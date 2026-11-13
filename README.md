@@ -73,10 +73,20 @@
   3. Tailored 1-Page Tech CV
   4. Core Interview Questions Mastered
 
-### 12. 👤 Public Portfolio Page & Badges
+### 12. 📄 Tech CV & Resume Builder (Top 5 Industry Formats)
+- **Top 5 Tech Formats:**
+  1. **ATS Modern (Single Column):** Clean, machine-parseable hierarchy optimized for ATS scanners and tech giants.
+  2. **Two-Column Engineering:** High-density technical layout with skills sidebar and project links.
+  3. **Executive / Senior Impact:** Quantified metrics, leadership achievements, and system architecture emphasis.
+  4. **Developer Minimalist:** Monospace terminal aesthetic featuring GitHub repo links and clean commit history style.
+  5. **Creative Frontend / Portfolio:** Visual project showcase with live demo links and interactive design highlights.
+- **Interactive Builder:** Form fields with sample tech data, reactive live preview, `@media print` A4 PDF pagination, and one-click Markdown copy.
+- **Persistence:** CV data is synchronized to the user's profile (`/api/user/cv`).
+
+### 13. 👤 Public Portfolio Page & Badges
 - Showcase solved counts, streak count, GitHub project links, and unlocked achievement badges (`First Blood`, `3-Day Fire`, `Unstoppable`, `Shipper`, `Theory Master`, `Interview Ready`).
 
-### 13. 🛡️ Admin Content Management
+### 14. 🛡️ Admin Content Management
 - Role-based admin access control (`admin@codepath.dev`).
 - Create, edit, and delete problems and tests without touching source code.
 - One-click database JSON export and import.
@@ -113,7 +123,9 @@ codepath/
         │   ├── frontend-runner.js # Live preview & DOM test runner
         │   └── sql-engine.js # Relational SQL table renderer
         └── views/
-            ├── dashboard.js  # 60-Day plan & skill radar
+            ├── cv-builder.js # Tech CV builder with Top 5 formats & PDF export
+            ├── dashboard.js  # Two-segment dashboard (Learn + Practice)
+            ├── languages.js  # Language selection portal
             ├── tracks.js     # Career tracks & modules
             ├── lessons.js    # Markdown lessons with "Try It"
             ├── practice.js   # 3-pane problem workspace
@@ -162,14 +174,16 @@ node scripts/seed.js
 
 ---
 
-## 🔑 Demo Accounts
+## 🔑 Authentication & Demo Accounts
+
+Every user must **Sign Up** or **Log In** to access the dashboard, curriculum, practice problems, and CV builder. Guest access is disabled to preserve user progress, streaks, and saved CVs.
 
 | Role | Email | Password | Permissions |
 |---|---|---|---|
-| **Learner (Default)** | `learner@codepath.dev` | `learner` | Solves problems, tracks streak, takes quizzes, builds portfolio |
+| **Learner (Default)** | `learner@codepath.dev` | `learner` | Solves problems, tracks streak, takes quizzes, builds CV & portfolio |
 | **Administrator** | `admin@codepath.dev` | `admin` | Full CRUD access to problems, lessons, telemetry, and JSON export |
 
-*Visitors can also practice problems immediately without creating an account (FR-A6).*
+*New users can register instantly with their Name, Email, and Password directly from the login/signup modal.*
 
 ---
 
