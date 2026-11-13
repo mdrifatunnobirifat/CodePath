@@ -587,3 +587,4 @@ ${(d.education || []).map(ed => `- **${ed.degree}**, ${ed.institution} (${ed.yea
     `;
   }
 };
+

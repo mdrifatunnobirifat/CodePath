@@ -91,6 +91,15 @@
 - Create, edit, and delete problems and tests without touching source code.
 - One-click database JSON export and import.
 
+### 15. 📧 Real-Time Email Notifications & Inbox Alerts
+- **Real-Time Delivery to Real Inboxes:** Built-in zero-dependency SMTP engine supporting direct SSL/TLS (port 465, Gmail) and STARTTLS (port 587, Outlook/Custom) or Resend API.
+- **Trigger Types:**
+  - 🚀 **Welcome & Curriculum Roadmap:** Instant email upon registration with the 60-day roadmap for your chosen language.
+  - 🏆 **Problem Solved & Milestones:** Celebratory emails when passing all tests and hitting streak milestones.
+  - 🔥 **Daily Streak Reminders:** Friendly notifications so you don't break your consecutive day streaks.
+  - 📄 **Tech CV & Application Alerts:** Status emails when you export or update your Technical CV.
+- **Email Notification Center & Outbox:** UI at `#notifications` featuring 1-click Gmail setup guide, notification toggles, test email sender, and live outbox history with full HTML preview modal.
+
 ---
 
 ## 📐 Architecture & Technology Stack
@@ -109,6 +118,8 @@ codepath/
 │   └── database.json         # Persistent JSON database
 ├── scripts/
 │   └── seed.js               # Database seeding utility
+├── services/
+│   └── mailer.js             # Zero-dependency native SMTP & notification engine
 ├── test/
 │   └── test_runner.js        # Automated unit and integration test suite
 └── public/
@@ -128,6 +139,7 @@ codepath/
             ├── languages.js  # Language selection portal
             ├── tracks.js     # Career tracks & modules
             ├── lessons.js    # Markdown lessons with "Try It"
+            ├── notifications.js # Real-time email notification center & SMTP setup
             ├── practice.js   # 3-pane problem workspace
             ├── quizzes.js    # Quizzes & timed quiz mode
             ├── interview.js  # Technical interview Q&A bank

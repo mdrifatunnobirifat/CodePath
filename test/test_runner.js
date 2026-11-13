@@ -191,6 +191,31 @@ async function runAllTests() {
     assert.strictEqual(res.data.percent, 100);
   });
 
+  // Integration Test 11: Email Notification Settings
+  await asyncTest('Integration: GET & POST /api/notifications/settings manages preferences', async () => {
+    const getRes = await request('GET', '/api/notifications/settings');
+    assert.strictEqual(getRes.status, 200);
+    assert.ok(getRes.data.emailPreferences);
+
+    const postRes = await request('POST', '/api/notifications/settings', {
+      emailPreferences: { enabled: true, welcomeEmail: true, problemSolved: true, dailyStreak: true, jobReadiness: true },
+      userEmail: 'testuser@example.com'
+    });
+    assert.strictEqual(postRes.status, 200);
+    assert.strictEqual(postRes.data.success, true);
+  });
+
+  // Integration Test 12: Notification Outbox & Test Email Delivery
+  await asyncTest('Integration: POST /api/notifications/test queues and delivers email', async () => {
+    const res = await request('POST', '/api/notifications/test', {
+      targetEmail: 'learner@example.com'
+    });
+    assert.strictEqual(res.status, 200);
+    assert.ok(res.data.entry);
+    assert.strictEqual(res.data.entry.userEmail, 'learner@example.com');
+    assert.ok(res.data.entry.subject.includes('Active'));
+  });
+
   console.log(`\nResults: ${passCount} passed, ${failCount} failed.\n`);
   server.close();
   if (failCount > 0) process.exit(1);

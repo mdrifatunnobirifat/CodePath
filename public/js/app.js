@@ -11,6 +11,7 @@ const routes = {
   jobs: JobsView,
   readiness: ReadinessView,
   cv: CVBuilderView,
+  notifications: NotificationsView,
   portfolio: ProfileView,
   admin: AdminView
 };

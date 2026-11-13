@@ -5,6 +5,7 @@ const url = require('url');
 const crypto = require('crypto');
 const vm = require('vm');
 const { spawnSync } = require('child_process');
+const mailer = require('./services/mailer');
 
 const PORT = process.env.PORT || 3000;
 const DATA_FILE = path.join(__dirname, 'data', 'database.json');
@@ -22,9 +23,11 @@ function getDb() {
     try {
       const content = fs.readFileSync(DATA_FILE, 'utf8');
       db = JSON.parse(content);
+      if (!db.emailNotifications) db.emailNotifications = [];
+      if (!db.systemSettings) db.systemSettings = {};
     } catch (e) {
       console.error('Error loading DB, initializing blank template:', e.message);
-      db = { users: [], problems: [], tracks: [], lessons: [], quizzes: [], interviewQuestions: [], projects: [], jobs: [], submissions: [], drafts: {}, progress: {}, revisionQueue: {}, plans: {} };
+      db = { users: [], problems: [], tracks: [], lessons: [], quizzes: [], interviewQuestions: [], projects: [], jobs: [], submissions: [], drafts: {}, progress: {}, revisionQueue: {}, plans: {}, emailNotifications: [], systemSettings: {} };
     }
   }
   return db;
@@ -375,9 +378,27 @@ const server = http.createServer(async (req, res) => {
         streakCount: 1,
         lastActiveDate: new Date().toISOString().slice(0, 10),
         bio: 'Job seeker preparing for developer roles in 60 days.',
-        githubUrl: ''
+        githubUrl: '',
+        emailPreferences: {
+          enabled: true,
+          welcomeEmail: true,
+          problemSolved: true,
+          dailyStreak: true,
+          jobReadiness: true
+        }
       };
       saveDb();
+
+      // Trigger Welcome & Curriculum Roadmap email to user's real email
+      mailer.sendNotification({
+        db: database,
+        type: 'welcome',
+        user: newUser,
+        payload: {
+          language: 'JavaScript',
+          goalTrack: goalTrack || 'Frontend'
+        }
+      }).catch(err => console.error('[CodePath Mailer Signup Error]:', err.message));
 
       const token = crypto.randomBytes(24).toString('hex');
       sessions.set(token, { userId: newUser.id, expires: Date.now() + 30 * 864e5 });
@@ -442,6 +463,14 @@ const server = http.createServer(async (req, res) => {
       if (currentUser && database.profiles[currentUser.id]) {
         database.profiles[currentUser.id].cv = cv;
         saveDb();
+
+        // Trigger CV ready notification
+        mailer.sendNotification({
+          db: database,
+          type: 'cvReady',
+          user: currentUser,
+          payload: { formatName: cv?.template || 'ATS Modern' }
+        }).catch(err => console.error('[CodePath Mailer CV Error]:', err.message));
       }
       return sendJson(res, 200, { success: true, cv });
     }
@@ -684,6 +713,20 @@ const server = http.createServer(async (req, res) => {
             prof.lastActiveDate = today;
           }
         }
+
+        // Trigger Problem Solved & Milestone email notification to user's real email
+        mailer.sendNotification({
+          db: database,
+          type: 'problemSolved',
+          user: currentUser,
+          payload: {
+            problemTitle: problem.title,
+            difficulty: problem.difficulty,
+            language: language || problem.language,
+            streakCount: (database.profiles[currentUser.id] && database.profiles[currentUser.id].streakCount) || 1,
+            totalSolved: (database.progress[currentUser.id] && database.progress[currentUser.id].solved.length) || 1
+          }
+        }).catch(err => console.error('[CodePath Mailer Submit Error]:', err.message));
       } else {
         // Add to revision queue if failed (FR-Q4)
         if (!database.revisionQueue[currentUser.id]) database.revisionQueue[currentUser.id] = [];
@@ -994,6 +1037,99 @@ const server = http.createServer(async (req, res) => {
         saveDb();
         return sendJson(res, 200, { success: true, count: database.problems.length });
       }
+    }
+
+    // --- 12. REAL-TIME EMAIL NOTIFICATIONS & SETTINGS ---
+    if (pathname === '/api/notifications/settings' && method === 'GET') {
+      const profile = database.profiles[currentUser.id] || {};
+      const emailPrefs = profile.emailPreferences || {
+        enabled: true,
+        welcomeEmail: true,
+        problemSolved: true,
+        dailyStreak: true,
+        jobReadiness: true
+      };
+      const sysEmail = (database.systemSettings && database.systemSettings.email) || {};
+      return sendJson(res, 200, {
+        email: currentUser.email,
+        emailPreferences: emailPrefs,
+        smtpConfig: {
+          smtpHost: sysEmail.smtpHost || process.env.SMTP_HOST || '',
+          smtpPort: sysEmail.smtpPort || process.env.SMTP_PORT || 465,
+          smtpUser: sysEmail.smtpUser || process.env.SMTP_USER || '',
+          smtpFrom: sysEmail.smtpFrom || process.env.SMTP_FROM || '',
+          isConfigured: Boolean((sysEmail.smtpHost || process.env.SMTP_HOST) && (sysEmail.smtpUser || process.env.SMTP_USER) && (sysEmail.smtpPass || process.env.SMTP_PASS)),
+          hasResend: Boolean(sysEmail.resendApiKey || process.env.RESEND_API_KEY)
+        }
+      });
+    }
+
+    if (pathname === '/api/notifications/settings' && method === 'POST') {
+      const { emailPreferences, smtpConfig, userEmail } = await parseJsonBody(req);
+
+      // Update user email if changed
+      if (userEmail && userEmail !== currentUser.email) {
+        currentUser.email = userEmail.trim().toLowerCase();
+        const userObj = database.users.find(u => u.id === currentUser.id);
+        if (userObj) userObj.email = currentUser.email;
+      }
+
+      // Update user notification preferences
+      if (!database.profiles[currentUser.id]) {
+        database.profiles[currentUser.id] = { userId: currentUser.id };
+      }
+      if (emailPreferences) {
+        database.profiles[currentUser.id].emailPreferences = emailPreferences;
+      }
+
+      // Update system SMTP settings if provided
+      if (smtpConfig) {
+        if (!database.systemSettings) database.systemSettings = {};
+        if (!database.systemSettings.email) database.systemSettings.email = {};
+        if (smtpConfig.smtpHost !== undefined) database.systemSettings.email.smtpHost = smtpConfig.smtpHost.trim();
+        if (smtpConfig.smtpPort !== undefined) database.systemSettings.email.smtpPort = Number(smtpConfig.smtpPort);
+        if (smtpConfig.smtpUser !== undefined) database.systemSettings.email.smtpUser = smtpConfig.smtpUser.trim();
+        if (smtpConfig.smtpPass) database.systemSettings.email.smtpPass = smtpConfig.smtpPass.trim();
+        if (smtpConfig.smtpFrom !== undefined) database.systemSettings.email.smtpFrom = smtpConfig.smtpFrom.trim();
+        if (smtpConfig.resendApiKey !== undefined) database.systemSettings.email.resendApiKey = smtpConfig.resendApiKey.trim();
+      }
+
+      saveDb();
+      return sendJson(res, 200, { success: true });
+    }
+
+    if (pathname === '/api/notifications/test' && method === 'POST') {
+      const { targetEmail } = await parseJsonBody(req);
+      const emailToUse = targetEmail || currentUser.email;
+      if (!emailToUse) {
+        return sendError(res, 400, 'NO_EMAIL', 'Email address is required');
+      }
+
+      const tempUser = { ...currentUser, email: emailToUse };
+      const outboxEntry = await mailer.sendNotification({
+        db: database,
+        type: 'test',
+        user: tempUser,
+        force: true
+      });
+      saveDb();
+
+      return sendJson(res, 200, {
+        success: outboxEntry.status === 'delivered',
+        status: outboxEntry.status,
+        error: outboxEntry.error,
+        message: outboxEntry.status === 'delivered'
+          ? `Real email sent successfully to ${emailToUse}! Check your inbox.`
+          : `Test email logged in CodePath outbox. (Status: ${outboxEntry.status})`,
+        entry: outboxEntry
+      });
+    }
+
+    if (pathname === '/api/notifications/history' && method === 'GET') {
+      const history = (database.emailNotifications || [])
+        .filter(n => n.userId === currentUser.id || currentUser.role === 'admin')
+        .slice(0, 30);
+      return sendJson(res, 200, { history });
     }
 
     // Static files fallback

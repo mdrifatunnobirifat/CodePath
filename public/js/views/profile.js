@@ -41,8 +41,22 @@ const ProfileView = {
             </div>
 
             <div style="display: flex; gap: 10px;">
+              <button class="btn" onclick="navigate('notifications')">📧 Email Alerts</button>
               <button class="btn p" onclick="ProfileView.copyShareableLink()">Share Portfolio Link 🔗</button>
             </div>
+          </div>
+
+          <!-- Email Notifications Status Bar -->
+          <div class="card" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; background: rgba(14, 124, 123, 0.05); border: 1px solid var(--acc);">
+            <div>
+              <h3 style="margin: 0 0 4px; font-size: 16px;">📧 Real-Time Email Notifications</h3>
+              <p style="margin: 0; font-size: 13px; color: var(--mute);">
+                Notifications sent to: <strong>${user.email}</strong> (Roadmaps, problem achievements, and daily streak alerts)
+              </p>
+            </div>
+            <button class="btn" onclick="navigate('notifications')" style="background: var(--acc); color: white;">
+              Configure Email & SMTP &rarr;
+            </button>
           </div>
 
           <!-- Solved Stats & Achievements -->

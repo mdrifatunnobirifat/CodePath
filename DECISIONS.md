@@ -34,3 +34,11 @@ This document records the key architectural and product decisions made during th
 - **Context:** Developer 4 (User Voice) emphasized that learners need structured daily guidance and retention mechanics.
 - **Decision:** Implemented a dynamic daily plan generator that schedules 1 lesson, 2-3 targeted problems, 1 revision task, and weekly mini-project milestones. Integrated a 1-3-7 day spaced repetition algorithm where missed quiz questions or difficult problems automatically schedule for review.
 
+### D-06: Tech CV & Resume Builder in Top 5 Formats
+- **Context:** To ensure students are job-ready, learners need technical CVs adhering to modern hiring manager and ATS standards.
+- **Decision:** Implemented 5 specialized templates (ATS Modern, Two-Column Engineering, Executive Impact, Developer Minimalist, Creative Frontend) with live A4 preview, `@media print` PDF generation, markdown export, and profile persistence.
+
+### D-07: Universal Zero-Dependency Real Email Notification Engine
+- **Context:** Learners want real-time email notifications for registration roadmaps, problem milestones, daily streak reminders, and CV completion sent to their real email address (e.g. Gmail).
+- **Decision:** Implemented a native zero-dependency mailer in `services/mailer.js` supporting direct SSL/TLS (port 465) for Gmail, STARTTLS (port 587) for Outlook/custom SMTP, and modern HTTP API (Resend). Added in-app outbox tracking (`/api/notifications/history`) and UI configuration panel (`/api/notifications/settings`) with instant 1-click test delivery.
+
