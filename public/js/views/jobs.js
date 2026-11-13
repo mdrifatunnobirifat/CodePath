@@ -115,3 +115,4 @@ const JobsView = {
     document.getElementById('modal-overlay').style.display = 'flex';
   }
 };
+

@@ -113,3 +113,4 @@ const ProfileView = {
     Store.toast('Public portfolio link copied to clipboard! 📋', 'success');
   }
 };
+

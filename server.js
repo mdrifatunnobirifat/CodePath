@@ -410,13 +410,32 @@ const server = http.createServer(async (req, res) => {
       const profile = database.profiles[currentUser.id] || {
         userId: currentUser.id,
         goalTrack: 'frontend',
+        selectedLanguage: 'JavaScript',
         level: 'Beginner',
         targetDate: new Date(Date.now() + 60 * 864e5).toISOString().slice(0, 10),
         dailyGoal: 3,
         streakCount: 1,
         lastActiveDate: new Date().toISOString().slice(0, 10)
       };
-      return sendJson(res, 200, { user: currentUser, profile });
+      const isAuthenticated = currentUser.id !== 'u-guest';
+      return sendJson(res, 200, { user: currentUser, profile, isAuthenticated });
+    }
+
+    if (pathname === '/api/user/language' && method === 'POST') {
+      const { language } = await parseJsonBody(req);
+      if (!database.profiles[currentUser.id]) {
+        database.profiles[currentUser.id] = { userId: currentUser.id };
+      }
+      database.profiles[currentUser.id].selectedLanguage = language;
+      saveDb();
+      return sendJson(res, 200, { success: true, language });
+    }
+
+    if (pathname === '/api/curriculum/topics' && method === 'GET') {
+      const lang = query.language || 'JavaScript';
+      const roadmaps = database.topicRoadmaps || {};
+      const topics = roadmaps[lang] || roadmaps['JavaScript'] || [];
+      return sendJson(res, 200, { language: lang, topics });
     }
 
     // --- 2. TRACKS & MODULES (FR-T1, FR-T2, FR-T3, FR-T5) ---
@@ -970,11 +989,14 @@ const server = http.createServer(async (req, res) => {
   }
 });
 
-server.listen(PORT, () => {
-  console.log(`=======================================================`);
-  console.log(` CodePath Platform running at: http://localhost:${PORT}`);
-  console.log(` Mode: Zero-Dependency High Performance Node.js Server`);
-  console.log(`=======================================================`);
-});
+if (require.main === module) {
+  server.listen(PORT, '0.0.0.0', () => {
+    console.log(`=======================================================`);
+    console.log(` CodePath Platform running at: http://localhost:${PORT}`);
+    console.log(` Mode: Zero-Dependency High Performance Node.js Server`);
+    console.log(`=======================================================`);
+  });
+}
 
 module.exports = server;
+

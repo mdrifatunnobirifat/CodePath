@@ -16,6 +16,9 @@ const PracticeView = {
   async render(params = {}) {
     const app = document.getElementById('app');
     if (params.slug) this.selectedSlug = params.slug;
+    if (this.filters.language === 'All' && Store.state.selectedLanguage) {
+      this.filters.language = Store.state.selectedLanguage;
+    }
 
     app.innerHTML = '<div class="notice">Loading coding workspace...</div>';
 
@@ -344,3 +347,4 @@ const PracticeView = {
       .replace(/\n\n/gim, '<br>');
   }
 };
+

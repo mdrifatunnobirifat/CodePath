@@ -5,3 +5,4 @@ echo  Starting CodePath Platform...
 echo ========================================================
 node server.js
 pause
+

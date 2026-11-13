@@ -172,3 +172,4 @@ Developed as part of the **CodePath 60-Day Job-Readiness Curriculum**.
     document.getElementById('modal-overlay').style.display = 'none';
   }
 };
+

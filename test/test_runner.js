@@ -2,6 +2,7 @@ const assert = require('assert');
 const http = require('http');
 const server = require('../server.js');
 
+const TEST_PORT = 3001;
 let passCount = 0;
 let failCount = 0;
 
@@ -34,7 +35,7 @@ function request(method, path, body = null, headers = {}) {
     const postData = body ? JSON.stringify(body) : '';
     const req = http.request({
       hostname: 'localhost',
-      port: 3000,
+      port: TEST_PORT,
       path,
       method,
       headers: {
@@ -120,20 +121,20 @@ async function runAllTests() {
   });
 
   // Integration Test 4: POST /api/problems/:slug/run executes visible tests
-  await asyncTest('Integration: POST /api/problems/sum-even/run executes JS safely', async () => {
-    const res = await request('POST', '/api/problems/sum-even/run', {
-      code: 'function sumEven(nums) { return nums.filter(x => x % 2 === 0).reduce((a, b) => a + b, 0); }',
+  await asyncTest('Integration: POST /api/problems/javascript-p1-sum-two-numbers/run executes JS safely', async () => {
+    const res = await request('POST', '/api/problems/javascript-p1-sum-two-numbers/run', {
+      code: 'function add(a, b) { return a + b; }',
       language: 'JavaScript'
     });
     assert.strictEqual(res.status, 200);
     assert.strictEqual(res.data.passed, true);
-    assert.ok(res.data.results.length >= 4);
+    assert.ok(res.data.results.length >= 2);
   });
 
   // Integration Test 5: Infinite loop protection in JS sandbox
   await asyncTest('Integration: Infinite loop halted safely with timeout message', async () => {
-    const res = await request('POST', '/api/problems/sum-even/run', {
-      code: 'function sumEven(nums) { while(true) {} }',
+    const res = await request('POST', '/api/problems/javascript-p1-sum-two-numbers/run', {
+      code: 'function add(a, b) { while(true) {} }',
       language: 'JavaScript'
     });
     assert.strictEqual(res.status, 200);
@@ -142,9 +143,9 @@ async function runAllTests() {
   });
 
   // Integration Test 6: POST /api/problems/:slug/submit validates both visible and hidden tests
-  await asyncTest('Integration: POST /api/problems/sum-even/submit passes all tests', async () => {
-    const res = await request('POST', '/api/problems/sum-even/submit', {
-      code: 'function sumEven(nums) { return nums.filter(x => x % 2 === 0).reduce((a, b) => a + b, 0); }',
+  await asyncTest('Integration: POST /api/problems/javascript-p1-sum-two-numbers/submit passes all tests', async () => {
+    const res = await request('POST', '/api/problems/javascript-p1-sum-two-numbers/submit', {
+      code: 'function add(a, b) { return a + b; }',
       language: 'JavaScript'
     });
     assert.strictEqual(res.status, 200);
@@ -195,8 +196,11 @@ async function runAllTests() {
   if (failCount > 0) process.exit(1);
 }
 
-runAllTests().catch(err => {
-  console.error('Test suite failed:', err);
-  server.close();
-  process.exit(1);
+server.listen(TEST_PORT, '127.0.0.1', () => {
+  runAllTests().catch(err => {
+    console.error('Test suite failed:', err);
+    server.close();
+    process.exit(1);
+  });
 });
+

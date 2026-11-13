@@ -33,3 +33,4 @@ This document records the key architectural and product decisions made during th
 ### D-05: 60-Day Job-Ready Plan & Spaced Repetition (Revision Queue)
 - **Context:** Developer 4 (User Voice) emphasized that learners need structured daily guidance and retention mechanics.
 - **Decision:** Implemented a dynamic daily plan generator that schedules 1 lesson, 2-3 targeted problems, 1 revision task, and weekly mini-project milestones. Integrated a 1-3-7 day spaced repetition algorithm where missed quiz questions or difficult problems automatically schedule for review.
+

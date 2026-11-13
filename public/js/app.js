@@ -1,5 +1,6 @@
-// CodePath Main Application Orchestrator & Router
+// CodePath Main Router & Application Orchestrator
 const routes = {
+  languages: LanguagesView,
   dashboard: DashboardView,
   tracks: TracksView,
   lessons: LessonsView,
@@ -13,16 +14,19 @@ const routes = {
   admin: AdminView
 };
 
-let currentTab = 'dashboard';
+let currentTab = 'languages';
 
 function navigate(tabName, params = {}) {
-  const target = routes[tabName] || routes.dashboard;
+  const target = routes[tabName] || routes.languages;
   currentTab = tabName;
 
-  // Update navigation button active state
-  document.querySelectorAll('nav button').forEach(btn => {
+  // Update active state in drawer menu
+  document.querySelectorAll('.drawer-nav-item').forEach(btn => {
     btn.setAttribute('aria-current', btn.dataset.t === tabName ? 'page' : 'false');
   });
+
+  // Close drawer if open
+  closeDrawer();
 
   // Render target view
   target.render(params);
@@ -31,60 +35,99 @@ function navigate(tabName, params = {}) {
   window.location.hash = tabName;
 }
 
-// Global initialization
+function openDrawer() {
+  document.getElementById('drawer-menu')?.classList.add('open');
+  const backdrop = document.getElementById('drawer-backdrop');
+  if (backdrop) backdrop.style.display = 'block';
+}
+
+function closeDrawer() {
+  document.getElementById('drawer-menu')?.classList.remove('open');
+  const backdrop = document.getElementById('drawer-backdrop');
+  if (backdrop) backdrop.style.display = 'none';
+}
+
 window.addEventListener('DOMContentLoaded', () => {
   Store.init();
+  AuthView.init();
 
-  // Subscribe UI to store state changes
+  // 1. Subscribe UI to Store State Changes
   Store.subscribe((state) => {
-    // 1. Streak badge in header
+    // Header streak
     const streakEl = document.getElementById('streak-badge');
     if (streakEl) {
       streakEl.textContent = state.streak.n ? `🔥 Streak: ${state.streak.n} ${state.streak.n === 1 ? 'day' : 'days'}` : '';
     }
 
-    // 2. User info
-    const userNameEl = document.getElementById('user-name');
-    if (userNameEl && state.user) {
-      userNameEl.textContent = state.user.name || 'Learner';
+    // Header active language text
+    const langText = document.getElementById('current-lang-text');
+    if (langText) {
+      langText.textContent = state.selectedLanguage || 'JavaScript';
     }
+
+    // Drawer user profile
+    const drawerName = document.getElementById('drawer-user-name');
+    const drawerStatus = document.getElementById('drawer-user-status');
+    const authBtnText = document.getElementById('drawer-auth-text');
+
+    if (drawerName && state.user) {
+      drawerName.textContent = state.user.name || 'Guest Learner';
+    }
+    if (drawerStatus) {
+      drawerStatus.textContent = state.isAuthenticated ? `Signed in (${state.user?.role || 'Learner'})` : 'Not signed in (Guest)';
+    }
+    if (authBtnText) {
+      authBtnText.textContent = state.isAuthenticated ? 'Log Out' : 'Sign Up / Log In';
+    }
+
+    // Drawer language pills active state
+    document.querySelectorAll('.drawer-lang-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.lang === state.selectedLanguage);
+    });
   });
 
-  // Theme toggle button
-  const themeBtn = document.getElementById('theme-toggle');
-  if (themeBtn) {
-    themeBtn.addEventListener('click', () => {
-      Store.toggleTheme();
-    });
-  }
+  // 2. Hamburger button listeners
+  document.getElementById('hamburger-btn')?.addEventListener('click', () => openDrawer());
+  document.getElementById('drawer-close-btn')?.addEventListener('click', () => closeDrawer());
+  document.getElementById('drawer-backdrop')?.addEventListener('click', () => closeDrawer());
 
-  // Navigation tab button listeners
-  document.querySelectorAll('nav button').forEach(btn => {
+  // 3. Drawer navigation items
+  document.querySelectorAll('.drawer-nav-item').forEach(btn => {
     btn.addEventListener('click', () => {
       const tab = btn.dataset.t;
       if (tab) navigate(tab);
     });
   });
 
-  // Modal overlay click to dismiss
-  const modalOverlay = document.getElementById('modal-overlay');
-  if (modalOverlay) {
-    modalOverlay.addEventListener('click', (e) => {
-      if (e.target === modalOverlay) {
-        modalOverlay.style.display = 'none';
+  // 4. Drawer quick language selector
+  document.querySelectorAll('.drawer-lang-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const lang = btn.dataset.lang;
+      if (lang) {
+        Store.selectLanguage(lang);
+        closeDrawer();
       }
     });
-  }
+  });
 
-  // User menu click to jump to profile
-  const userMenuBtn = document.getElementById('user-menu-btn');
-  if (userMenuBtn) {
-    userMenuBtn.addEventListener('click', () => {
-      navigate('portfolio');
-    });
-  }
+  // 5. Theme toggle
+  document.getElementById('theme-toggle')?.addEventListener('click', () => {
+    Store.toggleTheme();
+  });
 
-  // Handle initial route from hash
-  const initialHash = window.location.hash.replace('#', '') || 'dashboard';
-  navigate(initialHash);
+  // 6. Modal overlay click to dismiss
+  document.getElementById('modal-overlay')?.addEventListener('click', (e) => {
+    if (e.target.id === 'modal-overlay') {
+      e.target.style.display = 'none';
+    }
+  });
+
+  // 7. Initial Route
+  const initialHash = window.location.hash.replace('#', '');
+  if (initialHash && routes[initialHash]) {
+    navigate(initialHash);
+  } else {
+    // When a user first opens this website, show the language selection hub
+    navigate('languages');
+  }
 });

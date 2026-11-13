@@ -79,3 +79,4 @@ const InterviewView = {
     this.render();
   }
 };
+

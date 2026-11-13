@@ -3,7 +3,9 @@ const Store = {
   state: {
     user: null,
     profile: null,
-    activeTab: 'dashboard',
+    isAuthenticated: false,
+    selectedLanguage: localStorage.getItem('cp_lang') || 'JavaScript',
+    activeTab: 'languages',
     theme: 'light',
     streak: { n: 0, last: '' },
     savedJobs: [],
@@ -39,6 +41,17 @@ const Store = {
     this.setTheme(this.state.theme === 'dark' ? 'light' : 'dark');
   },
 
+  async selectLanguage(lang) {
+    this.state.selectedLanguage = lang;
+    localStorage.setItem('cp_lang', lang);
+    try {
+      await this.api('/user/language', 'POST', { language: lang });
+    } catch (e) {}
+    this.notify();
+    Store.toast(`Switched to ${lang} learning path! 🚀`, 'info');
+    navigate('dashboard');
+  },
+
   async api(endpoint, method = 'GET', data = null) {
     try {
       const options = {
@@ -65,11 +78,17 @@ const Store = {
       const res = await this.api('/me');
       this.state.user = res.user;
       this.state.profile = res.profile;
+      this.state.isAuthenticated = Boolean(res.isAuthenticated);
+      if (res.profile?.selectedLanguage) {
+        this.state.selectedLanguage = res.profile.selectedLanguage;
+        localStorage.setItem('cp_lang', res.profile.selectedLanguage);
+      }
       this.state.streak.n = res.profile?.streakCount || 0;
       this.notify();
     } catch (e) {
       // Fallback demo state
-      this.state.user = { id: 'u-guest', name: 'Learner', role: 'learner' };
+      this.state.user = { id: 'u-guest', name: 'Guest Learner', role: 'learner' };
+      this.state.isAuthenticated = false;
       this.notify();
     }
   },

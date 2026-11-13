@@ -109,3 +109,4 @@ const TracksView = {
     this.render();
   }
 };
+

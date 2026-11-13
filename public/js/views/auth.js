@@ -1,0 +1,133 @@
+// CodePath Authentication Controller (Sign Up / Login / Guest / Logout)
+const AuthView = {
+  mode: 'signup', // 'signup' | 'login' | 'guest'
+  pendingLanguage: null,
+
+  init() {
+    // Connect auth modal close button
+    const closeBtn = document.getElementById('auth-modal-close');
+    if (closeBtn) {
+      closeBtn.addEventListener('click', () => this.closeModal());
+    }
+
+    // Connect tab buttons
+    document.getElementById('tab-signup-btn')?.addEventListener('click', () => this.switchMode('signup'));
+    document.getElementById('tab-login-btn')?.addEventListener('click', () => this.switchMode('login'));
+    document.getElementById('tab-guest-btn')?.addEventListener('click', () => this.switchMode('guest'));
+
+    // Connect drawer logout button
+    document.getElementById('drawer-logout-btn')?.addEventListener('click', () => {
+      this.logout();
+    });
+  },
+
+  openModal(mode = 'signup', pendingLang = null) {
+    this.pendingLanguage = pendingLang;
+    this.switchMode(mode);
+    const modal = document.getElementById('auth-modal');
+    if (modal) modal.style.display = 'flex';
+  },
+
+  closeModal() {
+    const modal = document.getElementById('auth-modal');
+    if (modal) modal.style.display = 'none';
+  },
+
+  switchMode(mode) {
+    this.mode = mode;
+    const isSignup = mode === 'signup';
+    const isGuest = mode === 'guest';
+
+    document.getElementById('tab-signup-btn')?.setAttribute('aria-pressed', isSignup);
+    document.getElementById('tab-login-btn')?.setAttribute('aria-pressed', mode === 'login');
+    document.getElementById('tab-guest-btn')?.setAttribute('aria-pressed', isGuest);
+
+    const nameGroup = document.getElementById('signup-name-group');
+    const submitBtn = document.getElementById('auth-submit-btn');
+    const titleEl = document.getElementById('auth-modal-title');
+    const subEl = document.getElementById('auth-modal-subtitle');
+    const errorEl = document.getElementById('auth-error-msg');
+    if (errorEl) errorEl.style.display = 'none';
+
+    if (isGuest) {
+      if (nameGroup) nameGroup.style.display = 'none';
+      if (titleEl) titleEl.textContent = 'Continue as Guest Learner';
+      if (subEl) subEl.textContent = 'Preview problems, run tests in the sandbox, and try quizzes without an account.';
+      if (submitBtn) submitBtn.textContent = 'Enter as Guest Learner 🚀';
+    } else if (isSignup) {
+      if (nameGroup) nameGroup.style.display = 'block';
+      if (titleEl) titleEl.textContent = 'Create your CodePath Account';
+      if (subEl) subEl.textContent = 'Track your 60-day plan, maintain your streak, and save your solved coding exercises.';
+      if (submitBtn) submitBtn.textContent = 'Create Free Account & Start Learning 🚀';
+    } else {
+      if (nameGroup) nameGroup.style.display = 'none';
+      if (titleEl) titleEl.textContent = 'Welcome back! Log in to continue';
+      if (subEl) subEl.textContent = 'Access your saved drafts, streak, and job portfolio.';
+      if (submitBtn) submitBtn.textContent = 'Log In to My Account 🔑';
+    }
+  },
+
+  async submit() {
+    const errorEl = document.getElementById('auth-error-msg');
+    errorEl.style.display = 'none';
+
+    if (this.mode === 'guest') {
+      Store.state.user = { id: 'u-guest', name: 'Guest Learner', role: 'learner' };
+      Store.state.isAuthenticated = false;
+      Store.notify();
+      this.closeModal();
+      Store.toast('Welcome, Guest Learner! You can try exercises immediately.');
+      if (this.pendingLanguage) {
+        Store.selectLanguage(this.pendingLanguage);
+      } else {
+        navigate('dashboard');
+      }
+      return;
+    }
+
+    const email = document.getElementById('auth-email').value.trim();
+    const password = document.getElementById('auth-password').value.trim();
+    const name = document.getElementById('auth-name').value.trim();
+
+    try {
+      let res;
+      if (this.mode === 'signup') {
+        if (!name) throw new Error('Please enter your full name.');
+        res = await Store.api('/auth/signup', 'POST', { name, email, password });
+      } else {
+        res = await Store.api('/auth/login', 'POST', { email, password });
+      }
+
+      Store.state.user = res.user;
+      Store.state.isAuthenticated = true;
+      Store.notify();
+      this.closeModal();
+      Store.toast(`Welcome, ${res.user.name}! 🎉`, 'success');
+
+      if (this.pendingLanguage) {
+        Store.selectLanguage(this.pendingLanguage);
+      } else {
+        navigate('dashboard');
+      }
+    } catch (err) {
+      errorEl.style.display = 'block';
+      errorEl.innerHTML = `<div class="no">${CodeEditor.escapeHtml(err.message)}</div>`;
+    }
+  },
+
+  async logout() {
+    try {
+      await Store.api('/auth/logout', 'POST');
+    } catch (e) {}
+
+    Store.state.user = { id: 'u-guest', name: 'Guest Learner', role: 'learner' };
+    Store.state.isAuthenticated = false;
+    Store.notify();
+    Store.toast('Logged out successfully.');
+    // Close drawer
+    document.getElementById('drawer-menu')?.classList.remove('open');
+    document.getElementById('drawer-backdrop').style.display = 'none';
+    // Return to language selection hub
+    navigate('languages');
+  }
+};

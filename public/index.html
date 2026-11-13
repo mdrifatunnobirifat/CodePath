@@ -10,39 +10,170 @@
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <!-- Header adhering to User Prototype & SRS -->
+  <!-- Header with Hamburger Menu Navigation -->
   <header>
     <div class="header-left">
-      <div class="logo" role="banner" onclick="navigate('dashboard')" style="cursor: pointer;">Code<span>Path</span></div>
-      <nav aria-label="Main Navigation">
-        <button data-t="dashboard">Dashboard</button>
-        <button data-t="tracks">Tracks</button>
-        <button data-t="practice">Practice</button>
-        <button data-t="quizzes">Quizzes</button>
-        <button data-t="interview">Interview Q&A</button>
-        <button data-t="projects">Mini-Projects</button>
-        <button data-t="jobs">Jobs</button>
-        <button data-t="readiness">Readiness</button>
-        <button data-t="portfolio">Portfolio</button>
-        <button data-t="admin" class="admin-tab-btn">Admin</button>
-      </nav>
+      <div class="logo" role="banner" onclick="navigate('languages')" style="cursor: pointer;">Code<span>Path</span></div>
+      
+      <!-- Current Selected Language Indicator -->
+      <div id="active-lang-badge" class="active-lang-chip" onclick="navigate('languages')" title="Click to choose a different language">
+        <span class="lang-dot"></span>
+        <span id="current-lang-text">JavaScript</span>
+        <span class="lang-switch-hint">▾ Switch</span>
+      </div>
     </div>
 
     <div class="header-right">
       <div class="streak" id="streak-badge" title="Daily coding streak"></div>
       <button class="ghost theme-btn" id="theme-toggle" aria-label="Switch light or dark theme" title="Toggle Dark/Light Mode">Theme</button>
-      <div class="user-menu" id="user-menu-btn" title="Learner Profile">
-        <span class="user-avatar" id="user-avatar">👤</span>
-        <span class="user-name" id="user-name">Learner</span>
-      </div>
+      
+      <!-- Hamburger Menu Toggle Button -->
+      <button class="hamburger-btn" id="hamburger-btn" aria-label="Open Navigation Menu" title="Open Main Menu">
+        <span class="hamburger-icon">☰</span>
+        <span class="hamburger-text">Menu</span>
+      </button>
     </div>
   </header>
+
+  <!-- Hamburger Slide-out Drawer Navigation -->
+  <div id="drawer-backdrop" class="drawer-backdrop" style="display: none;"></div>
+  <aside id="drawer-menu" class="drawer-menu" aria-label="Main Drawer Menu">
+    <div class="drawer-header">
+      <div class="logo">Code<span>Path</span></div>
+      <button class="drawer-close-btn" id="drawer-close-btn" aria-label="Close menu">✕</button>
+    </div>
+
+    <!-- User Profile Summary in Menu -->
+    <div class="drawer-user-card" id="drawer-user-info">
+      <div class="drawer-user-avatar">👤</div>
+      <div class="drawer-user-details">
+        <b id="drawer-user-name">Guest Learner</b>
+        <span class="tag" id="drawer-user-status">Not signed in</span>
+      </div>
+    </div>
+
+    <!-- Quick Language Switcher inside Menu -->
+    <div class="drawer-section">
+      <div class="drawer-section-title">Active Language</div>
+      <div class="drawer-lang-grid" id="drawer-lang-selector">
+        <button class="drawer-lang-btn" data-lang="JavaScript">JavaScript</button>
+        <button class="drawer-lang-btn" data-lang="Python">Python</button>
+        <button class="drawer-lang-btn" data-lang="React">React</button>
+        <button class="drawer-lang-btn" data-lang="SQL">SQL</button>
+        <button class="drawer-lang-btn" data-lang="C#">C#</button>
+        <button class="drawer-lang-btn" data-lang="PHP">PHP</button>
+      </div>
+    </div>
+
+    <!-- Main Navigation Items -->
+    <div class="drawer-section">
+      <div class="drawer-section-title">Core Features</div>
+      <nav class="drawer-nav">
+        <button class="drawer-nav-item" data-t="dashboard">
+          <span class="nav-icon">📊</span>
+          <span class="nav-label"><b>Dashboard</b> (Learn & Practice)</span>
+        </button>
+        <button class="drawer-nav-item" data-t="practice">
+          <span class="nav-icon">⚡</span>
+          <span class="nav-label"><b>Practice Questions</b> (100+ Problems)</span>
+        </button>
+        <button class="drawer-nav-item" data-t="languages">
+          <span class="nav-icon">🌐</span>
+          <span class="nav-label"><b>Change Language Path</b></span>
+        </button>
+        <button class="drawer-nav-item" data-t="tracks">
+          <span class="nav-icon">🗺️</span>
+          <span class="nav-label">Career Role Tracks</span>
+        </button>
+        <button class="drawer-nav-item" data-t="quizzes">
+          <span class="nav-icon">⏱️</span>
+          <span class="nav-label">Quizzes & Timed Mode</span>
+        </button>
+        <button class="drawer-nav-item" data-t="interview">
+          <span class="nav-icon">💡</span>
+          <span class="nav-label">Interview Q&A Bank</span>
+        </button>
+        <button class="drawer-nav-item" data-t="projects">
+          <span class="nav-icon">💼</span>
+          <span class="nav-label">Mini-Projects & README Generator</span>
+        </button>
+        <button class="drawer-nav-item" data-t="jobs">
+          <span class="nav-icon">🏢</span>
+          <span class="nav-label">Developer Jobs Board</span>
+        </button>
+        <button class="drawer-nav-item" data-t="readiness">
+          <span class="nav-icon">📋</span>
+          <span class="nav-label">"Am I Ready to Apply?" Checklist</span>
+        </button>
+        <button class="drawer-nav-item" data-t="portfolio">
+          <span class="nav-icon">👤</span>
+          <span class="nav-label">Public Portfolio & Badges</span>
+        </button>
+        <button class="drawer-nav-item" data-t="admin">
+          <span class="nav-icon">🛡️</span>
+          <span class="nav-label">Admin Content Management</span>
+        </button>
+      </nav>
+    </div>
+
+    <!-- Drawer Footer with Logout / Auth Button -->
+    <div class="drawer-footer">
+      <button class="drawer-auth-btn" id="drawer-logout-btn">
+        <span class="nav-icon">🚪</span>
+        <span id="drawer-auth-text">Log Out</span>
+      </button>
+    </div>
+  </aside>
 
   <!-- Global Toast Alert Container -->
   <div id="toast-container" class="toast-container"></div>
 
   <!-- Main View Mount Point -->
   <main id="app"></main>
+
+  <!-- Auth Modal (Sign Up / Log In Popup) -->
+  <div id="auth-modal" class="modal-overlay" style="display: none;">
+    <div class="modal-card auth-modal-card">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+        <div class="logo" style="font-size: 22px;">Code<span>Path</span></div>
+        <button class="ghost" id="auth-modal-close" style="padding: 4px 8px;">✕</button>
+      </div>
+
+      <h3 id="auth-modal-title" style="margin-bottom: 6px;">Sign in to continue</h3>
+      <p class="tag" id="auth-modal-subtitle">Save your coding streak, track solved problems, and build your job portfolio.</p>
+
+      <!-- Auth Tab Switcher -->
+      <div class="chips" style="margin: 14px 0 16px;">
+        <button class="chip" id="tab-signup-btn" aria-pressed="true">Create Account</button>
+        <button class="chip" id="tab-login-btn" aria-pressed="false">Log In</button>
+        <button class="chip" id="tab-guest-btn" aria-pressed="false">Continue as Guest</button>
+      </div>
+
+      <!-- Auth Form -->
+      <form id="auth-form" onsubmit="event.preventDefault(); AuthView.submit();">
+        <div id="signup-name-group" style="margin-bottom: 12px;">
+          <label style="font-size: 13px; font-weight: 600; display: block; margin-bottom: 4px;">Full Name:</label>
+          <input type="text" id="auth-name" placeholder="Alex Morgan" style="width: 100%; padding: 9px 12px; border-radius: 8px; border: 1px solid var(--line); background: var(--code); color: var(--ink);" />
+        </div>
+
+        <div style="margin-bottom: 12px;">
+          <label style="font-size: 13px; font-weight: 600; display: block; margin-bottom: 4px;">Email Address:</label>
+          <input type="email" id="auth-email" placeholder="alex@example.com" style="width: 100%; padding: 9px 12px; border-radius: 8px; border: 1px solid var(--line); background: var(--code); color: var(--ink);" required />
+        </div>
+
+        <div style="margin-bottom: 16px;">
+          <label style="font-size: 13px; font-weight: 600; display: block; margin-bottom: 4px;">Password:</label>
+          <input type="password" id="auth-password" placeholder="••••••••" style="width: 100%; padding: 9px 12px; border-radius: 8px; border: 1px solid var(--line); background: var(--code); color: var(--ink);" required />
+        </div>
+
+        <div id="auth-error-msg" class="res" style="display: none; margin-bottom: 12px;"></div>
+
+        <button type="submit" class="btn p" id="auth-submit-btn" style="width: 100%; padding: 11px; font-size: 15px;">
+          Create Free Account & Start Learning 🚀
+        </button>
+      </form>
+    </div>
+  </div>
 
   <!-- Global Modal Shell for Previews & README Generators -->
   <div id="modal-overlay" class="modal-overlay" style="display: none;">
@@ -54,6 +185,8 @@
   <script src="js/components/editor.js"></script>
   <script src="js/components/frontend-runner.js"></script>
   <script src="js/components/sql-engine.js"></script>
+  <script src="js/views/auth.js"></script>
+  <script src="js/views/languages.js"></script>
   <script src="js/views/dashboard.js"></script>
   <script src="js/views/tracks.js"></script>
   <script src="js/views/lessons.js"></script>
