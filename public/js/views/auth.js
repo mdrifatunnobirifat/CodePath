@@ -76,6 +76,13 @@ const AuthView = {
     const password = document.getElementById('auth-password').value.trim();
     const name = document.getElementById('auth-name').value.trim();
 
+    const submitBtn = document.getElementById('auth-submit-btn');
+    const originalText = submitBtn ? submitBtn.textContent : '';
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Connecting...';
+    }
+
     try {
       let res;
       if (this.mode === 'signup') {
@@ -99,6 +106,11 @@ const AuthView = {
     } catch (err) {
       errorEl.style.display = 'block';
       errorEl.innerHTML = `<div class="no">${CodeEditor.escapeHtml(err.message)}</div>`;
+    } finally {
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.textContent = originalText;
+      }
     }
   },
 

@@ -565,3 +565,4 @@ const NotificationsView = {
     overlay.style.display = 'flex';
   }
 };
+

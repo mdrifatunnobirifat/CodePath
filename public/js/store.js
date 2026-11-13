@@ -53,6 +53,9 @@ const Store = {
   },
 
   async api(endpoint, method = 'GET', data = null) {
+    if (window.location.protocol === 'file:') {
+      throw new Error('CodePath server is not connected. Please double-click start.bat and visit http://localhost:3000 in Chrome (not the file directly).');
+    }
     try {
       const options = {
         method,
@@ -64,10 +67,13 @@ const Store = {
       const res = await fetch('/api' + endpoint, options);
       const json = await res.json();
       if (!res.ok) {
-        throw new Error(json.error?.message || 'API request failed');
+        throw new Error(json.error?.message || json.message || 'API request failed');
       }
       return json;
     } catch (err) {
+      if (err.name === 'TypeError' && (err.message.includes('fetch') || err.message.includes('NetworkError'))) {
+        throw new Error('Cannot connect to CodePath server. Please double-click start.bat (or run "node server.js") and visit http://localhost:3000');
+      }
       console.warn(`[Store API Error] ${endpoint}:`, err.message);
       throw err;
     }

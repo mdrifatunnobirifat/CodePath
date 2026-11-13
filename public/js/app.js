@@ -56,6 +56,13 @@ function closeDrawer() {
 }
 
 window.addEventListener('DOMContentLoaded', () => {
+  if (window.location.protocol === 'file:') {
+    const banner = document.createElement('div');
+    banner.style.cssText = 'background:#C0392B;color:#FFF;padding:12px 18px;text-align:center;font-weight:700;font-size:14px;position:sticky;top:0;z-index:999999;box-shadow:0 4px 12px rgba(0,0,0,0.4);';
+    banner.innerHTML = '⚠️ You opened CodePath as a local file (file://). To sign up and practice, start the server by double-clicking <strong>start.bat</strong>, then open <a href="http://localhost:3000" style="color:#FFF;text-decoration:underline;margin-left:4px;">http://localhost:3000</a> in Chrome!';
+    document.body.prepend(banner);
+  }
+
   Store.init();
   AuthView.init();
 
