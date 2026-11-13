@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>CodePath - Coding Practice & Job-Readiness Platform</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- Header adhering to User Prototype & SRS -->
+  <header>
+    <div class="header-left">
+      <div class="logo" role="banner" onclick="navigate('dashboard')" style="cursor: pointer;">Code<span>Path</span></div>
+      <nav aria-label="Main Navigation">
+        <button data-t="dashboard">Dashboard</button>
+        <button data-t="tracks">Tracks</button>
+        <button data-t="practice">Practice</button>
+        <button data-t="quizzes">Quizzes</button>
+        <button data-t="interview">Interview Q&A</button>
+        <button data-t="projects">Mini-Projects</button>
+        <button data-t="jobs">Jobs</button>
+        <button data-t="readiness">Readiness</button>
+        <button data-t="portfolio">Portfolio</button>
+        <button data-t="admin" class="admin-tab-btn">Admin</button>
+      </nav>
+    </div>
+
+    <div class="header-right">
+      <div class="streak" id="streak-badge" title="Daily coding streak"></div>
+      <button class="ghost theme-btn" id="theme-toggle" aria-label="Switch light or dark theme" title="Toggle Dark/Light Mode">Theme</button>
+      <div class="user-menu" id="user-menu-btn" title="Learner Profile">
+        <span class="user-avatar" id="user-avatar">👤</span>
+        <span class="user-name" id="user-name">Learner</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Global Toast Alert Container -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- Main View Mount Point -->
+  <main id="app"></main>
+
+  <!-- Global Modal Shell for Previews & README Generators -->
+  <div id="modal-overlay" class="modal-overlay" style="display: none;">
+    <div class="modal-card" id="modal-content"></div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/store.js"></script>
+  <script src="js/components/editor.js"></script>
+  <script src="js/components/frontend-runner.js"></script>
+  <script src="js/components/sql-engine.js"></script>
+  <script src="js/views/dashboard.js"></script>
+  <script src="js/views/tracks.js"></script>
+  <script src="js/views/lessons.js"></script>
+  <script src="js/views/practice.js"></script>
+  <script src="js/views/quizzes.js"></script>
+  <script src="js/views/interview.js"></script>
+  <script src="js/views/projects.js"></script>
+  <script src="js/views/jobs.js"></script>
+  <script src="js/views/readiness.js"></script>
+  <script src="js/views/profile.js"></script>
+  <script src="js/views/admin.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

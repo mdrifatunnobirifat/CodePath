@@ -1,0 +1,1844 @@
+{
+  "users": [
+    {
+      "id": "u-admin",
+      "name": "Platform Admin",
+      "email": "admin@codepath.dev",
+      "passwordHash": "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918",
+      "role": "admin",
+      "avatar": "https://api.dicebear.com/7.x/bottts/svg?seed=admin",
+      "createdAt": "2026-11-01T00:00:00.000Z"
+    },
+    {
+      "id": "u-learner",
+      "name": "Demo Learner",
+      "email": "learner@codepath.dev",
+      "passwordHash": "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8",
+      "role": "learner",
+      "avatar": "https://api.dicebear.com/7.x/bottts/svg?seed=learner",
+      "createdAt": "2026-11-01T00:00:00.000Z"
+    }
+  ],
+  "profiles": {
+    "u-learner": {
+      "userId": "u-learner",
+      "goalTrack": "frontend",
+      "level": "Beginner",
+      "targetDate": "2027-01-15",
+      "dailyGoal": 3,
+      "streakCount": 4,
+      "lastActiveDate": "2026-11-13",
+      "bio": "Aspiring Frontend & Full-Stack Developer preparing for interviews within 60 days.",
+      "githubUrl": "https://github.com/demolearner"
+    }
+  },
+  "tracks": [
+    {
+      "id": "frontend",
+      "title": "Frontend Engineer Track",
+      "description": "Master modern JavaScript, React, DOM manipulation, asynchronous programming, and web development fundamentals.",
+      "order": 1,
+      "badge": "Frontend Pro",
+      "modules": [
+        "js-foundations",
+        "js-async-dom",
+        "react-core",
+        "react-advanced"
+      ]
+    },
+    {
+      "id": "backend",
+      "title": "Backend Engineer Track",
+      "description": "Learn server-side programming with Python, C# / .NET, PHP, relational SQL databases, and API development.",
+      "order": 2,
+      "badge": "Backend Master",
+      "modules": [
+        "python-foundations",
+        "sql-databases",
+        "csharp-dotnet",
+        "backend-apis"
+      ]
+    },
+    {
+      "id": "fullstack",
+      "title": "Full-Stack Developer Track",
+      "description": "The complete journey bridging React frontend interfaces with robust backend services, databases, and deployment.",
+      "order": 3,
+      "badge": "Full-Stack Architect",
+      "modules": [
+        "js-foundations",
+        "react-core",
+        "python-foundations",
+        "sql-databases",
+        "csharp-dotnet"
+      ]
+    }
+  ],
+  "modules": [
+    {
+      "id": "js-foundations",
+      "trackId": "frontend",
+      "language": "JavaScript",
+      "title": "JavaScript Core & ES6+",
+      "description": "Variables, scoping, closures, higher-order array methods, and functional JavaScript paradigms.",
+      "order": 1,
+      "problems": [
+        "sum-even",
+        "reverse-string",
+        "palindrome-check",
+        "two-sum"
+      ],
+      "lessons": [
+        "js-variables-scope",
+        "js-arrays-objects"
+      ],
+      "quizId": "quiz-js-1"
+    },
+    {
+      "id": "js-async-dom",
+      "trackId": "frontend",
+      "language": "JavaScript",
+      "title": "DOM & Asynchronous JavaScript",
+      "description": "Event loop, Promises, async/await, fetching APIs, and interactive browser DOM manipulation.",
+      "order": 2,
+      "problems": [
+        "valid-parentheses",
+        "dom-color-picker"
+      ],
+      "lessons": [
+        "js-async-promises"
+      ],
+      "quizId": "quiz-js-2"
+    },
+    {
+      "id": "react-core",
+      "trackId": "frontend",
+      "language": "React",
+      "title": "React Components & State",
+      "description": "Component architecture, JSX, props, useState, and interactive UI updates.",
+      "order": 3,
+      "problems": [
+        "counter-component",
+        "interactive-accordion"
+      ],
+      "lessons": [
+        "react-component-lifecycle",
+        "react-hooks-deepdive"
+      ],
+      "quizId": "quiz-react-1"
+    },
+    {
+      "id": "react-advanced",
+      "trackId": "frontend",
+      "language": "React",
+      "title": "React Effects, Forms & Architecture",
+      "description": "useEffect, custom hooks, form handling, optimization, and real-world UI testing.",
+      "order": 4,
+      "problems": [
+        "interactive-accordion"
+      ],
+      "lessons": [
+        "react-hooks-deepdive"
+      ],
+      "quizId": "quiz-react-1"
+    },
+    {
+      "id": "python-foundations",
+      "trackId": "backend",
+      "language": "Python",
+      "title": "Python Core & Data Handling",
+      "description": "Lists, dicts, comprehensions, algorithms, parsing, and functional data processing.",
+      "order": 1,
+      "problems": [
+        "reverse-string",
+        "palindrome-check",
+        "two-sum",
+        "parse-csv-payload"
+      ],
+      "lessons": [
+        "python-data-structures"
+      ],
+      "quizId": "quiz-python-1"
+    },
+    {
+      "id": "sql-databases",
+      "trackId": "backend",
+      "language": "SQL",
+      "title": "Relational Databases & SQL Queries",
+      "description": "SELECT, WHERE, aggregate functions, GROUP BY, HAVING, INNER/LEFT JOINs, and database indexing.",
+      "order": 2,
+      "problems": [
+        "filter-employees-by-dept",
+        "department-salary-summary"
+      ],
+      "lessons": [
+        "sql-joins-grouping"
+      ],
+      "quizId": "quiz-sql-1"
+    },
+    {
+      "id": "csharp-dotnet",
+      "trackId": "backend",
+      "language": "C#",
+      "title": "C# & .NET Web Architecture",
+      "description": "C# OOP fundamentals, LINQ collections, ASP.NET Core Web API controllers, and dependency injection.",
+      "order": 3,
+      "problems": [
+        "two-sum",
+        "linq-high-earners",
+        "palindrome-check"
+      ],
+      "lessons": [
+        "csharp-oop-linq",
+        "dotnet-webapi-basics"
+      ],
+      "quizId": "quiz-dotnet-1"
+    },
+    {
+      "id": "backend-apis",
+      "trackId": "backend",
+      "language": "PHP",
+      "title": "PHP & Backend Logic",
+      "description": "PHP data parsing, associative arrays, string compression, and REST API conventions.",
+      "order": 4,
+      "problems": [
+        "fizzbuzz-custom",
+        "string-compression"
+      ],
+      "lessons": [
+        "dotnet-webapi-basics"
+      ],
+      "quizId": "quiz-python-1"
+    }
+  ],
+  "problems": [
+    {
+      "id": "sum-even",
+      "slug": "sum-even",
+      "moduleId": "js-foundations",
+      "title": "Sum of Even Numbers",
+      "difficulty": "Easy",
+      "type": "algorithm",
+      "language": "JavaScript",
+      "topics": [
+        "Arrays",
+        "Numbers",
+        "Math"
+      ],
+      "fn": "sumEven",
+      "descriptionMarkdown": "### Problem Description\n\nWrite a function `sumEven(nums)` that takes an array of integers and returns the sum of all even numbers.\n\n#### Examples:\n```javascript\nsumEven([1, 2, 3, 4]); // Returns 6 (2 + 4)\nsumEven([]); // Returns 0\nsumEven([7, 9]); // Returns 0\nsumEven([2, 2, 2]); // Returns 6\n```\n\n#### Constraints:\n- `nums` is an array of integers.\n- Length of `nums` is between `0` and `10^4`.\n- Numbers can be positive, negative, or zero.",
+      "starterCode": "function sumEven(nums) {\n  // Write your code here\n  \n}\n",
+      "hints": [
+        "Think about iterating over every item in the array with a loop or filter.",
+        "A number `n` is even if `n % 2 === 0` (or `Math.abs(n) % 2 === 0` for negative values).",
+        "Initialize a `total = 0`, iterate through `nums`, add `n` whenever `n % 2 === 0`, and return `total`."
+      ],
+      "solutionMarkdown": "```javascript\nfunction sumEven(nums) {\n  return nums.reduce((acc, curr) => (curr % 2 === 0 ? acc + curr : acc), 0);\n}\n```\n\n**Time Complexity:** O(N) where N is array length.\n**Space Complexity:** O(1) auxiliary space.",
+      "visibleTests": [
+        {
+          "input": [
+            [
+              1,
+              2,
+              3,
+              4
+            ]
+          ],
+          "expected": 6
+        },
+        {
+          "input": [
+            []
+          ],
+          "expected": 0
+        },
+        {
+          "input": [
+            [
+              7,
+              9
+            ]
+          ],
+          "expected": 0
+        },
+        {
+          "input": [
+            [
+              2,
+              2,
+              2
+            ]
+          ],
+          "expected": 6
+        }
+      ],
+      "hiddenTests": [
+        {
+          "input": [
+            [
+              -2,
+              -4,
+              5,
+              8
+            ]
+          ],
+          "expected": 2
+        },
+        {
+          "input": [
+            [
+              0,
+              0,
+              100
+            ]
+          ],
+          "expected": 100
+        },
+        {
+          "input": [
+            [
+              10,
+              20,
+              30,
+              40,
+              50
+            ]
+          ],
+          "expected": 150
+        }
+      ]
+    },
+    {
+      "id": "reverse-string",
+      "slug": "reverse-string",
+      "moduleId": "js-foundations",
+      "title": "Reverse a String",
+      "difficulty": "Easy",
+      "type": "algorithm",
+      "language": "JavaScript",
+      "topics": [
+        "Strings"
+      ],
+      "fn": "reverseString",
+      "descriptionMarkdown": "### Problem Description\n\nWrite a function `reverseString(text)` that returns the given string in reverse order.\n\n#### Examples:\n```javascript\nreverseString(\"abc\"); // \"cba\"\nreverseString(\"\"); // \"\"\nreverseString(\"Bangla\"); // \"algnaB\"\n```\n\n#### Constraints:\n- Input is a string.\n- Length is between `0` and `10^5`.",
+      "starterCode": "function reverseString(text) {\n  // Write your solution here\n  \n}\n",
+      "hints": [
+        "Strings are immutable in JavaScript, but you can convert them into an array of characters.",
+        "`text.split('')` produces an array of characters that has a `.reverse()` method.",
+        "Join the reversed array back into a string with `.join('')`."
+      ],
+      "solutionMarkdown": "```javascript\nfunction reverseString(text) {\n  return text.split('').reverse().join('');\n}\n```\n\n**Time Complexity:** O(N).\n**Space Complexity:** O(N).",
+      "visibleTests": [
+        {
+          "input": [
+            "abc"
+          ],
+          "expected": "cba"
+        },
+        {
+          "input": [
+            ""
+          ],
+          "expected": ""
+        },
+        {
+          "input": [
+            "Bangla"
+          ],
+          "expected": "algnaB"
+        }
+      ],
+      "hiddenTests": [
+        {
+          "input": [
+            "CodePath2026"
+          ],
+          "expected": "6202htaPedoC"
+        },
+        {
+          "input": [
+            "radar"
+          ],
+          "expected": "radar"
+        },
+        {
+          "input": [
+            "Hello World!"
+          ],
+          "expected": "!dlroW olleH"
+        }
+      ]
+    },
+    {
+      "id": "palindrome-check",
+      "slug": "palindrome-check",
+      "moduleId": "js-foundations",
+      "title": "Palindrome Check",
+      "difficulty": "Easy",
+      "type": "algorithm",
+      "language": "JavaScript",
+      "topics": [
+        "Strings",
+        "Two Pointers"
+      ],
+      "fn": "isPalindrome",
+      "descriptionMarkdown": "### Problem Description\n\nWrite `isPalindrome(text)` that returns `true` if the string reads the same forwards and backwards, ignoring case. Otherwise return `false`.\n\n#### Examples:\n```javascript\nisPalindrome(\"Level\"); // true\nisPalindrome(\"code\"); // false\nisPalindrome(\"Noon\"); // true\n```",
+      "starterCode": "function isPalindrome(text) {\n  // Write your code here\n  \n}\n",
+      "hints": [
+        "Normalize the string to lowercase first so case does not affect equality.",
+        "Compare the normalized string to its reverse, or use two pointers from both ends.",
+        "`const t = text.toLowerCase(); return t === t.split('').reverse().join('');`"
+      ],
+      "solutionMarkdown": "```javascript\nfunction isPalindrome(text) {\n  const s = text.toLowerCase();\n  let left = 0, right = s.length - 1;\n  while (left < right) {\n    if (s[left] !== s[right]) return false;\n    left++;\n    right--;\n  }\n  return true;\n}\n```",
+      "visibleTests": [
+        {
+          "input": [
+            "Level"
+          ],
+          "expected": true
+        },
+        {
+          "input": [
+            "code"
+          ],
+          "expected": false
+        },
+        {
+          "input": [
+            "a"
+          ],
+          "expected": true
+        },
+        {
+          "input": [
+            "Noon"
+          ],
+          "expected": true
+        }
+      ],
+      "hiddenTests": [
+        {
+          "input": [
+            "Racecar"
+          ],
+          "expected": true
+        },
+        {
+          "input": [
+            "Antigravity"
+          ],
+          "expected": false
+        },
+        {
+          "input": [
+            "Kayak"
+          ],
+          "expected": true
+        }
+      ]
+    },
+    {
+      "id": "two-sum",
+      "slug": "two-sum",
+      "moduleId": "js-foundations",
+      "title": "Two Sum",
+      "difficulty": "Medium",
+      "type": "algorithm",
+      "language": "JavaScript",
+      "topics": [
+        "Arrays",
+        "Hash Table"
+      ],
+      "fn": "twoSum",
+      "descriptionMarkdown": "### Problem Description\n\nGiven an array of integers `nums` and an integer `target`, return indices of the two numbers such that they add up to `target` as `[i, j]` where `i < j`.\n\nYou may assume each input has exactly one solution, and you may not use the same element twice.\n\n#### Examples:\n```javascript\ntwoSum([2, 7, 11, 15], 9); // [0, 1]\ntwoSum([3, 2, 4], 6); // [1, 2]\ntwoSum([3, 3], 6); // [0, 1]\n```",
+      "starterCode": "function twoSum(nums, target) {\n  // Write your solution here\n  \n}\n",
+      "hints": [
+        "Brute force with two nested loops checks all pairs in O(N^2) time.",
+        "To achieve O(N) time, use a Hash Map (or Object) to remember numbers you have already visited and their indices.",
+        "For each element `num` at index `i`, check if `target - num` exists in the map. If yes, return `[map[target - num], i]`."
+      ],
+      "solutionMarkdown": "```javascript\nfunction twoSum(nums, target) {\n  const seen = new Map();\n  for (let i = 0; i < nums.length; i++) {\n    const comp = target - nums[i];\n    if (seen.has(comp)) {\n      return [seen.get(comp), i];\n    }\n    seen.set(nums[i], i);\n  }\n  return [];\n}\n```",
+      "visibleTests": [
+        {
+          "input": [
+            [
+              2,
+              7,
+              11,
+              15
+            ],
+            9
+          ],
+          "expected": [
+            0,
+            1
+          ]
+        },
+        {
+          "input": [
+            [
+              3,
+              2,
+              4
+            ],
+            6
+          ],
+          "expected": [
+            1,
+            2
+          ]
+        },
+        {
+          "input": [
+            [
+              3,
+              3
+            ],
+            6
+          ],
+          "expected": [
+            0,
+            1
+          ]
+        }
+      ],
+      "hiddenTests": [
+        {
+          "input": [
+            [
+              1,
+              5,
+              8,
+              12,
+              19
+            ],
+            20
+          ],
+          "expected": [
+            0,
+            4
+          ]
+        },
+        {
+          "input": [
+            [
+              -3,
+              4,
+              3,
+              90
+            ],
+            0
+          ],
+          "expected": [
+            0,
+            2
+          ]
+        },
+        {
+          "input": [
+            [
+              10,
+              20,
+              30,
+              40
+            ],
+            50
+          ],
+          "expected": [
+            0,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "valid-parentheses",
+      "slug": "valid-parentheses",
+      "moduleId": "js-async-dom",
+      "title": "Valid Parentheses",
+      "difficulty": "Easy",
+      "type": "algorithm",
+      "language": "JavaScript",
+      "topics": [
+        "Stacks",
+        "Strings"
+      ],
+      "fn": "isValid",
+      "descriptionMarkdown": "### Problem Description\n\nGiven a string `s` containing just the characters `'('`, `')'`, `'{'`, `'}'`, `'['` and `']'`, determine if the input string is valid.\n\nAn input string is valid if:\n1. Open brackets must be closed by the same type of brackets.\n2. Open brackets must be closed in the correct order.\n3. Every close bracket has a corresponding open bracket of the same type.\n\n#### Examples:\n```javascript\nisValid(\"()\"); // true\nisValid(\"()[]{}\"); // true\nisValid(\"(]\"); // false\nisValid(\"([)]\"); // false\n```",
+      "starterCode": "function isValid(s) {\n  // Write your solution here\n  \n}\n",
+      "hints": [
+        "A Last-In, First-Out (LIFO) stack data structure is ideal for tracking open brackets.",
+        "When encountering an opening bracket, push it onto the stack. When encountering a closing bracket, check if the stack top matches.",
+        "If you see a closing bracket and the stack is empty, or if the top doesn't match, return false. At the end, check if the stack is completely empty."
+      ],
+      "solutionMarkdown": "```javascript\nfunction isValid(s) {\n  const stack = [];\n  const pairs = { ')': '(', '}': '{', ']': '[' };\n  for (const ch of s) {\n    if (ch === '(' || ch === '{' || ch === '[') {\n      stack.push(ch);\n    } else if (pairs[ch]) {\n      if (stack.pop() !== pairs[ch]) return false;\n    }\n  }\n  return stack.length === 0;\n}\n```",
+      "visibleTests": [
+        {
+          "input": [
+            "()"
+          ],
+          "expected": true
+        },
+        {
+          "input": [
+            "()[]{}"
+          ],
+          "expected": true
+        },
+        {
+          "input": [
+            "(]"
+          ],
+          "expected": false
+        },
+        {
+          "input": [
+            "([)]"
+          ],
+          "expected": false
+        }
+      ],
+      "hiddenTests": [
+        {
+          "input": [
+            "{[]}"
+          ],
+          "expected": true
+        },
+        {
+          "input": [
+            "[({()})]"
+          ],
+          "expected": true
+        },
+        {
+          "input": [
+            ")("
+          ],
+          "expected": false
+        },
+        {
+          "input": [
+            ""
+          ],
+          "expected": true
+        }
+      ]
+    },
+    {
+      "id": "counter-component",
+      "slug": "counter-component",
+      "moduleId": "react-core",
+      "title": "React Interactive Counter",
+      "difficulty": "Easy",
+      "type": "frontend-react",
+      "language": "React",
+      "topics": [
+        "React",
+        "State",
+        "DOM"
+      ],
+      "fn": "Counter",
+      "descriptionMarkdown": "### React Challenge: Interactive Counter\n\nCreate a `Counter` React component that manages a count state starting at `0`.\n\n#### Requirements:\n1. Render a count element with `id=\"count-display\"` displaying the current count.\n2. Render a button with `id=\"increment-btn\"` that adds `1` to the count when clicked.\n3. Render a button with `id=\"decrement-btn\"` that subtracts `1` from the count when clicked.\n4. Render a button with `id=\"reset-btn\"` that resets the count back to `0`.\n\nTest assertions will automatically interact with your rendered component!",
+      "starterCode": "function Counter() {\n  // TODO: Use React.useState to create count state\n  const [count, setCount] = React.useState(0);\n\n  return (\n    <div className=\"counter-card\">\n      <h2 id=\"count-display\">Count: {count}</h2>\n      <div style={{ display: 'flex', gap: '8px', marginTop: '12px' }}>\n        <button id=\"increment-btn\" onClick={() => setCount(count + 1)}>Increment</button>\n        <button id=\"decrement-btn\" onClick={() => setCount(count - 1)}>Decrement</button>\n        <button id=\"reset-btn\" onClick={() => setCount(0)}>Reset</button>\n      </div>\n    </div>\n  );\n}\n",
+      "hints": [
+        "Make sure the elements have exact `id` attributes: `count-display`, `increment-btn`, `decrement-btn`, and `reset-btn`.",
+        "Use `React.useState(0)` to track the count state.",
+        "Connect `onClick` listeners on the buttons to update state accordingly."
+      ],
+      "solutionMarkdown": "```jsx\nfunction Counter() {\n  const [count, setCount] = React.useState(0);\n  return (\n    <div className=\"p-4\">\n      <h2 id=\"count-display\">Count: {count}</h2>\n      <button id=\"increment-btn\" onClick={() => setCount(c => c + 1)}>Increment</button>\n      <button id=\"decrement-btn\" onClick={() => setCount(c => c - 1)}>Decrement</button>\n      <button id=\"reset-btn\" onClick={() => setCount(0)}>Reset</button>\n    </div>\n  );\n}\n```",
+      "frontendChecks": [
+        {
+          "name": "Renders #count-display element",
+          "test": "assert(document.querySelector('#count-display') !== null)"
+        },
+        {
+          "name": "Initial count displays 0",
+          "test": "assert(document.querySelector('#count-display').textContent.includes('0'))"
+        },
+        {
+          "name": "Clicking #increment-btn increases count to 1",
+          "test": "document.querySelector('#increment-btn').click(); assert(document.querySelector('#count-display').textContent.includes('1'))"
+        },
+        {
+          "name": "Clicking #decrement-btn decreases count",
+          "test": "document.querySelector('#decrement-btn').click(); assert(document.querySelector('#count-display').textContent.includes('0'))"
+        },
+        {
+          "name": "Clicking #reset-btn resets count to 0",
+          "test": "document.querySelector('#increment-btn').click(); document.querySelector('#increment-btn').click(); document.querySelector('#reset-btn').click(); assert(document.querySelector('#count-display').textContent.includes('0'))"
+        }
+      ],
+      "visibleTests": [
+        {
+          "input": [
+            "render"
+          ],
+          "expected": "passed"
+        }
+      ],
+      "hiddenTests": [
+        {
+          "input": [
+            "dom-simulation"
+          ],
+          "expected": "passed"
+        }
+      ]
+    },
+    {
+      "id": "interactive-accordion",
+      "slug": "interactive-accordion",
+      "moduleId": "react-core",
+      "title": "React Accordion Component",
+      "difficulty": "Medium",
+      "type": "frontend-react",
+      "language": "React",
+      "topics": [
+        "React",
+        "Conditional Rendering",
+        "Components"
+      ],
+      "fn": "Accordion",
+      "descriptionMarkdown": "### React Challenge: Accordion FAQ Item\n\nBuild an `Accordion` component that can toggle open and closed.\n\n#### Requirements:\n1. Has a toggle button with `id=\"accordion-trigger\"` containing the title.\n2. When clicked, it toggles visibility of the panel with `id=\"accordion-content\"`.\n3. By default, the content panel is hidden. After clicking the trigger, it becomes visible.",
+      "starterCode": "function Accordion() {\n  const [isOpen, setIsOpen] = React.useState(false);\n\n  return (\n    <div className=\"accordion-box\">\n      <button id=\"accordion-trigger\" onClick={() => setIsOpen(!isOpen)}>\n        What is CodePath?\n      </button>\n      {isOpen && (\n        <div id=\"accordion-content\" style={{ marginTop: '8px', padding: '10px', background: '#F7F9FC' }}>\n          CodePath is an accelerated coding practice & interview readiness platform.\n        </div>\n      )}\n    </div>\n  );\n}\n",
+      "hints": [
+        "Use a boolean state `isOpen` initialized to `false`.",
+        "Conditionally render `{isOpen && <div id=\"accordion-content\">...</div>}`.",
+        "Toggle `isOpen` using `setIsOpen(prev => !prev)` inside the trigger button's click handler."
+      ],
+      "solutionMarkdown": "```jsx\nfunction Accordion() {\n  const [isOpen, setIsOpen] = React.useState(false);\n  return (\n    <div>\n      <button id=\"accordion-trigger\" onClick={() => setIsOpen(!isOpen)}>What is CodePath?</button>\n      {isOpen && <div id=\"accordion-content\">Content</div>}\n    </div>\n  );\n}\n```",
+      "frontendChecks": [
+        {
+          "name": "Renders #accordion-trigger button",
+          "test": "assert(document.querySelector('#accordion-trigger') !== null)"
+        },
+        {
+          "name": "Content is initially closed/hidden",
+          "test": "assert(document.querySelector('#accordion-content') === null)"
+        },
+        {
+          "name": "Clicking trigger shows #accordion-content",
+          "test": "document.querySelector('#accordion-trigger').click(); assert(document.querySelector('#accordion-content') !== null)"
+        }
+      ],
+      "visibleTests": [
+        {
+          "input": [
+            "render"
+          ],
+          "expected": "passed"
+        }
+      ],
+      "hiddenTests": [
+        {
+          "input": [
+            "toggle"
+          ],
+          "expected": "passed"
+        }
+      ]
+    },
+    {
+      "id": "dom-color-picker",
+      "slug": "dom-color-picker",
+      "moduleId": "js-async-dom",
+      "title": "DOM Dynamic Color Box",
+      "difficulty": "Easy",
+      "type": "frontend-dom",
+      "language": "JavaScript",
+      "topics": [
+        "DOM",
+        "Events",
+        "CSS"
+      ],
+      "fn": "setupColorBox",
+      "descriptionMarkdown": "### HTML/CSS/DOM Challenge\n\nImplement `setupColorBox()` to wire up interactive color changes.\n\n#### Requirements:\n1. An element `#color-box` with width and height `100px`.\n2. An input `#color-input` of type color or text.\n3. When `#apply-btn` is clicked, set the `style.backgroundColor` of `#color-box` to the value in `#color-input`.",
+      "starterCode": "<!-- HTML -->\n<div id=\"color-box\" style=\"width: 100px; height: 100px; background-color: #0E7C7B; border-radius: 8px; margin-bottom: 12px;\"></div>\n<input type=\"text\" id=\"color-input\" value=\"#1B8A4B\" style=\"padding: 6px; border: 1px solid #ccc; border-radius: 6px;\" />\n<button id=\"apply-btn\" style=\"padding: 6px 12px; margin-left: 6px;\">Apply Color</button>\n\n<script>\nfunction setupColorBox() {\n  const btn = document.getElementById('apply-btn');\n  const input = document.getElementById('color-input');\n  const box = document.getElementById('color-box');\n  btn.addEventListener('click', () => {\n    box.style.backgroundColor = input.value;\n  });\n}\nsetupColorBox();\n</script>\n",
+      "hints": [
+        "Attach a click event listener to `#apply-btn`.",
+        "Read `colorInput.value` inside the listener.",
+        "Assign the value directly to `colorBox.style.backgroundColor`."
+      ],
+      "solutionMarkdown": "```javascript\ndocument.getElementById('apply-btn').addEventListener('click', () => {\n  document.getElementById('color-box').style.backgroundColor = document.getElementById('color-input').value;\n});\n```",
+      "frontendChecks": [
+        {
+          "name": "#color-box exists",
+          "test": "assert(document.querySelector('#color-box') !== null)"
+        },
+        {
+          "name": "#apply-btn exists",
+          "test": "assert(document.querySelector('#apply-btn') !== null)"
+        },
+        {
+          "name": "Applies new color when clicked",
+          "test": "document.querySelector('#color-input').value = '#B7791F'; document.querySelector('#apply-btn').click(); assert(document.querySelector('#color-box').style.backgroundColor.length > 0)"
+        }
+      ],
+      "visibleTests": [
+        {
+          "input": [
+            "setup"
+          ],
+          "expected": "passed"
+        }
+      ],
+      "hiddenTests": [
+        {
+          "input": [
+            "color-change"
+          ],
+          "expected": "passed"
+        }
+      ]
+    },
+    {
+      "id": "filter-employees-by-dept",
+      "slug": "filter-employees-by-dept",
+      "moduleId": "sql-databases",
+      "title": "Filter High Earners in Engineering",
+      "difficulty": "Easy",
+      "type": "sql",
+      "language": "SQL",
+      "topics": [
+        "SQL",
+        "SELECT",
+        "WHERE"
+      ],
+      "fn": "query",
+      "descriptionMarkdown": "### SQL Challenge: Engineering High Earners\n\nYou have access to the `employees` table:\n\n| id | name | department | salary | active |\n|---|---|---|---|---|\n| 1 | Alice Smith | Engineering | 95000 | 1 |\n| 2 | Bob Jones | Marketing | 62000 | 1 |\n| 3 | Charlie Day | Engineering | 105000 | 1 |\n| 4 | Dana Scully | Engineering | 80000 | 0 |\n| 5 | Evan Wright | Sales | 71000 | 1 |\n\n#### Task:\nWrite an SQL query to select `name` and `salary` for all active employees (`active = 1`) in the `'Engineering'` department who earn `salary >= 90000`, ordered by `salary DESC`.",
+      "starterCode": "SELECT name, salary\nFROM employees\nWHERE active = 1 AND department = 'Engineering' AND salary >= 90000\nORDER BY salary DESC;\n",
+      "hints": [
+        "Filter using `WHERE active = 1 AND department = 'Engineering' AND salary >= 90000`.",
+        "Sort the records with `ORDER BY salary DESC`.",
+        "Only project the requested columns: `SELECT name, salary`."
+      ],
+      "solutionMarkdown": "```sql\nSELECT name, salary\nFROM employees\nWHERE active = 1 AND department = 'Engineering' AND salary >= 90000\nORDER BY salary DESC;\n```",
+      "visibleTests": [
+        {
+          "input": [
+            "SELECT name, salary FROM employees WHERE active = 1 AND department = 'Engineering' AND salary >= 90000 ORDER BY salary DESC;"
+          ],
+          "expected": [
+            {
+              "name": "Charlie Day",
+              "salary": 105000
+            },
+            {
+              "name": "Alice Smith",
+              "salary": 95000
+            }
+          ]
+        }
+      ],
+      "hiddenTests": [
+        {
+          "input": [
+            "check-ordering"
+          ],
+          "expected": [
+            {
+              "name": "Charlie Day",
+              "salary": 105000
+            },
+            {
+              "name": "Alice Smith",
+              "salary": 95000
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "department-salary-summary",
+      "slug": "department-salary-summary",
+      "moduleId": "sql-databases",
+      "title": "Department Average Salary Aggregation",
+      "difficulty": "Medium",
+      "type": "sql",
+      "language": "SQL",
+      "topics": [
+        "SQL",
+        "GROUP BY",
+        "Aggregate Functions"
+      ],
+      "fn": "query",
+      "descriptionMarkdown": "### SQL Challenge: Department Summary\n\nGiven the `employees` table, write an SQL query to find the total headcount (`count`) and average salary rounded to nearest integer (`avg_salary`) for each department with at least 1 active employee.\n\nOrder results by `avg_salary DESC`.\n\nColumns required: `department`, `count`, `avg_salary`.",
+      "starterCode": "SELECT department, COUNT(*) AS count, ROUND(AVG(salary)) AS avg_salary\nFROM employees\nWHERE active = 1\nGROUP BY department\nORDER BY avg_salary DESC;\n",
+      "hints": [
+        "Use `COUNT(*)` to calculate department size and `AVG(salary)` for the average.",
+        "Filter with `WHERE active = 1` prior to grouping.",
+        "Group by `department` and order by `avg_salary DESC`."
+      ],
+      "solutionMarkdown": "```sql\nSELECT department, COUNT(*) AS count, ROUND(AVG(salary)) AS avg_salary\nFROM employees\nWHERE active = 1\nGROUP BY department\nORDER BY avg_salary DESC;\n```",
+      "visibleTests": [
+        {
+          "input": [
+            "SELECT department, COUNT(*) AS count, ROUND(AVG(salary)) AS avg_salary FROM employees WHERE active = 1 GROUP BY department ORDER BY avg_salary DESC;"
+          ],
+          "expected": [
+            {
+              "department": "Engineering",
+              "count": 2,
+              "avg_salary": 100000
+            },
+            {
+              "department": "Sales",
+              "count": 1,
+              "avg_salary": 71000
+            },
+            {
+              "department": "Marketing",
+              "count": 1,
+              "avg_salary": 62000
+            }
+          ]
+        }
+      ],
+      "hiddenTests": [
+        {
+          "input": [
+            "hidden-check"
+          ],
+          "expected": [
+            {
+              "department": "Engineering",
+              "count": 2,
+              "avg_salary": 100000
+            },
+            {
+              "department": "Sales",
+              "count": 1,
+              "avg_salary": 71000
+            },
+            {
+              "department": "Marketing",
+              "count": 1,
+              "avg_salary": 62000
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "parse-csv-payload",
+      "slug": "parse-csv-payload",
+      "moduleId": "python-foundations",
+      "title": "Parse CSV Payload",
+      "difficulty": "Easy",
+      "type": "algorithm",
+      "language": "Python",
+      "topics": [
+        "Python",
+        "Strings",
+        "Parsing"
+      ],
+      "fn": "parse_csv",
+      "descriptionMarkdown": "### Problem Description\n\nWrite a Python function `parse_csv(csv_text)` that takes a string of comma-separated rows with a header row, and returns a list of dictionaries where each dictionary maps column headers to corresponding values.\n\n#### Example:\n```python\ncsv_data = \"name,role,city\\nAlice,Frontend,Dhaka\\nBob,Backend,Remote\"\nparse_csv(csv_data)\n# Returns:\n# [\n#   {\"name\": \"Alice\", \"role\": \"Frontend\", \"city\": \"Dhaka\"},\n#   {\"name\": \"Bob\", \"role\": \"Backend\", \"city\": \"Remote\"}\n# ]\n```",
+      "starterCode": "def parse_csv(csv_text):\n    # Write your Python solution here\n    pass\n",
+      "hints": [
+        "Split the input string by `\\n` to get the individual rows.",
+        "The first row contains the header keys. Split them by `,`.",
+        "Iterate over subsequent non-empty rows, split by `,`, and zip with headers."
+      ],
+      "solutionMarkdown": "```python\ndef parse_csv(csv_text):\n    lines = [line.strip() for line in csv_text.strip().split('\\n') if line.strip()]\n    if not lines:\n        return []\n    headers = [h.strip() for h in lines[0].split(',')]\n    result = []\n    for line in lines[1:]:\n        values = [v.strip() for v in line.split(',')]\n        result.append(dict(zip(headers, values)))\n    return result\n```",
+      "visibleTests": [
+        {
+          "input": [
+            "name,role,city\nAlice,Frontend,Dhaka\nBob,Backend,Remote"
+          ],
+          "expected": [
+            {
+              "name": "Alice",
+              "role": "Frontend",
+              "city": "Dhaka"
+            },
+            {
+              "name": "Bob",
+              "role": "Backend",
+              "city": "Remote"
+            }
+          ]
+        },
+        {
+          "input": [
+            "id,score\n1,95\n2,88"
+          ],
+          "expected": [
+            {
+              "id": "1",
+              "score": "95"
+            },
+            {
+              "id": "2",
+              "score": "88"
+            }
+          ]
+        }
+      ],
+      "hiddenTests": [
+        {
+          "input": [
+            "lang,ver\nPython,3.13\nNode,24"
+          ],
+          "expected": [
+            {
+              "lang": "Python",
+              "ver": "3.13"
+            },
+            {
+              "lang": "Node",
+              "ver": "24"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "string-compression",
+      "slug": "string-compression",
+      "moduleId": "backend-apis",
+      "title": "Run-Length String Compression",
+      "difficulty": "Medium",
+      "type": "algorithm",
+      "language": "PHP",
+      "topics": [
+        "Strings",
+        "Algorithms"
+      ],
+      "fn": "compressString",
+      "descriptionMarkdown": "### Problem Description\n\nImplement `compressString($str)` that performs basic string compression using character counts (Run-Length Encoding). For example, `\"aabcccccaaa\"` becomes `\"a2b1c5a3\"`.\n\nIf the compressed string would not become smaller than the original string, your method should return the original string.",
+      "starterCode": "function compressString($str) {\n    // Implement string compression\n    \n}\n",
+      "hints": [
+        "Iterate through the string while keeping track of current consecutive character repeats.",
+        "Append the character followed by the count to a buffer whenever the next character differs.",
+        "Compare the length of the result with the original string length."
+      ],
+      "solutionMarkdown": "```php\nfunction compressString($str) {\n    $len = strlen($str);\n    if ($len <= 2) return $str;\n    $res = '';\n    $count = 1;\n    for ($i = 0; $i < $len; $i++) {\n        if ($i + 1 < $len && $str[$i] === $str[$i + 1]) {\n            $count++;\n        } else {\n            $res .= $str[$i] . $count;\n            $count = 1;\n        }\n    }\n    return strlen($res) < $len ? $res : $str;\n}\n```",
+      "visibleTests": [
+        {
+          "input": [
+            "aabcccccaaa"
+          ],
+          "expected": "a2b1c5a3"
+        },
+        {
+          "input": [
+            "abcdef"
+          ],
+          "expected": "abcdef"
+        },
+        {
+          "input": [
+            "a"
+          ],
+          "expected": "a"
+        }
+      ],
+      "hiddenTests": [
+        {
+          "input": [
+            "wwwwaaadexxxxx"
+          ],
+          "expected": "w4a3d1e1x5"
+        },
+        {
+          "input": [
+            "bbbbbbbb"
+          ],
+          "expected": "b8"
+        }
+      ]
+    },
+    {
+      "id": "linq-high-earners",
+      "slug": "linq-high-earners",
+      "moduleId": "csharp-dotnet",
+      "title": "C# LINQ Data Filtering & Projection",
+      "difficulty": "Easy",
+      "type": "algorithm",
+      "language": "C#",
+      "topics": [
+        "C#",
+        "LINQ",
+        "Collections"
+      ],
+      "fn": "GetHighEarners",
+      "descriptionMarkdown": "### Problem Description\n\nGiven a list of employee names and their salaries, implement `GetHighEarners(employees, threshold)` that filters employees with `salary > threshold` and returns their names in UPPERCASE sorted alphabetically.\n\nInput format: Array of objects `{ name: string, salary: number }`.\nOutput format: Array of string names.",
+      "starterCode": "public static string[] GetHighEarners(dynamic employees, int threshold) {\n    // Filter salary > threshold and return uppercase names in alphabetical order\n    \n}\n",
+      "hints": [
+        "Use LINQ `.Where(e => e.salary > threshold)` to filter.",
+        "Use `.Select(e => e.name.ToUpper())` to convert to uppercase.",
+        "Use `.OrderBy(name => name).ToArray()` to sort alphabetically."
+      ],
+      "solutionMarkdown": "```csharp\npublic static string[] GetHighEarners(dynamic employees, int threshold) {\n    return ((IEnumerable<dynamic>)employees)\n        .Where(e => e.salary > threshold)\n        .Select(e => (string)e.name.ToUpper())\n        .OrderBy(n => n)\n        .ToArray();\n}\n```",
+      "visibleTests": [
+        {
+          "input": [
+            [
+              {
+                "name": "Alice",
+                "salary": 85000
+              },
+              {
+                "name": "Bob",
+                "salary": 45000
+              },
+              {
+                "name": "Charlie",
+                "salary": 92000
+              }
+            ],
+            50000
+          ],
+          "expected": [
+            "ALICE",
+            "CHARLIE"
+          ]
+        }
+      ],
+      "hiddenTests": [
+        {
+          "input": [
+            [
+              {
+                "name": "Zara",
+                "salary": 120000
+              },
+              {
+                "name": "Adam",
+                "salary": 110000
+              }
+            ],
+            100000
+          ],
+          "expected": [
+            "ADAM",
+            "ZARA"
+          ]
+        }
+      ]
+    }
+  ],
+  "lessons": [
+    {
+      "id": "js-variables-scope",
+      "moduleId": "js-foundations",
+      "title": "Modern JavaScript: let, const, Scopes & Closures",
+      "order": 1,
+      "contentMarkdown": "# JavaScript Variables, Scope, and Closures\n\nIn modern JavaScript (ES6+), variable declaration and scoping form the bedrock of clean, bug-free applications.\n\n### 1. var vs let vs const\n\n- `var`: Function-scoped or globally scoped. Hoisted to the top with an initial value of `undefined`. Vulnerable to unintended variable leaking.\n- `let`: Block-scoped (enclosed within `{}`). Hoisted into the *Temporal Dead Zone* (TDZ) and cannot be accessed before declaration.\n- `const`: Block-scoped. Cannot be reassigned. Note that object properties inside a `const` can still be mutated.\n\n### 2. Closures in Action\n\nA closure is the combination of a function bundled together with references to its lexical environment. A closure gives an inner function access to an outer function's scope even after the outer function has returned!\n\n```javascript\nfunction createCounter(initialValue = 0) {\n  let count = initialValue;\n  return {\n    increment() { count++; return count; },\n    decrement() { count--; return count; },\n    get() { return count; }\n  };\n}\n\nconst counter = createCounter(5);\nconsole.log(counter.increment()); // 6\nconsole.log(counter.increment()); // 7\nconsole.log(counter.get()); // 7\n```\n\n> [!TIP]\n> In React hooks like `useState` and `useEffect`, closures preserve state across renders!",
+      "sampleCode": "function createMultiplier(multiplier) {\n  return function(x) {\n    return x * multiplier;\n  };\n}\nconst double = createMultiplier(2);\nconst triple = createMultiplier(3);\nconsole.log('Double 5:', double(5));\nconsole.log('Triple 5:', triple(5));"
+    },
+    {
+      "id": "js-arrays-objects",
+      "moduleId": "js-foundations",
+      "title": "Mastering Array Methods: map, filter, reduce & Destructuring",
+      "order": 2,
+      "contentMarkdown": "# Functional Array Methods & Destructuring\n\nTop developers write declarative, functional code. Instead of manual `for` loops, master `map`, `filter`, and `reduce`.\n\n### Array Method Highlights\n\n1. **`map(fn)`**: Transforms each element and returns a new array of the same length.\n2. **`filter(predicate)`**: Returns a new array with elements that evaluate to truthy.\n3. **`reduce(reducer, initial)`**: Folds an array into a single accumulated result (number, object, group).\n\n### Real-World Example\n\n```javascript\nconst users = [\n  { name: 'Rahim', role: 'developer', salary: 75000 },\n  { name: 'Sara', role: 'designer', salary: 65000 },\n  { name: 'Kamal', role: 'developer', salary: 85000 }\n];\n\n// Total salary of developers\nconst devPayroll = users\n  .filter(u => u.role === 'developer')\n  .map(u => u.salary)\n  .reduce((sum, sal) => sum + sal, 0);\n\nconsole.log('Developer payroll:', devPayroll); // 160000\n```",
+      "sampleCode": "const numbers = [1, 2, 3, 4, 5, 6];\nconst evensSquared = numbers\n  .filter(n => n % 2 === 0)\n  .map(n => n * n);\nconsole.log('Evens squared:', evensSquared);"
+    },
+    {
+      "id": "js-async-promises",
+      "moduleId": "js-async-dom",
+      "title": "Asynchronous JavaScript: Event Loop, Promises & async/await",
+      "order": 1,
+      "contentMarkdown": "# Event Loop & Asynchronous JavaScript\n\nJavaScript is single-threaded with an event loop. Understanding microtasks vs macrotasks separates junior developers from senior candidates.\n\n### The Execution Pipeline\n\n1. **Call Stack**: Executes synchronous code.\n2. **Microtask Queue**: Resolved Promise callbacks (`.then()`, `await`), `queueMicrotask`.\n3. **Macrotask Queue**: `setTimeout`, `setInterval`, I/O, UI rendering.\n\n> [!IMPORTANT]\n> Microtasks are always drained completely before the next macrotask is processed!\n\n### Async / Await Pattern with Clean Error Handling\n\n```javascript\nasync function fetchUserData(userId) {\n  try {\n    const response = await fetch(`/api/users/${userId}`);\n    if (!response.ok) {\n      throw new Error(`HTTP error! status: ${response.status}`);\n    }\n    const data = await response.json();\n    return data;\n  } catch (err) {\n    console.error('Fetch error:', err.message);\n    return null;\n  }\n}\n```",
+      "sampleCode": "async function demoAsync() {\n  console.log('1: Start');\n  const p = new Promise(resolve => {\n    setTimeout(() => resolve('3: Promise resolved!'), 500);\n  });\n  console.log('2: Waiting...');\n  const res = await p;\n  console.log(res);\n  console.log('4: Done');\n}\ndemoAsync();"
+    },
+    {
+      "id": "react-component-lifecycle",
+      "moduleId": "react-core",
+      "title": "Thinking in React: Component Architecture & State",
+      "order": 1,
+      "contentMarkdown": "# Thinking in React: Components, Props, and State\n\nReact renders UI as a pure projection of application state.\n\n### The Golden Rule of State\n\n- State represents data that changes over time and affects UI.\n- **Never mutate state directly!** Always use the setter function or state updater.\n\n```jsx\n// ❌ WRONG: directly mutating\nuser.name = 'New Name';\nsetUser(user); // React won't re-render because object reference is unchanged!\n\n// ✅ CORRECT: creating a new object reference\nsetUser(prev => ({ ...prev, name: 'New Name' }));\n```\n\n### Controlled vs Uncontrolled Components\n\nIn controlled components, form data is handled by a React component state rather than DOM inputs directly.",
+      "sampleCode": "const sampleComponent = `\nfunction Greeting({ name }) {\n  const [liked, setLiked] = React.useState(false);\n  return (\n    <div>\n      <h3>Hello, {name}!</h3>\n      <button onClick={() => setLiked(!liked)}>\n        {liked ? '❤️ Liked' : '🤍 Like'}\n      </button>\n    </div>\n  );\n}`;\nconsole.log('Component definition ready!');"
+    },
+    {
+      "id": "react-hooks-deepdive",
+      "moduleId": "react-core",
+      "title": "Deep Dive: useState, useEffect & Custom Hooks",
+      "order": 2,
+      "contentMarkdown": "# Deep Dive into React Hooks\n\nHooks allow functional components to harness React lifecycle features.\n\n### 1. `useEffect` Dependency Array Mastery\n\n- `useEffect(fn)`: Runs after **every** render.\n- `useEffect(fn, [])`: Runs **once** when the component mounts.\n- `useEffect(fn, [depA, depB])`: Runs when either `depA` or `depB` changes.\n- **Cleanup function**: Return a cleanup callback to cancel network subscriptions, timers, or event listeners.\n\n```jsx\nuseEffect(() => {\n  const timer = setInterval(() => setSeconds(s => s + 1), 1000);\n  return () => clearInterval(timer); // Crucial cleanup!\n}, []);\n```",
+      "sampleCode": "console.log('Tip: Never call Hooks inside loops, conditions, or nested functions!');"
+    },
+    {
+      "id": "python-data-structures",
+      "moduleId": "python-foundations",
+      "title": "Python Data Structures, Dicts & List Comprehensions",
+      "order": 1,
+      "contentMarkdown": "# Python Data Structures & Idiomatic Code\n\nPython excels at data manipulation through clean, expressive syntax.\n\n### List & Dict Comprehensions\n\nInstead of verbose loops, write pythonic comprehensions:\n\n```python\n# Filter even numbers and square them\nnumbers = [1, 2, 3, 4, 5, 6, 7, 8]\nsquares = [x**2 for x in numbers if x % 2 == 0]\n\n# Grouping dictionary\nitems = [('apple', 3), ('banana', 5), ('orange', 2)]\ninventory = {k: v for k, v in items if v > 2}\n```",
+      "sampleCode": "nums = [1, 2, 3, 4, 5]\nprint('Evens squared:', [x*x for x in nums if x % 2 == 0])"
+    },
+    {
+      "id": "sql-joins-grouping",
+      "moduleId": "sql-databases",
+      "title": "Relational Databases: SQL Joins, Aggregation & Indexing",
+      "order": 1,
+      "contentMarkdown": "# Relational SQL Joins & Aggregation\n\nBackend developers deal with relational data every day. Mastering JOINs and aggregations is a non-negotiable interview requirement.\n\n### JOIN Varieties\n- **INNER JOIN**: Returns rows with matching keys in both tables.\n- **LEFT JOIN**: Returns all rows from the left table, with NULLs for unmatched right-table records.\n- **GROUP BY + HAVING**: Group rows sharing common attributes; `HAVING` filters aggregated values (unlike `WHERE` which filters individual rows).\n\n```sql\nSELECT d.name AS department_name, COUNT(e.id) AS headcount, AVG(e.salary) AS avg_sal\nFROM departments d\nINNER JOIN employees e ON d.id = e.department_id\nWHERE e.active = 1\nGROUP BY d.name\nHAVING COUNT(e.id) >= 2\nORDER BY avg_sal DESC;\n```",
+      "sampleCode": "SELECT 'SQL Mastery Unlocked!' AS status;"
+    },
+    {
+      "id": "csharp-oop-linq",
+      "moduleId": "csharp-dotnet",
+      "title": "C# OOP Fundamentals & LINQ Declarative Queries",
+      "order": 1,
+      "contentMarkdown": "# C# Object-Oriented Design & LINQ\n\nC# is a type-safe, high-performance object-oriented language widely adopted across corporate enterprises and modern startups.\n\n### LINQ (Language Integrated Query)\n\nLINQ brings database-style declarative querying straight to C# collections.\n\n```csharp\nvar employees = GetEmployees();\n\nvar seniorDevs = employees\n    .Where(e => e.YearsOfExperience >= 5 && e.Department == \"Engineering\")\n    .OrderByDescending(e => e.Salary)\n    .Select(e => new { e.Name, e.Salary, e.Email })\n    .ToList();\n```",
+      "sampleCode": "Console.WriteLine(\"C# LINQ is fast, readable, and type-safe.\");"
+    },
+    {
+      "id": "dotnet-webapi-basics",
+      "moduleId": "csharp-dotnet",
+      "title": "Modern ASP.NET Core: Web API, Routing & Dependency Injection",
+      "order": 2,
+      "contentMarkdown": "# ASP.NET Core Web API Essentials\n\nASP.NET Core is consistently one of the fastest web frameworks in the world.\n\n### Key Concepts\n\n1. **Controllers & Endpoints**: Define routes with `[ApiController]` and attributes like `[HttpGet]`, `[HttpPost]`.\n2. **Dependency Injection (DI)**: Register services with `builder.Services.AddScoped<IProductService, ProductService>()`.\n3. **Model Validation**: Automatic 400 responses using data annotations like `[Required]` and `[StringLength]`.\n\n```csharp\n[ApiController]\n[Route(\"api/[controller]\")]\npublic class ProductsController : ControllerBase {\n    private readonly IProductRepository _repo;\n\n    public ProductsController(IProductRepository repo) {\n        _repo = repo;\n    }\n\n    [HttpGet]\n    public async Task<IActionResult> GetAll() {\n        var products = await _repo.GetAllAsync();\n        return Ok(products);\n    }\n}\n```",
+      "sampleCode": "Console.WriteLine(\"ASP.NET Core Web API: Production-ready backend.\");"
+    }
+  ],
+  "quizzes": [
+    {
+      "id": "quiz-js-1",
+      "title": "JavaScript Fundamentals & ES6+ Quiz",
+      "description": "Test your mastery of scoping, closures, equality, and array mechanics.",
+      "questions": [
+        {
+          "id": "q1",
+          "prompt": "What is the output of `typeof NaN` in JavaScript?",
+          "options": [
+            "\"nan\"",
+            "\"number\"",
+            "\"undefined\"",
+            "\"object\""
+          ],
+          "answer": 1,
+          "explanation": "In JavaScript, NaN stands for 'Not-a-Number', but its data type is officially a numeric type: `typeof NaN === 'number'`."
+        },
+        {
+          "id": "q2",
+          "prompt": "Which declaration keyword prevents variable hoisting from creating an accessible `undefined` value prior to declaration?",
+          "options": [
+            "var",
+            "let and const",
+            "function",
+            "None of the above"
+          ],
+          "answer": 1,
+          "explanation": "`let` and `const` variables are hoisted into the Temporal Dead Zone (TDZ). Accessing them before declaration throws a ReferenceError."
+        },
+        {
+          "id": "q3",
+          "prompt": "What will `[1, 2, 3] + [4, 5, 6]` evaluate to in JavaScript?",
+          "options": [
+            "[1, 2, 3, 4, 5, 6]",
+            "\"1,2,34,5,6\"",
+            "NaN",
+            "TypeError"
+          ],
+          "answer": 1,
+          "explanation": "The `+` operator on arrays coerces both arrays into strings (`\"1,2,3\"` and `\"4,5,6\"`) and concatenates them into `\"1,2,34,5,6\"`."
+        },
+        {
+          "id": "q4",
+          "prompt": "What is the primary difference between `==` and `===`?",
+          "options": [
+            "`==` performs type coercion; `===` checks both value and type strictly",
+            "`===` is only for strings",
+            "`==` is deprecated in ES6",
+            "There is no difference"
+          ],
+          "answer": 0,
+          "explanation": "`==` allows implicit type conversion, whereas `===` checks strict equality without type coercion."
+        }
+      ]
+    },
+    {
+      "id": "quiz-react-1",
+      "title": "React Core & Component State Quiz",
+      "description": "Assess your understanding of component re-rendering, hooks, and virtual DOM.",
+      "questions": [
+        {
+          "id": "rq1",
+          "prompt": "What happens when you pass an empty dependency array `[]` to `useEffect`?",
+          "options": [
+            "It runs after every single render",
+            "It never runs",
+            "It runs once after the component mounts",
+            "It throws an error"
+          ],
+          "answer": 2,
+          "explanation": "An empty dependency array tells React that the effect does not depend on any props or state, so it runs only once upon mounting."
+        },
+        {
+          "id": "rq2",
+          "prompt": "Why should keys in React lists be unique and stable rather than array indices?",
+          "options": [
+            "Keys are required by CSS styling",
+            "Using array indices can cause rendering bugs and state mismatch when items reorder or delete",
+            "Array indices are slower in JavaScript",
+            "React throws a runtime exception if an index is used"
+          ],
+          "answer": 1,
+          "explanation": "Stable keys allow React's reconciliation algorithm to accurately identify which items have changed, added, or removed."
+        },
+        {
+          "id": "rq3",
+          "prompt": "What is the Virtual DOM in React?",
+          "options": [
+            "A direct copy of the browser's C++ rendering engine",
+            "A lightweight in-memory JavaScript representation of the real DOM",
+            "A proprietary browser plugin",
+            "A database cache"
+          ],
+          "answer": 1,
+          "explanation": "The Virtual DOM is a lightweight JS tree representation used to diff changes and batch minimal updates to the real DOM."
+        }
+      ]
+    },
+    {
+      "id": "quiz-python-1",
+      "title": "Python & Backend Systems Quiz",
+      "description": "Assess your understanding of Python execution, data structures, and backend concepts.",
+      "questions": [
+        {
+          "id": "py1",
+          "prompt": "Which of the following data structures in Python is immutable?",
+          "options": [
+            "List",
+            "Dictionary",
+            "Tuple",
+            "Set"
+          ],
+          "answer": 2,
+          "explanation": "Tuples in Python are immutable; once created, their elements cannot be modified, added, or removed."
+        },
+        {
+          "id": "py2",
+          "prompt": "What is the time complexity of looking up a key in a standard Python dictionary on average?",
+          "options": [
+            "O(1)",
+            "O(log N)",
+            "O(N)",
+            "O(N^2)"
+          ],
+          "answer": 0,
+          "explanation": "Python dictionaries are implemented with hash tables, providing O(1) average lookup and insertion time complexity."
+        }
+      ]
+    },
+    {
+      "id": "quiz-sql-1",
+      "title": "SQL & Relational Databases Quiz",
+      "description": "Query optimization, indexing, and relational aggregations.",
+      "questions": [
+        {
+          "id": "sq1",
+          "prompt": "What is the difference between `WHERE` and `HAVING` in SQL?",
+          "options": [
+            "`WHERE` filters individual rows before grouping; `HAVING` filters groups after aggregation",
+            "`HAVING` is faster than `WHERE`",
+            "`WHERE` only works with strings",
+            "They are interchangeable synonyms"
+          ],
+          "answer": 0,
+          "explanation": "`WHERE` filters records prior to `GROUP BY`. `HAVING` applies filters specifically to the result of aggregate functions."
+        },
+        {
+          "id": "sq2",
+          "prompt": "What type of index organizes physical data rows on disk in sequential order?",
+          "options": [
+            "Non-clustered Index",
+            "Clustered Index",
+            "Composite Index",
+            "Bitmap Index"
+          ],
+          "answer": 1,
+          "explanation": "A Clustered Index determines the actual physical order of data storage in the table. Each table can only have one clustered index."
+        }
+      ]
+    },
+    {
+      "id": "quiz-dotnet-1",
+      "title": "C# & .NET Architecture Quiz",
+      "description": "Verify your understanding of C# memory management, LINQ, and ASP.NET Core.",
+      "questions": [
+        {
+          "id": "cs1",
+          "prompt": "What is the difference between `IEnumerable` and `IQueryable` in .NET?",
+          "options": [
+            "`IEnumerable` executes queries in-memory; `IQueryable` translates expressions to SQL and executes on the database server",
+            "`IQueryable` is only for XML documents",
+            "`IEnumerable` does not support LINQ",
+            "There is no difference"
+          ],
+          "answer": 0,
+          "explanation": "`IQueryable` uses expression trees so queries (like filtering and paging) are translated to native SQL before hitting the database."
+        },
+        {
+          "id": "cs2",
+          "prompt": "In ASP.NET Core Dependency Injection, what is the lifetime of a `Scoped` service?",
+          "options": [
+            "Created once per application lifetime",
+            "Created once per HTTP request",
+            "Created every single time it is requested",
+            "Persisted across client sessions"
+          ],
+          "answer": 1,
+          "explanation": "A `Scoped` service is instantiated once per client HTTP request cycle and disposed when the request finishes."
+        }
+      ]
+    }
+  ],
+  "interviewQuestions": [
+    {
+      "id": "iq-js-1",
+      "technology": "JavaScript",
+      "difficulty": "Junior/Mid",
+      "question": "Can you explain how the JavaScript Event Loop works?",
+      "answerMarkdown": "**Model Answer:**\n\nJavaScript is single-threaded and non-blocking. It processes tasks via the Call Stack, Web APIs, Microtask Queue, and Macrotask Queue (Task Queue).\n\n1. **Call Stack**: Executes synchronous code line-by-line.\n2. **Web APIs / Node APIs**: Asynchronous operations (timers, fetch calls, file reads) run in the background.\n3. **Microtask Queue**: Promises (`.then`, `await`) and `queueMicrotask` queue here. When the Call Stack empties, the Event Loop drains **ALL** microtasks before touching macrotasks.\n4. **Macrotask Queue**: `setTimeout`, `setInterval`, I/O callbacks run one at a time after microtasks are cleared.\n\n*Example:* `console.log(1); setTimeout(() => console.log(2), 0); Promise.resolve().then(() => console.log(3)); console.log(4);` prints `1, 4, 3, 2`.",
+      "followUps": [
+        "What happens if a microtask schedules another microtask recursively?",
+        "How does `requestAnimationFrame` fit into the browser rendering cycle?",
+        "Why is `setTimeout(fn, 0)` not guaranteed to execute in exactly 0 milliseconds?"
+      ]
+    },
+    {
+      "id": "iq-js-2",
+      "technology": "JavaScript",
+      "difficulty": "Mid",
+      "question": "What is Debouncing vs Throttling, and when would you use each?",
+      "answerMarkdown": "**Model Answer:**\n\nBoth are rate-limiting techniques for functions that fire rapidly (such as window resizing, scrolling, or keystrokes).\n\n- **Debounce:** Delays execution until a specified silence duration passes after the last trigger. If another event occurs before the timer completes, the timer resets.\n  - *Best for:* Search auto-complete input, window resize layout recalculations, auto-saving form drafts.\n- **Throttle:** Guarantees the function is executed at most once per defined time window (e.g. every 200ms), regardless of how many times the trigger fires.\n  - *Best for:* Infinite scrolling position checks, drag-and-drop animations, game loop physics.",
+      "followUps": [
+        "Can you write a simple `debounce(fn, delay)` implementation on a whiteboard?",
+        "How would you cancel a pending debounced call when a React component unmounts?"
+      ]
+    },
+    {
+      "id": "iq-react-1",
+      "technology": "React",
+      "difficulty": "Junior/Mid",
+      "question": "What triggers a re-render in React, and how do you prevent unnecessary re-renders?",
+      "answerMarkdown": "**Model Answer:**\n\nIn React, a component re-renders when:\n1. Its own internal state changes via `useState` or `useReducer`.\n2. Its parent component re-renders (causing children to re-render by default).\n3. A context value it subscribes to via `useContext` changes.\n\n**To optimize performance and avoid unnecessary renders:**\n- `React.memo`: Wraps functional components to shallowly compare incoming props.\n- `useMemo`: Caches expensive computation results between renders.\n- `useCallback`: Memoizes function instances passed down as props to memoized children.\n- **State Colocation:** Keep state close to where it is needed rather than lifting it unnecessarily high up the component tree.",
+      "followUps": [
+        "Why is `useMemo` not recommended for every single variable in React?",
+        "What is the difference between shallow and deep prop comparison?"
+      ]
+    },
+    {
+      "id": "iq-react-2",
+      "technology": "React",
+      "difficulty": "Mid",
+      "question": "Explain the difference between useEffect, useLayoutEffect, and standard render logic.",
+      "answerMarkdown": "**Model Answer:**\n\n- **Render logic:** Runs during the render phase to compute JSX. Must be pure and free of side effects.\n- **`useEffect`:** Runs asynchronously *after* the browser paints the screen. It is non-blocking and ideal for data fetching, event listeners, and timers.\n- **`useLayoutEffect`:** Runs synchronously *after* DOM mutations but *before* the browser repaints the screen. Use this when measuring DOM node dimensions or synchronously adjusting styles to prevent visual layout flicker.",
+      "followUps": [
+        "What are common symptoms of misusing `useLayoutEffect`?",
+        "Why does Server-Side Rendering (SSR) warn when using `useLayoutEffect`?"
+      ]
+    },
+    {
+      "id": "iq-python-1",
+      "technology": "Python",
+      "difficulty": "Junior/Mid",
+      "question": "What is the Python GIL (Global Interpreter Lock) and how does it affect concurrency?",
+      "answerMarkdown": "**Model Answer:**\n\nThe GIL is a mutex in CPython that ensures only one native thread executes Python bytecode at a time, designed to simplify thread-safe memory management.\n\n- **I/O-bound tasks:** Standard threading (`threading` module) or `asyncio` works great because threads release the GIL during network/disk I/O wait times.\n- **CPU-bound tasks:** Threads cannot utilize multiple CPU cores concurrently. To achieve true multi-core parallel processing for heavy math or parsing, use the `multiprocessing` module or worker processes.",
+      "followUps": [
+        "How does Python 3.13 free-threaded mode (PEP 703) change the GIL landscape?",
+        "When would you choose `asyncio` over `multiprocessing`?"
+      ]
+    },
+    {
+      "id": "iq-dotnet-1",
+      "technology": ".NET",
+      "difficulty": "Mid",
+      "question": "How does Dependency Injection work in ASP.NET Core, and what are Transient, Scoped, and Singleton lifetimes?",
+      "answerMarkdown": "**Model Answer:**\n\nASP.NET Core has a built-in Inversion of Control (IoC) container that resolves dependencies automatically into controller constructors and services.\n\n1. **Transient (`AddTransient`)**: Created each time they are requested. Ideal for lightweight, stateless services.\n2. **Scoped (`AddScoped`)**: Created once per HTTP client request. This is the standard lifetime for Entity Framework DbContext and repository services.\n3. **Singleton (`AddSingleton`)**: Created on the first request and lives for the entire application lifetime. Ideal for configuration caches, telemetry providers, and shared singleton managers.\n\n> [!CAUTION]\n> Captive Dependency Bug: Injecting a `Scoped` service into a `Singleton` service can cause data leakage and memory issues!",
+      "followUps": [
+        "What is the Captive Dependency problem and how does ASP.NET Core detect it?",
+        "How would you register multiple implementations of an interface?"
+      ]
+    },
+    {
+      "id": "iq-sql-1",
+      "technology": "SQL",
+      "difficulty": "Junior/Mid",
+      "question": "Explain database indexing, B-Trees, and when an index might degrade performance.",
+      "answerMarkdown": "**Model Answer:**\n\nA database index is a data structure (typically a balanced B-Tree) that speeds up data retrieval (`SELECT` with `WHERE`, `JOIN`, `ORDER BY`) from O(N) sequential table scans to O(log N) tree lookups.\n\n**Trade-offs & when an index can degrade performance:**\n- **Write overhead:** Every `INSERT`, `UPDATE`, and `DELETE` must also update the index tree, which increases disk I/O.\n- **Storage cost:** Indexes occupy disk and RAM space.\n- **Low cardinality columns:** Indexing columns with only 2 distinct values (e.g., boolean `is_active`) often results in the query planner ignoring the index in favor of a full table scan.",
+      "followUps": [
+        "How do you read and interpret an SQL `EXPLAIN` query execution plan?",
+        "What is an index covering query?"
+      ]
+    },
+    {
+      "id": "iq-csharp-1",
+      "technology": "C#",
+      "difficulty": "Mid",
+      "question": "What is the difference between Value Types (struct) and Reference Types (class) in C#?",
+      "answerMarkdown": "**Model Answer:**\n\n- **Value Types (`struct`, `int`, `bool`, `enum`)**: Hold their data directly in their own memory allocation. Typically allocated on the stack (or embedded within containing objects). Copying creates an independent value duplicate.\n- **Reference Types (`class`, `interface`, `string`, `object`)**: Hold a memory reference (pointer) to the actual object data stored on the Managed Heap. Copying copies the memory pointer, not the object itself.\n- **Boxing & Unboxing**: Converting a value type to an `object` reference type wraps it in a heap-allocated box (boxing), which incurs allocation overhead.",
+      "followUps": [
+        "What are `record class` and `record struct` introduced in recent C# versions?",
+        "Why is `string` immutable in C#?"
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "id": "proj-frontend-todo",
+      "trackId": "frontend",
+      "title": "Interactive Task Manager with LocalStorage & Filters",
+      "difficulty": "Beginner",
+      "estimatedHours": 8,
+      "description": "Build a responsive, accessible task management application with real-time filtering (All, Active, Completed), local storage persistence, priority badges, and keyboard shortcuts.",
+      "requirements": [
+        "Add, edit, toggle, and delete tasks.",
+        "Persist all tasks and state to browser LocalStorage.",
+        "Filter by status: 'All', 'Pending', 'Completed'.",
+        "Clean, responsive CSS layout adhering to accessibility contrast rules.",
+        "Empty state illustration and clear status notices."
+      ],
+      "checklist": [
+        "Define task data model: { id, title, completed, priority, createdAt }",
+        "Implement localStorage synchronization on every mutation",
+        "Add category filter buttons with aria-pressed states",
+        "Support keyboard shortcuts (Enter to add, Escape to cancel edit)",
+        "Write a comprehensive GitHub README with screenshots and setup instructions"
+      ],
+      "suggestedStructure": "task-manager/\n├── index.html\n├── css/\n│   └── styles.css\n├── js/\n│   ├── app.js\n│   ├── storage.js\n│   └── ui.js\n└── README.md"
+    },
+    {
+      "id": "proj-frontend-weather",
+      "trackId": "frontend",
+      "title": "Async Weather Forecast Dashboard",
+      "difficulty": "Intermediate",
+      "estimatedHours": 12,
+      "description": "Construct an asynchronous single-page application that consumes weather APIs to show current meteorological conditions, 5-day forecasts, search history, and error recovery states.",
+      "requirements": [
+        "City search with debounced autocomplete suggestions.",
+        "Asynchronous fetch with animated loading skeletons and HTTP error states.",
+        "Dynamic background theme changes based on weather conditions (sunny, rainy, cloudy).",
+        "Recent searches history stored locally for instant one-click reload."
+      ],
+      "checklist": [
+        "Set up fetch wrapper with timeout and try/catch exception handling",
+        "Render weather metrics: Temperature, Humidity, Wind speed, UV Index",
+        "Implement 5-day daily forecast cards",
+        "Handle edge cases (invalid city names, network offline)",
+        "Publish live demo to Vercel or GitHub Pages"
+      ],
+      "suggestedStructure": "weather-dashboard/\n├── index.html\n├── src/\n│   ├── api.js\n│   ├── dom.js\n│   └── main.js\n├── assets/\n└── README.md"
+    },
+    {
+      "id": "proj-react-kanban",
+      "trackId": "frontend",
+      "title": "React Interactive Kanban Board",
+      "difficulty": "Intermediate",
+      "estimatedHours": 16,
+      "description": "Build a modular Trello-style Kanban board in React featuring drag-and-drop / click-to-move card lanes (Backlog, In Progress, Review, Done), custom tags, and local storage state persistence.",
+      "requirements": [
+        "Multi-column task board with columns: 'To Do', 'In Progress', 'Done'.",
+        "Move cards between columns and reorder items.",
+        "Modal dialog for viewing and editing card details and tags.",
+        "Component tests with Jest / React Testing Library."
+      ],
+      "checklist": [
+        "Architect clean state with React Context or custom hooks",
+        "Implement card creation with priority levels and due dates",
+        "Implement lane transfer actions",
+        "Add unit tests for column transitions",
+        "Generate recruiter-ready README"
+      ],
+      "suggestedStructure": "react-kanban/\n├── src/\n│   ├── components/\n│   │   ├── Board.jsx\n│   │   ├── Column.jsx\n│   │   └── Card.jsx\n│   ├── hooks/useBoardState.js\n│   └── App.jsx\n├── tests/\n└── README.md"
+    },
+    {
+      "id": "proj-backend-blog-api",
+      "trackId": "backend",
+      "title": "RESTful Blog API with Authentication & SQLite",
+      "difficulty": "Intermediate",
+      "estimatedHours": 14,
+      "description": "Develop a production-grade REST API backend in Python (FastAPI/Flask) or Node.js featuring JWT authentication, role-based authorization, post CRUD, comments, and SQL migrations.",
+      "requirements": [
+        "User registration and login with secure password hashing (bcrypt).",
+        "JWT token issuance and route middleware protection.",
+        "Full CRUD endpoints for blog posts and nested comments.",
+        "Pagination, search query filtering, and OpenAPI documentation."
+      ],
+      "checklist": [
+        "Design database schema with foreign keys and cascade rules",
+        "Implement password hashing and JWT authorization header validation",
+        "Write automated integration tests for CRUD endpoints",
+        "Include Postman / Insomnia API collection or swagger.json",
+        "Deploy to Railway or Render"
+      ],
+      "suggestedStructure": "blog-api/\n├── src/\n│   ├── auth/\n│   ├── models/\n│   ├── routes/\n│   └── server.js (or main.py)\n├── tests/\n└── README.md"
+    },
+    {
+      "id": "proj-dotnet-webapi",
+      "trackId": "backend",
+      "title": "ASP.NET Core Web API Order Management System",
+      "difficulty": "Advanced",
+      "estimatedHours": 18,
+      "description": "Create an enterprise-ready Web API using .NET 6/8 and C# with Controller architecture, Entity Framework Core, SQL Server / SQLite, Repository pattern, and Dependency Injection.",
+      "requirements": [
+        "Endpoints: `GET /api/orders`, `POST /api/orders`, `GET /api/orders/{id}`, `PUT /api/orders/{id}/status`.",
+        "Entity Framework Core DbContext with relational entities (Customer, Order, OrderItem).",
+        "Dependency injection with `IOrderService` and `IOrderRepository`.",
+        "Comprehensive input validation using FluentValidation or DataAnnotations."
+      ],
+      "checklist": [
+        "Configure Program.cs with CORS, Swagger, and DI containers",
+        "Implement DTO mappings (Data Transfer Objects)",
+        "Write unit tests with xUnit or NUnit",
+        "Include database migration scripts",
+        "Write deployment documentation"
+      ],
+      "suggestedStructure": "OrderService/\n├── Controllers/\n│   └── OrdersController.cs\n├── Models/\n│   ├── Order.cs\n│   └── Customer.cs\n├── Data/\n│   └── AppDbContext.cs\n├── Services/\n└── Program.cs"
+    },
+    {
+      "id": "proj-fullstack-jobtracker",
+      "trackId": "fullstack",
+      "title": "Full-Stack Job Application Tracker",
+      "difficulty": "Advanced",
+      "estimatedHours": 20,
+      "description": "A complete end-to-end full-stack web application for tracking developer job applications, interviews, contacts, salary expectations, and interview notes.",
+      "requirements": [
+        "React frontend connected to a RESTful API backend.",
+        "Kanban pipeline view: 'Wishlist', 'Applied', 'Interviewing', 'Offer', 'Rejected'.",
+        "Analytics dashboard showing application conversion rates and response timelines.",
+        "Export and import data as JSON."
+      ],
+      "checklist": [
+        "Build normalized database schema with indices",
+        "Implement API endpoints with input validation",
+        "Connect React frontend with optimistic UI updates",
+        "Add analytics charts and metrics",
+        "Record 2-minute demo walkthrough and commit to GitHub"
+      ],
+      "suggestedStructure": "job-tracker/\n├── client/\n├── server/\n├── docker-compose.yml\n└── README.md"
+    }
+  ],
+  "jobs": [
+    {
+      "id": "j1",
+      "title": "Junior React Developer",
+      "company": "Northwind Labs",
+      "location": "Remote",
+      "isRemote": true,
+      "technologies": [
+        "React",
+        "JavaScript"
+      ],
+      "level": "Junior",
+      "daysAgo": 2,
+      "description": "Looking for a high-energy Junior React Developer to help build client dashboards and user portals. Strong familiarity with modern hooks, state management, and responsive CSS required.",
+      "salary": "$45,000 - $60,000 / year"
+    },
+    {
+      "id": "j2",
+      "title": "Frontend Intern",
+      "company": "Pixelbridge",
+      "location": "Dhaka",
+      "isRemote": false,
+      "technologies": [
+        "JavaScript",
+        "React"
+      ],
+      "level": "Intern",
+      "daysAgo": 5,
+      "description": "Join our product design and engineering team to convert Figma specifications into responsive web components. Mentorship provided by senior architects.",
+      "salary": "BDT 25,000 - 35,000 / month"
+    },
+    {
+      "id": "j3",
+      "title": "Python Backend Developer",
+      "company": "Ledgerly",
+      "location": "Remote",
+      "isRemote": true,
+      "technologies": [
+        "Python",
+        "SQL"
+      ],
+      "level": "Junior",
+      "daysAgo": 1,
+      "description": "Building fintech transaction pipelines and microservices in Python. We look for strong understanding of algorithms, relational databases, and clean RESTful design.",
+      "salary": "$50,000 - $70,000 / year"
+    },
+    {
+      "id": "j4",
+      "title": "PHP Web Developer",
+      "company": "Kite Commerce",
+      "location": "Chattogram",
+      "isRemote": false,
+      "technologies": [
+        "PHP",
+        "JavaScript",
+        "SQL"
+      ],
+      "level": "Junior",
+      "daysAgo": 8,
+      "description": "Maintain and enhance high-traffic e-commerce systems, order workflows, and payment gateway integrations. Solid PHP and MySQL knowledge required.",
+      "salary": "BDT 40,000 - 55,000 / month"
+    },
+    {
+      "id": "j5",
+      "title": "C# Software Engineer",
+      "company": "Harbor Systems",
+      "location": "Dhaka",
+      "isRemote": false,
+      "technologies": [
+        "C#",
+        ".NET",
+        "SQL"
+      ],
+      "level": "Mid",
+      "daysAgo": 3,
+      "description": "Engineering high-throughput enterprise logistics platforms in C# and .NET. Experience with LINQ, Entity Framework, and SQL query tuning preferred.",
+      "salary": "BDT 80,000 - 110,000 / month"
+    },
+    {
+      "id": "j6",
+      "title": ".NET API Developer",
+      "company": "Orbit Health",
+      "location": "Remote",
+      "isRemote": true,
+      "technologies": [
+        ".NET",
+        "C#",
+        "SQL"
+      ],
+      "level": "Junior",
+      "daysAgo": 6,
+      "description": "Develop secure healthcare API services in ASP.NET Core with strict adherence to data security standards and RESTful principles.",
+      "salary": "$55,000 - $75,000 / year"
+    },
+    {
+      "id": "j7",
+      "title": "Full-Stack Developer",
+      "company": "Tidewater",
+      "location": "Remote",
+      "isRemote": true,
+      "technologies": [
+        "React",
+        "Python",
+        "JavaScript",
+        "SQL"
+      ],
+      "level": "Mid",
+      "daysAgo": 4,
+      "description": "End-to-end full-stack feature delivery connecting React frontend user interfaces with scalable Python API microservices.",
+      "salary": "$65,000 - $85,000 / year"
+    },
+    {
+      "id": "j8",
+      "title": "JavaScript Developer",
+      "company": "Lumen Studio",
+      "location": "Sylhet",
+      "isRemote": false,
+      "technologies": [
+        "JavaScript",
+        "HTML/CSS"
+      ],
+      "level": "Junior",
+      "daysAgo": 10,
+      "description": "Interactive web experiences, animations, and frontend client tooling for international brands.",
+      "salary": "BDT 35,000 - 50,000 / month"
+    },
+    {
+      "id": "j9",
+      "title": "Python Data Intern",
+      "company": "Fieldnote",
+      "location": "Remote",
+      "isRemote": true,
+      "technologies": [
+        "Python",
+        "SQL"
+      ],
+      "level": "Intern",
+      "daysAgo": 7,
+      "description": "Work with our analytics team to parse, clean, and validate incoming data feeds using Python and SQL.",
+      "salary": "$25 / hour"
+    },
+    {
+      "id": "j10",
+      "title": "Laravel & PHP Engineer",
+      "company": "Mosaic Media",
+      "location": "Dhaka",
+      "isRemote": false,
+      "technologies": [
+        "PHP",
+        "JavaScript"
+      ],
+      "level": "Mid",
+      "daysAgo": 12,
+      "description": "Develop content publishing architectures, API integrations, and digital media processing pipelines.",
+      "salary": "BDT 75,000 - 95,000 / month"
+    }
+  ],
+  "submissions": [
+    {
+      "id": "sub-1794572714084",
+      "userId": "u-learner",
+      "problemId": "sum-even",
+      "status": "Accepted",
+      "passedCount": 7,
+      "totalCount": 7,
+      "language": "JavaScript",
+      "createdAt": "2026-11-13T12:25:14.084Z"
+    },
+    {
+      "id": "sub-1794573069606",
+      "userId": "u-learner",
+      "problemId": "sum-even",
+      "status": "Accepted",
+      "passedCount": 7,
+      "totalCount": 7,
+      "language": "JavaScript",
+      "createdAt": "2026-11-13T12:31:09.606Z"
+    }
+  ],
+  "drafts": {},
+  "progress": {
+    "u-learner": {
+      "solved": [
+        "sum-even"
+      ],
+      "lessons": [],
+      "badges": []
+    }
+  },
+  "revisionQueue": {},
+  "plans": {
+    "u-learner": {
+      "2026-11-13": [
+        {
+          "id": "task-lesson",
+          "type": "lesson",
+          "title": "Modern JavaScript: let, const, Scopes & Closures",
+          "refId": "js-variables-scope",
+          "done": false
+        },
+        {
+          "id": "task-prob-1",
+          "type": "problem",
+          "title": "Reverse a String",
+          "refId": "reverse-string",
+          "done": false
+        },
+        {
+          "id": "task-prob-2",
+          "type": "problem",
+          "title": "Palindrome Check",
+          "refId": "palindrome-check",
+          "done": false
+        },
+        {
+          "id": "task-revision",
+          "type": "revision",
+          "title": "Daily Spaced Repetition Review",
+          "refId": "revision",
+          "done": false
+        }
+      ]
+    }
+  },
+  "savedJobs": [
+    "Junior React Developer",
+    "Python Backend Developer"
+  ]
+}

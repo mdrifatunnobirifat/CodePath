@@ -1,0 +1,26 @@
+{
+  "name": "codepath",
+  "version": "1.0.0",
+  "description": "CodePath - A Coding Practice and Job-Readiness Platform",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "seed": "node scripts/seed.js",
+    "test": "node test/test_runner.js"
+  },
+  "keywords": [
+    "coding-practice",
+    "job-readiness",
+    "javascript",
+    "react",
+    "python",
+    "csharp",
+    "dotnet",
+    "php",
+    "sql",
+    "interview-prep"
+  ],
+  "author": "CodePath Team",
+  "license": "MIT"
+}
