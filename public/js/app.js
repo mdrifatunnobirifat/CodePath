@@ -17,6 +17,12 @@ const routes = {
 let currentTab = 'languages';
 
 function navigate(tabName, params = {}) {
+  // Enforce strict authentication for all workspace features
+  if (!Store.state.isAuthenticated && tabName !== 'languages') {
+    AuthView.openModal('login');
+    tabName = 'languages';
+  }
+
   const target = routes[tabName] || routes.languages;
   currentTab = tabName;
 
@@ -70,14 +76,14 @@ window.addEventListener('DOMContentLoaded', () => {
     const drawerStatus = document.getElementById('drawer-user-status');
     const authBtnText = document.getElementById('drawer-auth-text');
 
-    if (drawerName && state.user) {
-      drawerName.textContent = state.user.name || 'Guest Learner';
+    if (drawerName) {
+      drawerName.textContent = state.user?.name || 'Welcome! Please Sign In';
     }
     if (drawerStatus) {
-      drawerStatus.textContent = state.isAuthenticated ? `Signed in (${state.user?.role || 'Learner'})` : 'Not signed in (Guest)';
+      drawerStatus.textContent = state.isAuthenticated ? `Signed in (${state.user?.role || 'Learner'})` : 'Sign up or log in to track progress';
     }
     if (authBtnText) {
-      authBtnText.textContent = state.isAuthenticated ? 'Log Out' : 'Sign Up / Log In';
+      authBtnText.textContent = state.isAuthenticated ? 'Log Out' : 'Sign Up / Log In 🔑';
     }
 
     // Drawer language pills active state

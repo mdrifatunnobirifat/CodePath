@@ -32927,6 +32927,16 @@
       "totalCount": 3,
       "language": "JavaScript",
       "createdAt": "2026-11-13T12:52:30.820Z"
+    },
+    {
+      "id": "sub-1794574752074",
+      "userId": "u-learner",
+      "problemId": "javascript-1",
+      "status": "Accepted",
+      "passedCount": 3,
+      "totalCount": 3,
+      "language": "JavaScript",
+      "createdAt": "2026-11-13T12:59:12.074Z"
     }
   ],
   "drafts": {},

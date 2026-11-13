@@ -78,7 +78,7 @@ const Store = {
       const res = await this.api('/me');
       this.state.user = res.user;
       this.state.profile = res.profile;
-      this.state.isAuthenticated = Boolean(res.isAuthenticated);
+      this.state.isAuthenticated = Boolean(res.isAuthenticated && res.user);
       if (res.profile?.selectedLanguage) {
         this.state.selectedLanguage = res.profile.selectedLanguage;
         localStorage.setItem('cp_lang', res.profile.selectedLanguage);
@@ -86,8 +86,7 @@ const Store = {
       this.state.streak.n = res.profile?.streakCount || 0;
       this.notify();
     } catch (e) {
-      // Fallback demo state
-      this.state.user = { id: 'u-guest', name: 'Guest Learner', role: 'learner' };
+      this.state.user = null;
       this.state.isAuthenticated = false;
       this.notify();
     }
