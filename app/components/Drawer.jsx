@@ -105,7 +105,7 @@ export default function Drawer({
               <span>Log Out</span>
             </button>
           ) : (
-            <button className="drawer-auth-btn" onClick={() => onOpenAuth('login')}>
+            <button className="drawer-auth-btn" onClick={() => onOpenAuth('signup')}>
               <span className="nav-icon">🔑</span>
               <span>Sign Up / Log In</span>
             </button>

@@ -1,13 +1,13 @@
 'use client';
 import React, { useState } from 'react';
 
-export default function CVBuilderView({ initialCvData, onSaveCv }) {
+export default function CVBuilderView({ initialCvData, onSaveCv, user }) {
   const [currentFormat, setCurrentFormat] = useState('ats-modern');
 
   const defaultCv = {
-    name: 'Alex Morgan',
+    name: user?.name || 'Alex Morgan',
     title: 'Full-Stack Software Developer',
-    email: 'alex.morgan@example.com',
+    email: user?.email || 'alex.morgan@example.com',
     phone: '+1 (555) 234-5678',
     location: 'Dhaka, Bangladesh · Remote Available',
     github: 'https://github.com/alexmorgan',

@@ -71,8 +71,8 @@ function getAuthUser(req) {
     const user = getDb().users.find(u => u.id === session.userId);
     if (user) return user;
   }
-  // Default demo learner if no session provided (FR-A6)
-  return getDb().users.find(u => u.id === 'u-learner') || { id: 'u-guest', name: 'Guest User', role: 'learner' };
+  // No auto-login: user must sign up or log in explicitly
+  return null;
 }
 
 // Sample SQL Database for the SQL playground & problems
@@ -428,6 +428,9 @@ const server = http.createServer(async (req, res) => {
     }
 
     if (pathname === '/api/me' && method === 'GET') {
+      if (!currentUser) {
+        return sendJson(res, 200, { user: null, profile: null, isAuthenticated: false });
+      }
       const profile = database.profiles[currentUser.id] || {
         userId: currentUser.id,
         goalTrack: 'frontend',
@@ -438,7 +441,7 @@ const server = http.createServer(async (req, res) => {
         streakCount: 1,
         lastActiveDate: new Date().toISOString().slice(0, 10)
       };
-      const isAuthenticated = currentUser.id !== 'u-guest';
+      const isAuthenticated = true;
       return sendJson(res, 200, { user: currentUser, profile, isAuthenticated });
     }
 

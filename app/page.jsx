@@ -48,8 +48,23 @@ export default function CodePathApp() {
     if (savedUser) {
       try {
         const u = JSON.parse(savedUser);
-        setUser(u);
-      } catch (e) {}
+        if (u && u.id && u.email) {
+          setUser(u);
+        } else {
+          setUser(null);
+          setAuthModalMode('signup');
+          setAuthModalOpen(true);
+        }
+      } catch (e) {
+        setUser(null);
+        setAuthModalMode('signup');
+        setAuthModalOpen(true);
+      }
+    } else {
+      // First visit: Not logged in. Prompt Sign Up / Log In immediately!
+      setUser(null);
+      setAuthModalMode('signup');
+      setAuthModalOpen(true);
     }
 
     const savedLang = localStorage.getItem('cp_lang');
@@ -172,6 +187,8 @@ export default function CodePathApp() {
     localStorage.removeItem('cp_user');
     setIsDrawerOpen(false);
     setActiveTab('languages');
+    setAuthModalMode('login');
+    setAuthModalOpen(true);
     showToast('Logged out successfully.');
   };
 
@@ -237,6 +254,7 @@ export default function CodePathApp() {
         theme={theme}
         onToggleTheme={handleToggleTheme}
         user={user}
+        onLogout={handleLogout}
         onOpenAuth={(mode) => { setAuthModalMode(mode); setAuthModalOpen(true); }}
       />
 
@@ -304,6 +322,7 @@ export default function CodePathApp() {
         {activeTab === 'cv' && (
           <CVBuilderView 
             initialCvData={cvData}
+            user={user}
             onSaveCv={handleSaveCv}
           />
         )}

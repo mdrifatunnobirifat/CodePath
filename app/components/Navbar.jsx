@@ -8,6 +8,7 @@ export default function Navbar({
   theme = 'light', 
   onToggleTheme,
   user,
+  onLogout,
   onOpenAuth
 }) {
   return (
@@ -55,11 +56,32 @@ export default function Navbar({
               style={{ width: '32px', height: '32px', borderRadius: '50%', border: '1.5px solid var(--acc)', background: 'var(--code)' }} 
             />
             <span style={{ fontSize: '13px', fontWeight: 600, display: 'inline-block' }}>{user.name.split(' ')[0]}</span>
+            <button 
+              className="ghost" 
+              onClick={onLogout} 
+              title="Log Out"
+              style={{ fontSize: '12px', padding: '4px 10px', color: 'var(--mute)' }}
+            >
+              Log Out
+            </button>
           </div>
         ) : (
-          <button className="btn p" onClick={() => onOpenAuth('login')} style={{ padding: '6px 14px', fontSize: '13px' }}>
-            Log In 🔑
-          </button>
+          <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+            <button 
+              className="ghost" 
+              onClick={() => onOpenAuth('login')} 
+              style={{ padding: '6px 12px', fontSize: '13px', fontWeight: 600 }}
+            >
+              Log In
+            </button>
+            <button 
+              className="btn p" 
+              onClick={() => onOpenAuth('signup')} 
+              style={{ padding: '6px 14px', fontSize: '13px' }}
+            >
+              Sign Up 🚀
+            </button>
+          </div>
         )}
       </div>
     </header>
