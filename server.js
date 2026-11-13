@@ -431,6 +431,21 @@ const server = http.createServer(async (req, res) => {
       return sendJson(res, 200, { success: true, language });
     }
 
+    // --- CV / RESUME BUILDER PERSISTENCE ---
+    if (pathname === '/api/user/cv' && method === 'GET') {
+      const cvData = currentUser ? (database.profiles[currentUser.id]?.cv || null) : null;
+      return sendJson(res, 200, { cv: cvData });
+    }
+
+    if (pathname === '/api/user/cv' && method === 'POST') {
+      const { cv } = await parseJsonBody(req);
+      if (currentUser && database.profiles[currentUser.id]) {
+        database.profiles[currentUser.id].cv = cv;
+        saveDb();
+      }
+      return sendJson(res, 200, { success: true, cv });
+    }
+
     if (pathname === '/api/curriculum/topics' && method === 'GET') {
       const lang = query.language || 'JavaScript';
       const roadmaps = database.topicRoadmaps || {};

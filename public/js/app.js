@@ -10,6 +10,7 @@ const routes = {
   projects: ProjectsView,
   jobs: JobsView,
   readiness: ReadinessView,
+  cv: CVBuilderView,
   portfolio: ProfileView,
   admin: AdminView
 };

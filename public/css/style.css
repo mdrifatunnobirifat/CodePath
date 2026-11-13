@@ -920,3 +920,282 @@ textarea.code-ed {
   font-family: ui-monospace, Menlo, Consolas, monospace;
   font-size: 13px;
 }
+
+/* --- CV & RESUME BUILDER STYLES (TOP 5 FORMATS) --- */
+.cv-sheet {
+  width: 100%;
+  max-width: 780px;
+  min-height: 960px;
+  background: #FFFFFF !important;
+  color: #14213D !important;
+  padding: 36px 42px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: 13px;
+  line-height: 1.5;
+  box-sizing: border-box;
+}
+
+.cv-sheet a {
+  color: #0E7C7B !important;
+  text-decoration: none;
+}
+
+.cv-sheet a:hover {
+  text-decoration: underline;
+}
+
+/* Template 1: ATS Modern */
+.ats-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.ats-header {
+  text-align: center;
+  border-bottom: 2px solid #14213D;
+  padding-bottom: 12px;
+}
+.ats-name {
+  font-size: 26px;
+  letter-spacing: -0.5px;
+  margin: 0;
+  text-transform: uppercase;
+  color: #14213D !important;
+}
+.ats-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: #5B6678 !important;
+  margin: 4px 0;
+}
+.ats-contact {
+  font-size: 12px;
+  color: #5B6678 !important;
+}
+.ats-sec-title {
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  border-bottom: 1.5px solid #14213D;
+  padding-bottom: 3px;
+  margin: 10px 0 8px;
+  color: #14213D !important;
+}
+.ats-skills-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 12.5px;
+}
+.ats-item {
+  margin-bottom: 10px;
+}
+.ats-item-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  margin-bottom: 3px;
+}
+.ats-bullets {
+  margin: 4px 0 0 18px;
+  padding: 0;
+  font-size: 12.5px;
+  line-height: 1.5;
+}
+
+/* Template 2: Two-Column Engineering */
+.twocol-wrapper {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 20px;
+}
+.twocol-sidebar {
+  background: #F8FAFC;
+  padding: 16px;
+  border-radius: 6px;
+  border-right: 1px solid #E2E8F0;
+}
+.twocol-name {
+  font-size: 20px;
+  margin: 0;
+  color: #0E7C7B !important;
+}
+.twocol-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: #64748B;
+  margin-bottom: 14px;
+}
+.twocol-group {
+  margin-bottom: 16px;
+  font-size: 12px;
+}
+.twocol-group h3 {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #0E7C7B;
+  border-bottom: 1px solid #CBD5E1;
+  padding-bottom: 2px;
+  margin-bottom: 6px;
+}
+.twocol-heading {
+  font-size: 14px;
+  text-transform: uppercase;
+  border-bottom: 1.5px solid #0E7C7B;
+  padding-bottom: 2px;
+  margin: 12px 0 8px;
+  color: #14213D;
+}
+
+/* Template 3: Executive Impact */
+.exec-header {
+  border-bottom: 2px double #14213D;
+  padding-bottom: 10px;
+  margin-bottom: 14px;
+}
+.exec-header h1 {
+  font-family: Georgia, serif;
+  font-size: 26px;
+  margin: 0;
+  color: #14213D !important;
+}
+.exec-subtitle {
+  font-size: 14px;
+  font-style: italic;
+  color: #5B6678;
+  margin: 4px 0;
+}
+.exec-contact-bar {
+  font-size: 12px;
+  color: #5B6678;
+}
+.exec-title {
+  font-family: Georgia, serif;
+  font-size: 14px;
+  letter-spacing: 0.8px;
+  border-bottom: 1px solid #94A3B8;
+  padding-bottom: 3px;
+  margin: 12px 0 6px;
+}
+
+/* Template 4: Developer Minimal */
+.minimal-wrapper {
+  font-family: ui-monospace, Menlo, Consolas, monospace !important;
+  font-size: 12px;
+  line-height: 1.6;
+}
+.minimal-head {
+  border-bottom: 1px dashed #64748B;
+  padding-bottom: 12px;
+  margin-bottom: 12px;
+}
+.minimal-prompt {
+  color: #0E7C7B;
+  font-weight: 700;
+}
+.minimal-name {
+  font-size: 22px;
+  margin: 2px 0;
+}
+.minimal-sec {
+  margin-bottom: 14px;
+}
+.minimal-sec-head {
+  font-weight: 700;
+  color: #0E7C7B;
+  margin-bottom: 4px;
+}
+
+/* Template 5: Creative Frontend */
+.creative-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  border-left: 5px solid #0E7C7B;
+  padding-left: 14px;
+  margin-bottom: 16px;
+}
+.creative-name {
+  font-size: 24px;
+  margin: 0;
+  color: #14213D !important;
+}
+.creative-title {
+  font-size: 14px;
+  color: #0E7C7B;
+  font-weight: 700;
+}
+.creative-contact {
+  font-size: 12px;
+  text-align: right;
+  color: #64748B;
+}
+.creative-section h3 {
+  font-size: 14px;
+  text-transform: uppercase;
+  color: #0E7C7B;
+  border-bottom: 1px solid #E2E8F0;
+  padding-bottom: 4px;
+  margin: 12px 0 8px;
+}
+.creative-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.creative-pill {
+  background: #EEF2F6;
+  border: 1px solid #CBD5E1;
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
+}
+.creative-projects-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.creative-project-card {
+  border: 1px solid #E2E8F0;
+  padding: 10px;
+  border-radius: 6px;
+  background: #F8FAFC;
+}
+.creative-stack {
+  display: block;
+  font-size: 11px;
+  color: #64748B;
+  margin: 2px 0 6px;
+}
+
+/* Print Styles for PDF Generation */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  #cv-preview-sheet, #cv-preview-sheet * {
+    visibility: visible;
+  }
+  #cv-preview-sheet {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 15mm 20mm !important;
+    border: none !important;
+    box-shadow: none !important;
+    background: #FFF !important;
+    color: #000 !important;
+  }
+  header, aside, .drawer-menu, .btn, .chips, .tag, input, textarea {
+    display: none !important;
+  }
+}

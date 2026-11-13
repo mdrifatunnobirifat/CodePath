@@ -77,6 +77,7 @@ const ReadinessView = {
                   <div>
                     <h4>${c.met ? '✓' : '○'} ${c.title}</h4>
                     <p style="font-size: 14px; color: var(--mute); margin: 4px 0;">${c.desc}</p>
+                    ${c.id === 'crit-cv' ? '<button class="btn p" style="padding: 4px 12px; font-size: 12px; margin-top: 6px;" onclick="navigate(\'cv\')">Open CV Builder (Top 5 Formats) 📄</button>' : ''}
                   </div>
                   <div>
                     <span class="badge ${c.met ? 'easy' : 'medium'}">${c.met ? 'Ready' : 'In Progress'}</span>
