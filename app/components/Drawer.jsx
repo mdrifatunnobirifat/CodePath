@@ -54,7 +54,7 @@ export default function Drawer({
             <div>
               <div className="drawer-user-name">{user?.name || 'Welcome! Please Sign In'}</div>
               <div className="drawer-user-status">
-                {user ? `Signed in (${user.role || 'Learner'})` : 'Sign up or log in to track progress'}
+                {user ? (user.role === 'admin' || user.email === 'admin@email.com' ? '🛡️ System Administrator' : `Signed in (${user.role || 'Learner'})`) : 'Sign up or log in to track progress'}
               </div>
             </div>
           </div>

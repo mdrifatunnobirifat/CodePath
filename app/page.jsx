@@ -153,8 +153,13 @@ export default function CodePathApp() {
     const loggedUser = await authService.logIn(email, password);
     setUser(loggedUser);
     localStorage.setItem('cp_user', JSON.stringify(loggedUser));
-    showToast(`Welcome back, ${loggedUser.name}! 👋`, 'success');
-    setActiveTab('dashboard');
+    if (loggedUser.role === 'admin' || loggedUser.email === 'admin@email.com') {
+      showToast(`Welcome, Administrator! 🛡️ Access granted.`, 'success');
+      setActiveTab('admin');
+    } else {
+      showToast(`Welcome back, ${loggedUser.name}! 👋`, 'success');
+      setActiveTab('dashboard');
+    }
   };
 
   const handleSignup = async (name, email, password) => {
