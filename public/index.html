@@ -157,21 +157,21 @@
       </div>
 
       <!-- Auth Form -->
-      <form id="auth-form" onsubmit="event.preventDefault(); AuthView.submit();">
+      <form id="auth-form" autocomplete="off" onsubmit="event.preventDefault(); AuthView.submit();">
         <div id="signup-name-group" style="margin-bottom: 12px;">
           <label style="font-size: 13px; font-weight: 600; display: block; margin-bottom: 4px;">Full Name:</label>
-          <input type="text" id="auth-name" placeholder="Alex Morgan" style="width: 100%; padding: 9px 12px; border-radius: 8px; border: 1px solid var(--line); background: var(--code); color: var(--ink);" />
+          <input type="text" id="auth-name" placeholder="Your Full Name" autocomplete="name" style="width: 100%; padding: 9px 12px; border-radius: 8px; border: 1px solid var(--line); background: var(--code); color: var(--ink);" />
         </div>
 
         <div style="margin-bottom: 12px;">
           <label style="font-size: 13px; font-weight: 600; display: block; margin-bottom: 4px;">Email Address:</label>
-          <input type="email" id="auth-email" placeholder="alex@example.com" style="width: 100%; padding: 9px 12px; border-radius: 8px; border: 1px solid var(--line); background: var(--code); color: var(--ink);" required />
+          <input type="email" id="auth-email" placeholder="youremail@example.com" autocomplete="email" style="width: 100%; padding: 9px 12px; border-radius: 8px; border: 1px solid var(--line); background: var(--code); color: var(--ink);" required />
           <small style="color: var(--mute); font-size: 11px; display: block; margin-top: 3px;">Enter your real email to receive 60-day roadmaps, problem milestones & streak alerts!</small>
         </div>
 
         <div style="margin-bottom: 16px;">
           <label style="font-size: 13px; font-weight: 600; display: block; margin-bottom: 4px;">Password:</label>
-          <input type="password" id="auth-password" placeholder="••••••••" style="width: 100%; padding: 9px 12px; border-radius: 8px; border: 1px solid var(--line); background: var(--code); color: var(--ink);" required />
+          <input type="password" id="auth-password" placeholder="At least 6 characters" autocomplete="new-password" style="width: 100%; padding: 9px 12px; border-radius: 8px; border: 1px solid var(--line); background: var(--code); color: var(--ink);" required />
         </div>
 
         <div id="auth-error-msg" class="res" style="display: none; margin-bottom: 12px;"></div>

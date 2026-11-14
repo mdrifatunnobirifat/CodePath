@@ -26,6 +26,12 @@ const AuthView = {
 
   openModal(mode = 'signup', pendingLang = null) {
     this.pendingLanguage = pendingLang;
+    const nameInput = document.getElementById('auth-name');
+    const emailInput = document.getElementById('auth-email');
+    const passInput = document.getElementById('auth-password');
+    if (nameInput) nameInput.value = '';
+    if (emailInput) emailInput.value = '';
+    if (passInput) passInput.value = '';
     this.switchMode(mode);
     const modal = document.getElementById('auth-modal');
     if (modal) modal.style.display = 'flex';

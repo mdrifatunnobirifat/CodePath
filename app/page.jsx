@@ -20,6 +20,7 @@ import {
   AdminView 
 } from './views/OtherViews';
 import initialData from '../lib/initialData';
+import { authService } from '../lib/authService';
 
 export default function CodePathApp() {
   const [mounted, setMounted] = useState(false);
@@ -44,28 +45,36 @@ export default function CodePathApp() {
     setTheme(savedTheme);
     document.documentElement.setAttribute('data-theme', savedTheme);
 
-    const savedUser = localStorage.getItem('cp_user');
-    if (savedUser) {
+    const initAuth = async () => {
+      // 1. Check Supabase cloud session if configured
       try {
-        const u = JSON.parse(savedUser);
-        if (u && u.id && u.email) {
-          setUser(u);
-        } else {
-          setUser(null);
-          setAuthModalMode('signup');
-          setAuthModalOpen(true);
+        const cloudUser = await authService.getSession();
+        if (cloudUser) {
+          setUser(cloudUser);
+          localStorage.setItem('cp_user', JSON.stringify(cloudUser));
+          return;
         }
-      } catch (e) {
-        setUser(null);
-        setAuthModalMode('signup');
-        setAuthModalOpen(true);
+      } catch (e) {}
+
+      // 2. Check saved local session
+      const savedUser = localStorage.getItem('cp_user');
+      if (savedUser) {
+        try {
+          const u = JSON.parse(savedUser);
+          if (u && u.id && u.email) {
+            setUser(u);
+            return;
+          }
+        } catch (e) {}
       }
-    } else {
-      // First visit: Not logged in. Prompt Sign Up / Log In immediately!
+
+      // 3. New visitor: Prompt Sign Up / Log In immediately
       setUser(null);
       setAuthModalMode('signup');
       setAuthModalOpen(true);
-    }
+    };
+
+    initAuth();
 
     const savedLang = localStorage.getItem('cp_lang');
     if (savedLang) setSelectedLanguage(savedLang);
@@ -141,29 +150,17 @@ export default function CodePathApp() {
   };
 
   const handleLogin = async (email, password) => {
-    const newUser = {
-      id: 'u-' + Date.now(),
-      name: email.split('@')[0],
-      email,
-      role: 'learner',
-      avatar: `https://api.dicebear.com/7.x/bottts/svg?seed=${encodeURIComponent(email)}`
-    };
-    setUser(newUser);
-    localStorage.setItem('cp_user', JSON.stringify(newUser));
-    showToast(`Welcome back, ${newUser.name}! 👋`, 'success');
+    const loggedUser = await authService.logIn(email, password);
+    setUser(loggedUser);
+    localStorage.setItem('cp_user', JSON.stringify(loggedUser));
+    showToast(`Welcome back, ${loggedUser.name}! 👋`, 'success');
     setActiveTab('dashboard');
   };
 
   const handleSignup = async (name, email, password) => {
-    const newUser = {
-      id: 'u-' + Date.now(),
-      name,
-      email,
-      role: 'learner',
-      avatar: `https://api.dicebear.com/7.x/bottts/svg?seed=${encodeURIComponent(name)}`
-    };
-    setUser(newUser);
-    localStorage.setItem('cp_user', JSON.stringify(newUser));
+    const signedUser = await authService.signUp(name, email, password);
+    setUser(signedUser);
+    localStorage.setItem('cp_user', JSON.stringify(signedUser));
 
     // Create welcome notification
     const welcomeNotif = {
@@ -178,11 +175,12 @@ export default function CodePathApp() {
     setNotifications(updatedNotifs);
     localStorage.setItem('cp_notifs', JSON.stringify(updatedNotifs));
 
-    showToast(`Account created! Welcome roadmap sent to ${email} 🎉`, 'success');
+    showToast(`Account created! Welcome, ${name}! 🎉`, 'success');
     setActiveTab('dashboard');
   };
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    await authService.logOut();
     setUser(null);
     localStorage.removeItem('cp_user');
     setIsDrawerOpen(false);

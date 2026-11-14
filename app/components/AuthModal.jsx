@@ -1,5 +1,6 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { isSupabaseConfigured } from '../../lib/supabaseClient';
 
 export default function AuthModal({ isOpen, onClose, onLogin, onSignup, initialMode = 'signup' }) {
   const [mode, setMode] = useState(initialMode);
@@ -8,6 +9,17 @@ export default function AuthModal({ isOpen, onClose, onLogin, onSignup, initialM
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+
+  // Reset inputs to clean state whenever modal opens
+  useEffect(() => {
+    if (isOpen) {
+      setMode(initialMode);
+      setName('');
+      setEmail('');
+      setPassword('');
+      setError('');
+    }
+  }, [isOpen, initialMode]);
 
   if (!isOpen) return null;
 
@@ -20,6 +32,7 @@ export default function AuthModal({ isOpen, onClose, onLogin, onSignup, initialM
       if (mode === 'signup') {
         if (!name.trim()) throw new Error('Please enter your full name.');
         if (!email.trim() || !password.trim()) throw new Error('Email and password are required.');
+        if (password.length < 6) throw new Error('Password must be at least 6 characters.');
         await onSignup(name.trim(), email.trim(), password.trim());
       } else {
         if (!email.trim() || !password.trim()) throw new Error('Email and password are required.');
@@ -56,7 +69,7 @@ export default function AuthModal({ isOpen, onClose, onLogin, onSignup, initialM
             type="button"
             className="chip" 
             aria-pressed={mode === 'signup'}
-            onClick={() => { setMode('signup'); setError(''); }}
+            onClick={() => { setMode('signup'); setPassword(''); setError(''); }}
           >
             Create Account
           </button>
@@ -64,20 +77,21 @@ export default function AuthModal({ isOpen, onClose, onLogin, onSignup, initialM
             type="button"
             className="chip" 
             aria-pressed={mode === 'login'}
-            onClick={() => { setMode('login'); setError(''); }}
+            onClick={() => { setMode('login'); setPassword(''); setError(''); }}
           >
             Log In
           </button>
         </div>
 
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} autoComplete="off">
           {mode === 'signup' && (
             <div style={{ marginBottom: '12px' }}>
               <label style={{ fontSize: '13px', fontWeight: 600, display: 'block', marginBottom: '4px' }}>Full Name:</label>
               <input 
                 type="text" 
-                placeholder="Alex Morgan"
+                placeholder="Your Full Name"
                 value={name}
+                autoComplete="name"
                 onChange={e => setName(e.target.value)}
                 style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: '1px solid var(--line)', background: 'var(--code)', color: 'var(--ink)' }}
                 required 
@@ -89,8 +103,9 @@ export default function AuthModal({ isOpen, onClose, onLogin, onSignup, initialM
             <label style={{ fontSize: '13px', fontWeight: 600, display: 'block', marginBottom: '4px' }}>Email Address:</label>
             <input 
               type="email" 
-              placeholder="alex@example.com"
+              placeholder="youremail@example.com"
               value={email}
+              autoComplete="email"
               onChange={e => setEmail(e.target.value)}
               style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: '1px solid var(--line)', background: 'var(--code)', color: 'var(--ink)' }}
               required 
@@ -104,8 +119,9 @@ export default function AuthModal({ isOpen, onClose, onLogin, onSignup, initialM
             <label style={{ fontSize: '13px', fontWeight: 600, display: 'block', marginBottom: '4px' }}>Password:</label>
             <input 
               type="password" 
-              placeholder="••••••••"
+              placeholder="At least 6 characters"
               value={password}
+              autoComplete={mode === 'signup' ? 'new-password' : 'current-password'}
               onChange={e => setPassword(e.target.value)}
               style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: '1px solid var(--line)', background: 'var(--code)', color: 'var(--ink)' }}
               required 
@@ -127,6 +143,14 @@ export default function AuthModal({ isOpen, onClose, onLogin, onSignup, initialM
             {loading ? 'Processing...' : (mode === 'signup' ? 'Create Free Account & Start Learning 🚀' : 'Log In to My Account 🔑')}
           </button>
         </form>
+
+        <div style={{ marginTop: '16px', textAlign: 'center', fontSize: '11px', color: 'var(--mute)' }}>
+          {isSupabaseConfigured ? (
+            <span style={{ color: 'var(--ok)' }}>⚡ Connected to Supabase Cloud Database</span>
+          ) : (
+            <span>💾 Encrypted persistent account storage</span>
+          )}
+        </div>
       </div>
     </div>
   );
