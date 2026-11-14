@@ -8,6 +8,7 @@ import DashboardView from './views/DashboardView';
 import PracticeView from './views/PracticeView';
 import CVBuilderView from './views/CVBuilderView';
 import NotificationsView from './views/NotificationsView';
+import AdminView from './views/AdminView';
 import { 
   TracksView, 
   LessonsView, 
@@ -16,8 +17,7 @@ import {
   ProjectsView, 
   JobsView, 
   ReadinessView, 
-  ProfileView, 
-  AdminView 
+  ProfileView 
 } from './views/OtherViews';
 import initialData from '../lib/initialData';
 import { authService } from '../lib/authService';
