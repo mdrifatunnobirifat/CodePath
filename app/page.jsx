@@ -45,33 +45,57 @@ export default function CodePathApp() {
     setTheme(savedTheme);
     document.documentElement.setAttribute('data-theme', savedTheme);
 
+    const savedTab = localStorage.getItem('cp_active_tab');
+
     const initAuth = async () => {
+      let resolvedUser = null;
+
       // 1. Check Supabase cloud session if configured
       try {
         const cloudUser = await authService.getSession();
         if (cloudUser) {
-          setUser(cloudUser);
-          localStorage.setItem('cp_user', JSON.stringify(cloudUser));
-          return;
+          resolvedUser = cloudUser;
         }
       } catch (e) {}
 
-      // 2. Check saved local session
-      const savedUser = localStorage.getItem('cp_user');
-      if (savedUser) {
-        try {
-          const u = JSON.parse(savedUser);
-          if (u && u.id && u.email) {
-            setUser(u);
-            return;
-          }
-        } catch (e) {}
+      // 2. Check saved local session if no cloud user
+      if (!resolvedUser) {
+        const savedUser = localStorage.getItem('cp_user');
+        if (savedUser) {
+          try {
+            const u = JSON.parse(savedUser);
+            if (u && u.id && u.email) {
+              resolvedUser = u;
+            }
+          } catch (e) {}
+        }
       }
 
-      // 3. New visitor: Prompt Sign Up / Log In immediately
-      setUser(null);
-      setAuthModalMode('signup');
-      setAuthModalOpen(true);
+      if (resolvedUser) {
+        setUser(resolvedUser);
+        localStorage.setItem('cp_user', JSON.stringify(resolvedUser));
+
+        const isAdmin = resolvedUser.role === 'admin' || resolvedUser.email === 'admin@email.com';
+
+        // Properly restore the view on page refresh!
+        if (isAdmin) {
+          // If admin, default to 'admin' view unless they were previewing a specific learner tab
+          const tabToUse = (savedTab && savedTab !== 'languages') ? savedTab : 'admin';
+          setActiveTab(tabToUse);
+          localStorage.setItem('cp_active_tab', tabToUse);
+        } else {
+          // Regular learner
+          const tabToUse = savedTab || 'dashboard';
+          setActiveTab(tabToUse);
+          localStorage.setItem('cp_active_tab', tabToUse);
+        }
+      } else {
+        // New visitor: Prompt Sign Up / Log In
+        setUser(null);
+        setActiveTab('languages');
+        setAuthModalMode('signup');
+        setAuthModalOpen(true);
+      }
     };
 
     initAuth();
@@ -126,16 +150,21 @@ export default function CodePathApp() {
     setSelectedLanguage(lang);
     localStorage.setItem('cp_lang', lang);
 
-    // If user is not signed in, prompt authentication to save progress
     if (!user) {
       setAuthModalMode('signup');
       setAuthModalOpen(true);
       return;
     }
 
+    const isAdmin = user.role === 'admin' || user.email === 'admin@email.com';
     setIsDrawerOpen(false);
-    setActiveTab('dashboard');
-    showToast(`Switched to ${lang} learning roadmap! 🚀`, 'success');
+    if (isAdmin) {
+      showToast(`Previewing ${lang} roadmap as Administrator! 🚀`, 'info');
+    } else {
+      setActiveTab('dashboard');
+      localStorage.setItem('cp_active_tab', 'dashboard');
+      showToast(`Switched to ${lang} learning roadmap! 🚀`, 'success');
+    }
   };
 
   const handleNavigate = (tab) => {
@@ -145,6 +174,7 @@ export default function CodePathApp() {
       return;
     }
     setActiveTab(tab);
+    localStorage.setItem('cp_active_tab', tab);
     setIsDrawerOpen(false);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -156,9 +186,11 @@ export default function CodePathApp() {
     if (loggedUser.role === 'admin' || loggedUser.email === 'admin@email.com') {
       showToast(`Welcome, Administrator! 🛡️ Access granted.`, 'success');
       setActiveTab('admin');
+      localStorage.setItem('cp_active_tab', 'admin');
     } else {
       showToast(`Welcome back, ${loggedUser.name}! 👋`, 'success');
       setActiveTab('dashboard');
+      localStorage.setItem('cp_active_tab', 'dashboard');
     }
   };
 
@@ -182,12 +214,14 @@ export default function CodePathApp() {
 
     showToast(`Account created! Welcome, ${name}! 🎉`, 'success');
     setActiveTab('dashboard');
+    localStorage.setItem('cp_active_tab', 'dashboard');
   };
 
   const handleLogout = async () => {
     await authService.logOut();
     setUser(null);
     localStorage.removeItem('cp_user');
+    localStorage.removeItem('cp_active_tab');
     setIsDrawerOpen(false);
     setActiveTab('languages');
     setAuthModalMode('login');
@@ -257,6 +291,8 @@ export default function CodePathApp() {
         theme={theme}
         onToggleTheme={handleToggleTheme}
         user={user}
+        activeTab={activeTab}
+        onNavigate={handleNavigate}
         onLogout={handleLogout}
         onOpenAuth={(mode) => { setAuthModalMode(mode); setAuthModalOpen(true); }}
       />
@@ -307,8 +343,12 @@ export default function CodePathApp() {
             onSelectProblem={(p) => {
               setCurrentProblem(p);
               setActiveTab('practice');
+              localStorage.setItem('cp_active_tab', 'practice');
             }}
-            onOpenLanguages={() => setActiveTab('languages')}
+            onOpenLanguages={() => {
+              setActiveTab('languages');
+              localStorage.setItem('cp_active_tab', 'languages');
+            }}
           />
         )}
 
@@ -365,7 +405,7 @@ export default function CodePathApp() {
         {activeTab === 'readiness' && (
           <ReadinessView 
             solvedCount={solvedProblemIds.length} 
-            onOpenTab={setActiveTab}
+            onOpenTab={handleNavigate}
           />
         )}
 
@@ -374,18 +414,16 @@ export default function CodePathApp() {
             user={user} 
             solvedCount={solvedProblemIds.length} 
             streak={streak} 
-            onOpenTab={setActiveTab}
+            onOpenTab={handleNavigate}
           />
         )}
 
         {activeTab === 'admin' && (
           <AdminView 
             totalProblems={(initialData.problems || []).length}
-            totalUsers={user ? 3 : 2}
           />
         )}
       </main>
     </div>
   );
 }
-

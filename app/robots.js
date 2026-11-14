@@ -8,3 +8,4 @@ export default function robots() {
     sitemap: 'https://codepath-zeta.vercel.app/sitemap.xml',
   };
 }
+

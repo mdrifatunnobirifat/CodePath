@@ -8,9 +8,25 @@ export default function Navbar({
   theme = 'light', 
   onToggleTheme,
   user,
+  activeTab,
+  onNavigate,
   onLogout,
   onOpenAuth
 }) {
+  const isAdmin = user && (user.role === 'admin' || user.email === 'admin@email.com');
+
+  const handleLogoClick = () => {
+    if (onNavigate) {
+      if (isAdmin) {
+        onNavigate('admin');
+      } else if (user) {
+        onNavigate('dashboard');
+      } else {
+        onNavigate('languages');
+      }
+    }
+  };
+
   return (
     <header className="header" style={{ position: 'sticky', top: 0, zIndex: 100, backdropFilter: 'blur(8px)' }}>
       <div className="header-left">
@@ -18,22 +34,56 @@ export default function Navbar({
           className="hamburger-btn" 
           onClick={onOpenDrawer} 
           aria-label="Open Navigation Menu"
-          title="Open Menu"
+          title="Open Navigation Menu"
         >
           <span className="hamburger-line"></span>
           <span className="hamburger-line"></span>
           <span className="hamburger-line"></span>
         </button>
-        <div className="logo" style={{ cursor: 'pointer' }} onClick={() => window.location.hash = 'languages'}>
-          Code<span>Path</span>
+        <div 
+          className="logo" 
+          style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }} 
+          onClick={handleLogoClick}
+          title={isAdmin ? "CodePath Admin Dashboard" : "CodePath Platform"}
+        >
+          <span>Code<span>Path</span></span>
+          {isAdmin && (
+            <span className="badge p" style={{ fontSize: '10px', padding: '2px 7px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+              ADMIN
+            </span>
+          )}
         </div>
-        <div className="tag" style={{ display: 'none', marginLeft: '6px' }} id="active-lang-badge">
-          🌐 <span>{selectedLanguage}</span>
-        </div>
+
+        {!isAdmin && (
+          <div className="tag" style={{ display: 'none', marginLeft: '6px' }} id="active-lang-badge">
+            🌐 <span>{selectedLanguage}</span>
+          </div>
+        )}
       </div>
 
-      <div className="header-right">
-        {streak > 0 && (
+      <div className="header-right" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+        
+        {/* Direct Admin Dashboard shortcut button for administrators */}
+        {isAdmin && onNavigate && (
+          <button
+            onClick={() => onNavigate('admin')}
+            className={`btn ${activeTab === 'admin' ? 'p' : 'ghost'}`}
+            style={{ 
+              fontSize: '13px', 
+              padding: '6px 14px', 
+              display: 'flex', 
+              alignItems: 'center', 
+              gap: '6px',
+              border: activeTab === 'admin' ? 'none' : '1px solid var(--acc)'
+            }}
+            title="Switch to Admin Dashboard"
+          >
+            <span>🛡️</span>
+            <b>Admin Dashboard</b>
+          </button>
+        )}
+
+        {streak > 0 && !isAdmin && (
           <div className="pill" style={{ color: 'var(--warm)', fontWeight: 700, fontSize: '13px' }}>
             🔥 Streak: {streak} {streak === 1 ? 'day' : 'days'}
           </div>
@@ -53,9 +103,20 @@ export default function Navbar({
             <img 
               src={user.avatar || `https://api.dicebear.com/7.x/bottts/svg?seed=${encodeURIComponent(user.name)}`} 
               alt={user.name} 
-              style={{ width: '32px', height: '32px', borderRadius: '50%', border: '1.5px solid var(--acc)', background: 'var(--code)' }} 
+              style={{ 
+                width: '32px', 
+                height: '32px', 
+                borderRadius: '50%', 
+                border: isAdmin ? '2px solid var(--acc)' : '1.5px solid var(--line)', 
+                background: 'var(--code)' 
+              }} 
             />
-            <span style={{ fontSize: '13px', fontWeight: 600, display: 'inline-block' }}>{user.name.split(' ')[0]}</span>
+            <div style={{ display: 'flex', flexDirection: 'column', lineHeight: 1.1 }}>
+              <span style={{ fontSize: '13px', fontWeight: 700 }}>{user.name.split(' ')[0]}</span>
+              {isAdmin && (
+                <span style={{ fontSize: '10px', color: 'var(--acc)', fontWeight: 700 }}>System Admin</span>
+              )}
+            </div>
             <button 
               className="ghost" 
               onClick={onLogout} 
@@ -87,4 +148,3 @@ export default function Navbar({
     </header>
   );
 }
-
