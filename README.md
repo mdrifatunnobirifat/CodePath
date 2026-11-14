@@ -1,9 +1,13 @@
 # CodePath – Coding Practice & Job-Readiness Platform 🚀
 
+[![Live Production App](https://img.shields.io/badge/Live%20App-codepath--zeta.vercel.app-0E7C7B?style=for-the-badge&logo=vercel)](https://codepath-zeta.vercel.app)
+[![GitHub Repo](https://img.shields.io/badge/GitHub-CodePath-181717?style=for-the-badge&logo=github)](https://github.com/mdrifatunnobirifat/CodePath)
 [![Node.js](https://img.shields.io/badge/Node.js-v18%2B-green.svg)](https://nodejs.org/)
-[![Status](https://img.shields.io/badge/Status-Production%20Ready-0E7C7B.svg)](https://github.com)
+[![Status](https://img.shields.io/badge/Status-Production%20Ready-0E7C7B.svg)](https://codepath-zeta.vercel.app)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Zero Dependencies](https://img.shields.io/badge/Dependencies-Zero-brightgreen.svg)](package.json)
+
+> 🌐 **Live Production Web App:** [https://codepath-zeta.vercel.app](https://codepath-zeta.vercel.app)  
+> 🛡️ **Master Admin Account:** Email: `admin@email.com` | Password: `#codepathadmin`
 
 > **CodePath** is an accelerated coding practice and interview readiness platform designed for learners preparing to land developer roles within **60 days**. Built strictly according to the **CodePath Software Requirements Specification (SRS v1.0)** and incorporating the bespoke design system from the prototype.
 
