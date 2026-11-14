@@ -168,6 +168,34 @@ export default function PracticeView({
     }
   };
 
+  // Keyboard shortcut handler (Ctrl+Enter to Run, Ctrl+Shift+Enter to Submit, Tab to indent)
+  const handleKeyDown = (e) => {
+    if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+      e.preventDefault();
+      if (e.shiftKey) {
+        handleSubmit();
+      } else {
+        handleRun();
+      }
+      return;
+    }
+
+    if (e.key === 'Tab') {
+      e.preventDefault();
+      const textarea = e.currentTarget;
+      const start = textarea.selectionStart;
+      const end = textarea.selectionEnd;
+      const currentVal = textarea.value;
+
+      const updatedVal = currentVal.substring(0, start) + '  ' + currentVal.substring(end);
+      handleCodeChange(updatedVal);
+
+      setTimeout(() => {
+        textarea.selectionStart = textarea.selectionEnd = start + 2;
+      }, 0);
+    }
+  };
+
   const handleRun = () => {
     if (!problem) return;
     setRunning(true);
@@ -244,7 +272,7 @@ export default function PracticeView({
   const diffColor = problem.difficulty === 'Easy' ? 'var(--ok)' : problem.difficulty === 'Medium' ? 'var(--warm)' : 'var(--bad)';
 
   return (
-    <div style={{ display: 'grid', gridTemplateColumns: '280px 1fr 380px', gap: '16px', minHeight: '80vh', padding: '12px 0 30px' }}>
+    <div className="practice-workspace-grid" style={{ minHeight: '80vh', padding: '12px 0 30px' }}>
       
       {/* PANE 1: PROBLEM DIRECTORY */}
       <div className="card" style={{ display: 'flex', flexDirection: 'column', height: 'calc(100vh - 120px)', padding: '14px' }}>
@@ -381,7 +409,9 @@ export default function PracticeView({
           <textarea
             value={code}
             onChange={e => handleCodeChange(e.target.value)}
+            onKeyDown={handleKeyDown}
             spellCheck="false"
+            placeholder="Write your solution here..."
             style={{
               flex: 1,
               width: '100%',
@@ -400,9 +430,9 @@ export default function PracticeView({
           />
 
           {/* Action Bar */}
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '12px' }}>
-            <div style={{ fontSize: '12px', color: 'var(--mute)' }}>
-              Keyboard: Ctrl+Enter to Run
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '12px', flexWrap: 'wrap', gap: '8px' }}>
+            <div style={{ fontSize: '11.5px', color: 'var(--mute)' }}>
+              Shortcuts: <code>Ctrl+Enter</code> (Run) &nbsp;·&nbsp; <code>Ctrl+Shift+Enter</code> (Submit)
             </div>
             <div style={{ display: 'flex', gap: '8px' }}>
               <button 

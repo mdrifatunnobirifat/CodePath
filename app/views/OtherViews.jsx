@@ -41,7 +41,7 @@ export function LessonsView({ lessons = [] }) {
   const [activeLesson, setActiveLesson] = useState(lessons[0] || null);
 
   return (
-    <div style={{ display: 'grid', gridTemplateColumns: '280px 1fr', gap: '20px', padding: '16px 0 40px' }}>
+    <div className="sidebar-main-grid" style={{ padding: '16px 0 40px' }}>
       <div className="card" style={{ padding: '14px', height: 'calc(100vh - 120px)', overflowY: 'auto' }}>
         <h3 style={{ fontSize: '15px', margin: '0 0 12px' }}>📖 Curriculum Lessons</h3>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
@@ -115,7 +115,7 @@ export function QuizzesView({ quizzes = [] }) {
         <span className="badge" style={{ color: 'var(--warm)', fontWeight: 700 }}>⏳ 15-Minute Mode</span>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '260px 1fr', gap: '20px' }}>
+      <div className="sidebar-main-grid">
         <div className="card" style={{ padding: '14px' }}>
           <b style={{ fontSize: '13px', display: 'block', marginBottom: '10px' }}>Available Quizzes</b>
           {quizzes.map(q => (
@@ -172,6 +172,11 @@ export function QuizzesView({ quizzes = [] }) {
                         );
                       })}
                     </div>
+                    {submitted && q.explanation && (
+                      <div style={{ marginTop: '10px', fontSize: '12px', color: 'var(--ink)', background: 'rgba(14, 124, 123, 0.08)', borderLeft: '3px solid var(--acc)', padding: '8px 12px', borderRadius: '4px', lineHeight: 1.5 }}>
+                        💡 <b>Explanation:</b> {q.explanation}
+                      </div>
+                    )}
                   </div>
                 ))}
 
@@ -239,8 +244,21 @@ export function InterviewView({ questions = [] }) {
 export function ProjectsView({ projects = [] }) {
   const handleCopyReadme = (p) => {
     const text = `# ${p.title}\n\n${p.description}\n\n## Tech Stack\n${(p.technologies || []).join(', ')}\n\n## Setup\n\`\`\`bash\nnpm install\nnpm run dev\n\`\`\``;
-    navigator.clipboard.writeText(text);
-    alert('Recruiter-ready README copied to clipboard!');
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text);
+      } else {
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+      }
+      alert('Recruiter-ready README copied to clipboard!');
+    } catch (err) {
+      alert('README prepared! You can copy the content.');
+    }
   };
 
   return (
@@ -406,21 +424,4 @@ export function ProfileView({ user, solvedCount = 0, streak = 1, onOpenTab }) {
   );
 }
 
-// 9. Admin Content Management View
-export function AdminView({ totalProblems = 600, totalUsers = 2 }) {
-  return (
-    <div style={{ padding: '16px 0 40px' }}>
-      <h1 style={{ fontSize: '24px', margin: '0 0 16px' }}>🛡️ Admin Content Management</h1>
-      <div className="stats" style={{ marginBottom: '20px' }}>
-        <div className="card"><b>{totalProblems}</b><span className="tag">Problems in Curriculum</span></div>
-        <div className="card"><b>6</b><span className="tag">Supported Languages</span></div>
-        <div className="card"><b>{totalUsers}</b><span className="tag">Registered Users</span></div>
-        <div className="card"><b>100%</b><span className="tag">System Health</span></div>
-      </div>
-      <div className="card" style={{ padding: '20px' }}>
-        <p style={{ margin: 0, color: 'var(--mute)' }}>Administrator controls active. Full CRUD access enabled for problems and tests.</p>
-      </div>
-    </div>
-  );
-}
 

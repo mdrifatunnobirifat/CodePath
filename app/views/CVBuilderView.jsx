@@ -291,8 +291,21 @@ ${(e.bullets || []).map(b => `- ${b}`).join('\n')}
 ## Education
 ${(d.education || []).map(ed => `- **${ed.degree}**, ${ed.institution} (${ed.year || ''})`).join('\n')}
 `;
-    navigator.clipboard.writeText(md);
-    alert('Formatted Markdown copied to clipboard!');
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(md);
+      } else {
+        const ta = document.createElement('textarea');
+        ta.value = md;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+      }
+      alert('Formatted Markdown copied to clipboard!');
+    } catch (err) {
+      alert('Markdown prepared! You can copy it from the editor.');
+    }
   };
 
   const d = cvData;
@@ -370,7 +383,7 @@ ${(d.education || []).map(ed => `- **${ed.degree}**, ${ed.institution} (${ed.yea
       </div>
 
       {/* Split Workspace */}
-      <div style={{ display: 'grid', gridTemplateColumns: '460px 1fr', gap: '20px', alignItems: 'start' }}>
+      <div className="cv-workspace-grid">
         
         {/* LEFT FORM EDITOR */}
         <div className="card" style={{ maxHeight: '880px', overflowY: 'auto', padding: '18px' }}>

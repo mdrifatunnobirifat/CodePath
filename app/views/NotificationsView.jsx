@@ -7,7 +7,7 @@ export default function NotificationsView({
   onSendTestNotification, 
   onSavePreferences 
 }) {
-  const [userEmail, setUserEmail] = useState(user?.email || 'mann45281@gmail.com');
+  const [userEmail, setUserEmail] = useState(user?.email || '');
   const [smtpHost, setSmtpHost] = useState('smtp.gmail.com');
   const [smtpPort, setSmtpPort] = useState(465);
   const [smtpUser, setSmtpUser] = useState(user?.email || '');
