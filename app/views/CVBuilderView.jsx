@@ -1,8 +1,24 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+
+// URL sanitizer to guarantee all links open externally in web and offline PDF/HTML
+export function safeUrl(url) {
+  if (!url) return '';
+  const trimmed = String(url).trim();
+  if (!trimmed) return '';
+  if (/^(https?:\/\/|mailto:|tel:)/i.test(trimmed)) {
+    return trimmed;
+  }
+  return `https://${trimmed}`;
+}
 
 export default function CVBuilderView({ initialCvData, onSaveCv, user }) {
   const [currentFormat, setCurrentFormat] = useState('ats-modern');
+
+  useEffect(() => {
+    const savedFormat = localStorage.getItem('cp_cv_format');
+    if (savedFormat) setCurrentFormat(savedFormat);
+  }, []);
 
   const defaultCv = {
     name: user?.name || 'Alex Morgan',
@@ -96,6 +112,11 @@ export default function CVBuilderView({ initialCvData, onSaveCv, user }) {
     { id: 'frontend-creative', name: '5. Creative Portfolio-Linked' }
   ];
 
+  const handleSelectFormat = (formatId) => {
+    setCurrentFormat(formatId);
+    localStorage.setItem('cp_cv_format', formatId);
+  };
+
   // Helper updates
   const updateField = (key, val) => {
     setCvData(prev => ({ ...prev, [key]: val }));
@@ -108,7 +129,111 @@ export default function CVBuilderView({ initialCvData, onSaveCv, user }) {
     }));
   };
 
-  // Dynamic Education Slots
+  // Projects
+  const addProject = () => {
+    setCvData(prev => ({
+      ...prev,
+      projects: [
+        ...(prev.projects || []),
+        { title: '', technologies: '', github: '', demo: '', bullets: [''] }
+      ]
+    }));
+  };
+
+  const removeProject = (idx) => {
+    setCvData(prev => ({
+      ...prev,
+      projects: prev.projects.filter((_, i) => i !== idx)
+    }));
+  };
+
+  const updateProject = (idx, field, val) => {
+    setCvData(prev => {
+      const p = [...prev.projects];
+      p[idx] = { ...p[idx], [field]: val };
+      return { ...prev, projects: p };
+    });
+  };
+
+  const addProjectBullet = (pIdx) => {
+    setCvData(prev => {
+      const p = [...prev.projects];
+      p[pIdx].bullets = [...(p[pIdx].bullets || []), ''];
+      return { ...prev, projects: p };
+    });
+  };
+
+  const updateProjectBullet = (pIdx, bIdx, val) => {
+    setCvData(prev => {
+      const p = [...prev.projects];
+      const b = [...p[pIdx].bullets];
+      b[bIdx] = val;
+      p[pIdx].bullets = b;
+      return { ...prev, projects: p };
+    });
+  };
+
+  const removeProjectBullet = (pIdx, bIdx) => {
+    setCvData(prev => {
+      const p = [...prev.projects];
+      p[pIdx].bullets = p[pIdx].bullets.filter((_, i) => i !== bIdx);
+      return { ...prev, projects: p };
+    });
+  };
+
+  // Experience
+  const addExperience = () => {
+    setCvData(prev => ({
+      ...prev,
+      experience: [
+        ...(prev.experience || []),
+        { role: '', company: '', period: '', location: '', bullets: [''] }
+      ]
+    }));
+  };
+
+  const removeExperience = (idx) => {
+    setCvData(prev => ({
+      ...prev,
+      experience: prev.experience.filter((_, i) => i !== idx)
+    }));
+  };
+
+  const updateExperience = (idx, field, val) => {
+    setCvData(prev => {
+      const exp = [...prev.experience];
+      exp[idx] = { ...exp[idx], [field]: val };
+      return { ...prev, experience: exp };
+    });
+  };
+
+  const addExpBullet = (eIdx) => {
+    setCvData(prev => {
+      const exp = [...prev.experience];
+      exp[eIdx].bullets = [...(exp[eIdx].bullets || []), ''];
+      return { ...prev, experience: exp };
+    });
+  };
+
+  const updateExpBullet = (eIdx, bIdx, val) => {
+    setCvData(prev => {
+      const exp = [...prev.experience];
+      const b = [...exp[eIdx].bullets];
+      b[bIdx] = val;
+      exp[eIdx].bullets = b;
+      return { ...prev, experience: exp };
+    });
+  };
+
+  const removeExpBullet = (eIdx, bIdx) => {
+    setCvData(prev => {
+      const exp = [...prev.experience];
+      exp[eIdx].bullets = exp[eIdx].bullets.filter((_, i) => i !== bIdx);
+      return { ...prev, experience: exp };
+    });
+  };
+
+  // Education
   const addEducation = () => {
     setCvData(prev => ({
       ...prev,
@@ -131,69 +256,7 @@ export default function CVBuilderView({ initialCvData, onSaveCv, user }) {
     });
   };
 
-  // Dynamic Work Experience Slots
-  const addExperience = () => {
-    setCvData(prev => ({
-      ...prev,
-      experience: [...(prev.experience || []), { role: '', company: '', period: '', location: '', bullets: [''] }]
-    }));
-  };
-
-  const removeExperience = (idx) => {
-    setCvData(prev => ({
-      ...prev,
-      experience: prev.experience.filter((_, i) => i !== idx)
-    }));
-  };
-
-  const updateExperience = (idx, field, val) => {
-    setCvData(prev => {
-      const exp = [...prev.experience];
-      exp[idx] = { ...exp[idx], [field]: val };
-      return { ...prev, experience: exp };
-    });
-  };
-
-  const updateExperienceBullets = (idx, val) => {
-    setCvData(prev => {
-      const exp = [...prev.experience];
-      exp[idx] = { ...exp[idx], bullets: val.split('\n').filter(b => b.trim().length > 0) };
-      return { ...prev, experience: exp };
-    });
-  };
-
-  // Dynamic Project Slots
-  const addProject = () => {
-    setCvData(prev => ({
-      ...prev,
-      projects: [...(prev.projects || []), { title: '', technologies: '', github: '', demo: '', bullets: [''] }]
-    }));
-  };
-
-  const removeProject = (idx) => {
-    setCvData(prev => ({
-      ...prev,
-      projects: prev.projects.filter((_, i) => i !== idx)
-    }));
-  };
-
-  const updateProject = (idx, field, val) => {
-    setCvData(prev => {
-      const projs = [...prev.projects];
-      projs[idx] = { ...projs[idx], [field]: val };
-      return { ...prev, projects: projs };
-    });
-  };
-
-  const updateProjectBullets = (idx, val) => {
-    setCvData(prev => {
-      const projs = [...prev.projects];
-      projs[idx] = { ...projs[idx], bullets: val.split('\n').filter(b => b.trim().length > 0) };
-      return { ...prev, projects: projs };
-    });
-  };
-
-  // Custom Skills
+  // Custom skills
   const addCustomSkill = () => {
     setCvData(prev => ({
       ...prev,
@@ -266,7 +329,7 @@ export default function CVBuilderView({ initialCvData, onSaveCv, user }) {
     const d = cvData;
     const md = `# ${d.name}
 **${d.title}**
-${d.email} | ${d.phone} | ${d.location} | [GitHub](${d.github}) | [LinkedIn](${d.linkedin})
+${d.email} | ${d.phone} | ${d.location} | [GitHub](${safeUrl(d.github)}) | [LinkedIn](${safeUrl(d.linkedin)})
 
 ## Professional Summary
 ${d.summary}
@@ -280,6 +343,7 @@ ${(d.customSkills || []).map(cs => `- **${cs.category}:** ${cs.items}`).join('\n
 
 ## Featured Projects
 ${(d.projects || []).map(p => `### ${p.title} (${p.technologies})
+${p.github ? `Source: [${p.github}](${safeUrl(p.github)})` : ''} ${p.demo ? `| Demo: [${p.demo}](${safeUrl(p.demo)})` : ''}
 ${(p.bullets || []).map(b => `- ${b}`).join('\n')}
 `).join('\n')}
 
@@ -304,11 +368,156 @@ ${(d.education || []).map(ed => `- **${ed.degree}**, ${ed.institution} (${ed.yea
       }
       alert('Formatted Markdown copied to clipboard!');
     } catch (err) {
-      alert('Markdown prepared! You can copy it from the editor.');
+      alert('Markdown prepared! You can copy it directly from the editor.');
     }
   };
 
   const d = cvData;
+
+  // Print or Download PDF with sanitized document.title
+  const handlePrintPdf = () => {
+    const originalTitle = document.title;
+    const sanitizedName = (d.name || 'Developer').trim().replace(/[^a-zA-Z0-9_-]/g, '_');
+    document.title = `${sanitizedName}_Resume_${currentFormat}`;
+    window.print();
+    setTimeout(() => {
+      document.title = originalTitle;
+    }, 1200);
+  };
+
+  // Export standalone offline HTML file with clickable links and embedded styles
+  const handleDownloadHtml = () => {
+    const sheetEl = document.getElementById('cv-preview-sheet');
+    if (!sheetEl) return;
+    const sanitizedName = (d.name || 'Developer').trim().replace(/[^a-zA-Z0-9_-]/g, '_');
+    const htmlContent = `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>${d.name || 'Developer'} - Resume</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 24px;
+      background: #eef2f6;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: #14213d;
+    }
+    .offline-toolbar {
+      width: 100%;
+      max-width: 820px;
+      margin-bottom: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #ffffff;
+      padding: 12px 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+    .offline-btn {
+      background: #0E7C7B;
+      color: #ffffff;
+      border: none;
+      padding: 8px 18px;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 13px;
+    }
+    .cv-sheet {
+      width: 100%;
+      max-width: 820px;
+      min-height: 1050px;
+      background: #ffffff;
+      padding: 36px 44px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      border-radius: 4px;
+      font-size: 13px;
+      line-height: 1.55;
+    }
+    a {
+      color: #0E7C7B !important;
+      text-decoration: underline;
+      font-weight: 600;
+    }
+    /* Template 1: ATS Modern */
+    .ats-wrapper { display: flex; flex-direction: column; gap: 14px; }
+    .ats-header { text-align: center; border-bottom: 2px solid #14213d; padding-bottom: 12px; }
+    .ats-name { font-size: 26px; margin: 0; text-transform: uppercase; color: #14213d; }
+    .ats-title { font-size: 15px; font-weight: 600; color: #5b6678; margin: 4px 0; }
+    .ats-contact { font-size: 12px; color: #5b6678; }
+    .ats-sec-title { font-size: 13px; font-weight: 800; letter-spacing: 0.5px; text-transform: uppercase; border-bottom: 1.5px solid #14213d; padding-bottom: 3px; margin: 10px 0 8px; }
+    .ats-skills-list { display: flex; flex-direction: column; gap: 4px; font-size: 12.5px; }
+    .ats-item { margin-bottom: 10px; }
+    .ats-item-header { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 3px; }
+    .ats-bullets { margin: 4px 0 0 18px; padding: 0; font-size: 12.5px; line-height: 1.5; }
+    /* Template 2: Two-Column */
+    .twocol-wrapper { display: grid; grid-template-columns: 240px 1fr; gap: 24px; }
+    .twocol-sidebar { background: #f8fafc; padding: 18px; border-radius: 6px; border-right: 1px solid #e2e8f0; }
+    .twocol-name { font-size: 20px; margin: 0; color: #0E7C7B; }
+    .twocol-title { font-size: 12px; font-weight: 600; color: #64748b; margin-bottom: 14px; }
+    .twocol-group { margin-bottom: 16px; font-size: 12px; }
+    .twocol-group h3 { font-size: 12px; text-transform: uppercase; color: #0E7C7B; border-bottom: 1px solid #cbd5e1; padding-bottom: 2px; margin-bottom: 6px; }
+    .twocol-heading { font-size: 14px; text-transform: uppercase; border-bottom: 1.5px solid #0E7C7B; padding-bottom: 2px; margin: 12px 0 8px; color: #14213d; }
+    /* Template 3: Executive Impact */
+    .exec-header { border-bottom: 2px double #14213d; padding-bottom: 10px; margin-bottom: 14px; }
+    .exec-header h1 { font-family: Georgia, serif; font-size: 26px; margin: 0; color: #14213d; }
+    .exec-subtitle { font-size: 14px; font-style: italic; color: #5b6678; margin: 4px 0; }
+    .exec-contact-bar { font-size: 12px; color: #5b6678; }
+    .exec-title { font-family: Georgia, serif; font-size: 14px; letter-spacing: 0.8px; border-bottom: 1px solid #94a3b8; padding-bottom: 3px; margin: 12px 0 6px; }
+    /* Template 4: Minimalist */
+    .minimal-wrapper { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 12px; line-height: 1.6; }
+    .minimal-head { border-bottom: 1px dashed #64748b; padding-bottom: 12px; margin-bottom: 12px; }
+    .minimal-prompt { color: #0E7C7B; font-weight: 700; }
+    .minimal-name { font-size: 22px; margin: 2px 0; }
+    .minimal-sec { margin-bottom: 14px; }
+    .minimal-sec-head { font-weight: 700; color: #0E7C7B; margin-bottom: 4px; }
+    /* Template 5: Creative Frontend */
+    .creative-header { display: flex; justify-content: space-between; align-items: flex-start; border-left: 5px solid #0E7C7B; padding-left: 14px; margin-bottom: 16px; }
+    .creative-name { font-size: 24px; margin: 0; color: #14213d; }
+    .creative-title { font-size: 14px; color: #0E7C7B; font-weight: 700; }
+    .creative-contact { font-size: 12px; text-align: right; color: #64748b; }
+    .creative-section h3 { font-size: 14px; text-transform: uppercase; color: #0E7C7B; border-bottom: 1px solid #e2e8f0; padding-bottom: 4px; margin: 12px 0 8px; }
+    .creative-pills { display: flex; flex-wrap: wrap; gap: 6px; }
+    .creative-pill { background: #eef2f6; border: 1px solid #cbd5e1; padding: 3px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; }
+    .creative-projects-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .creative-project-card { border: 1px solid #e2e8f0; padding: 10px; border-radius: 6px; background: #f8fafc; }
+    .cv-photo-circle { width: 78px; height: 78px; border-radius: 50%; object-fit: cover; border: 2px solid #0E7C7B; }
+    .cv-photo-square { width: 72px; height: 72px; border-radius: 8px; object-fit: cover; border: 1.5px solid #cbd5e1; }
+    .cv-signature-block { margin-top: 18px; padding-top: 12px; border-top: 1px dashed #cbd5e1; display: flex; justify-content: space-between; align-items: flex-end; font-size: 11.5px; }
+    .cv-signature-font { font-family: 'Brush Script MT', 'Dancing Script', 'Caveat', cursive; font-size: 26px; line-height: 1.1; }
+    @media print {
+      body { background: #fff; padding: 0; }
+      .offline-toolbar { display: none !important; }
+      .cv-sheet { box-shadow: none; padding: 0; width: 100%; max-width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <div class="offline-toolbar">
+    <div><b>${d.name}</b> — Offline Standalone Resume (${currentFormat})</div>
+    <button class="offline-btn" onclick="window.print()">🖨️ Print / Save PDF</button>
+  </div>
+  ${sheetEl.outerHTML}
+</body>
+</html>`;
+
+    const blob = new Blob([htmlContent], { type: 'text/html;charset=utf-8' });
+    const downloadUrl = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = downloadUrl;
+    a.download = `${sanitizedName}_CV_${currentFormat}.html`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(downloadUrl);
+  };
 
   // Render Signature Component
   const renderSignature = () => {
@@ -357,14 +566,15 @@ ${(d.education || []).map(ed => `- **${ed.degree}**, ${ed.institution} (${ed.yea
         <div>
           <h2 style={{ margin: '0 0 4px' }}>Tech CV & Resume Builder (React & Next.js)</h2>
           <p className="tag" style={{ margin: 0 }}>
-            Choose from the top 5 industry formats with unlimited dynamic slots, photo, references, and signature.
+            Choose from the top 5 industry formats with live hyperlinks, photo, references, and signature.
           </p>
         </div>
         <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
           <button className="btn" onClick={() => setCvData(defaultCv)}>✨ Reset Sample</button>
           <button className="btn" onClick={handleSave}>💾 Save CV</button>
           <button className="btn" onClick={handleCopyMarkdown}>📋 Copy Markdown</button>
-          <button className="btn p" onClick={() => window.print()}>🖨️ Print / Download PDF</button>
+          <button className="btn" onClick={handleDownloadHtml} title="Download an offline standalone HTML file with clickable links">📥 Download Offline (.html)</button>
+          <button className="btn p" onClick={handlePrintPdf} title="Print or Save as PDF with working clickable hyperlinks">🖨️ Print / Save PDF</button>
         </div>
       </div>
 
@@ -375,7 +585,7 @@ ${(d.education || []).map(ed => `- **${ed.degree}**, ${ed.institution} (${ed.yea
             key={t.id}
             className="chip"
             aria-pressed={currentFormat === t.id}
-            onClick={() => setCurrentFormat(t.id)}
+            onClick={() => handleSelectFormat(t.id)}
           >
             {t.name}
           </button>
@@ -430,14 +640,14 @@ ${(d.education || []).map(ed => `- **${ed.degree}**, ${ed.institution} (${ed.yea
               style={{ padding: '7px 10px', borderRadius: '6px', border: '1px solid var(--line)', background: 'var(--code)', color: 'var(--ink)', fontSize: '13px' }}
             />
 
-            {/* Links */}
+            {/* Online Links */}
             <div style={{ background: 'var(--code)', border: '1px solid var(--line)', borderRadius: '6px', padding: '10px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
-              <b style={{ fontSize: '11.5px', color: 'var(--mute)' }}>🌐 Online Profiles:</b>
+              <b style={{ fontSize: '11.5px', color: 'var(--mute)' }}>🌐 Online Profiles (Full URLs or domains):</b>
               <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                 <span>🐙</span>
                 <input 
                   type="text" 
-                  placeholder="GitHub URL" 
+                  placeholder="GitHub URL (e.g. github.com/username)" 
                   value={d.github || ''} 
                   onChange={e => updateField('github', e.target.value)} 
                   style={{ flex: 1, padding: '5px 8px', borderRadius: '4px', border: '1px solid var(--line)', background: 'var(--panel)', fontSize: '12px' }}
@@ -447,7 +657,7 @@ ${(d.education || []).map(ed => `- **${ed.degree}**, ${ed.institution} (${ed.yea
                 <span>💼</span>
                 <input 
                   type="text" 
-                  placeholder="LinkedIn URL" 
+                  placeholder="LinkedIn URL (e.g. linkedin.com/in/username)" 
                   value={d.linkedin || ''} 
                   onChange={e => updateField('linkedin', e.target.value)} 
                   style={{ flex: 1, padding: '5px 8px', borderRadius: '4px', border: '1px solid var(--line)', background: 'var(--panel)', fontSize: '12px' }}
@@ -457,7 +667,7 @@ ${(d.education || []).map(ed => `- **${ed.degree}**, ${ed.institution} (${ed.yea
                 <span>🔗</span>
                 <input 
                   type="text" 
-                  placeholder="Portfolio / Website URL" 
+                  placeholder="Portfolio / Website URL (e.g. username.dev)" 
                   value={d.website || ''} 
                   onChange={e => updateField('website', e.target.value)} 
                   style={{ flex: 1, padding: '5px 8px', borderRadius: '4px', border: '1px solid var(--line)', background: 'var(--panel)', fontSize: '12px' }}
@@ -465,7 +675,7 @@ ${(d.education || []).map(ed => `- **${ed.degree}**, ${ed.institution} (${ed.yea
               </div>
             </div>
 
-            {/* Photo */}
+            {/* Profile Photo */}
             <div style={{ background: 'var(--code)', border: '1px solid var(--line)', borderRadius: '6px', padding: '10px' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
                 <b style={{ fontSize: '11.5px', color: 'var(--mute)' }}>📸 Profile Photo:</b>
@@ -482,122 +692,128 @@ ${(d.education || []).map(ed => `- **${ed.degree}**, ${ed.institution} (${ed.yea
                 {d.photoUrl && (
                   <img src={d.photoUrl} alt="Photo" style={{ width: '40px', height: '40px', borderRadius: '50%', objectFit: 'cover' }} />
                 )}
-                <label className="btn" style={{ padding: '5px 10px', fontSize: '12px', cursor: 'pointer', background: 'var(--panel)', border: '1px solid var(--line)' }}>
-                  📁 Upload Photo
-                  <input type="file" accept="image/*" style={{ display: 'none' }} onChange={handlePhotoUpload} />
-                </label>
                 <input 
-                  type="text" 
-                  placeholder="Or paste image URL" 
-                  value={d.photoUrl || ''} 
-                  onChange={e => updateField('photoUrl', e.target.value)} 
-                  style={{ flex: 1, padding: '5px 8px', borderRadius: '4px', border: '1px solid var(--line)', background: 'var(--panel)', fontSize: '12px' }}
+                  type="file" 
+                  accept="image/*" 
+                  onChange={handlePhotoUpload} 
+                  style={{ fontSize: '11px' }}
                 />
               </div>
             </div>
           </div>
 
-          {/* Summary */}
+          {/* Professional Summary */}
           <div style={{ marginBottom: '16px', borderBottom: '1px solid var(--line)', paddingBottom: '16px' }}>
-            <b style={{ fontSize: '12px', textTransform: 'uppercase', color: 'var(--mute)', display: 'block', marginBottom: '6px' }}>Professional Summary</b>
+            <b style={{ fontSize: '12px', textTransform: 'uppercase', color: 'var(--mute)', display: 'block', marginBottom: '4px' }}>Professional Summary</b>
             <textarea 
               rows={4} 
               value={d.summary || ''} 
-              onChange={e => updateField('summary', e.target.value)}
-              style={{ width: '100%', padding: '8px', borderRadius: '6px', border: '1px solid var(--line)', background: 'var(--code)', color: 'var(--ink)', fontSize: '13px', fontFamily: 'inherit' }}
+              onChange={e => updateField('summary', e.target.value)} 
+              style={{ width: '100%', padding: '7px 10px', borderRadius: '6px', border: '1px solid var(--line)', background: 'var(--code)', color: 'var(--ink)', fontSize: '12.5px', lineHeight: 1.5 }}
             />
           </div>
 
           {/* Technical Skills */}
           <div style={{ marginBottom: '16px', borderBottom: '1px solid var(--line)', paddingBottom: '16px' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-              <b style={{ fontSize: '12px', textTransform: 'uppercase', color: 'var(--mute)' }}>Technical Skills</b>
-              <button className="ghost" onClick={addCustomSkill} style={{ fontSize: '11px', padding: '2px 8px' }}>+ Add Skill Group</button>
-            </div>
+            <b style={{ fontSize: '12px', textTransform: 'uppercase', color: 'var(--mute)', display: 'block', marginBottom: '8px' }}>Technical Skills</b>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-              <input type="text" placeholder="Languages" value={d.skills?.languages || ''} onChange={e => updateSkill('languages', e.target.value)} style={{ padding: '6px 8px', borderRadius: '4px', border: '1px solid var(--line)', background: 'var(--code)', fontSize: '12.5px' }} />
-              <input type="text" placeholder="Frameworks" value={d.skills?.frameworks || ''} onChange={e => updateSkill('frameworks', e.target.value)} style={{ padding: '6px 8px', borderRadius: '4px', border: '1px solid var(--line)', background: 'var(--code)', fontSize: '12.5px' }} />
-              <input type="text" placeholder="Databases" value={d.skills?.databases || ''} onChange={e => updateSkill('databases', e.target.value)} style={{ padding: '6px 8px', borderRadius: '4px', border: '1px solid var(--line)', background: 'var(--code)', fontSize: '12.5px' }} />
-              <input type="text" placeholder="Tools" value={d.skills?.tools || ''} onChange={e => updateSkill('tools', e.target.value)} style={{ padding: '6px 8px', borderRadius: '4px', border: '1px solid var(--line)', background: 'var(--code)', fontSize: '12.5px' }} />
-              
-              {(d.customSkills || []).map((cs, i) => (
-                <div key={i} style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
-                  <input type="text" placeholder="Group" value={cs.category} onChange={e => updateCustomSkill(i, 'category', e.target.value)} style={{ width: '110px', padding: '5px 8px', borderRadius: '4px', border: '1px solid var(--line)', background: 'var(--code)', fontSize: '12px' }} />
-                  <input type="text" placeholder="Skills list" value={cs.items} onChange={e => updateCustomSkill(i, 'items', e.target.value)} style={{ flex: 1, padding: '5px 8px', borderRadius: '4px', border: '1px solid var(--line)', background: 'var(--code)', fontSize: '12px' }} />
-                  <button className="cv-del-btn" onClick={() => removeCustomSkill(i)}>✕</button>
-                </div>
-              ))}
+              <input type="text" placeholder="Languages (e.g. JavaScript, Python, SQL)" value={d.skills?.languages || ''} onChange={e => updateSkill('languages', e.target.value)} style={{ padding: '6px 10px', borderRadius: '4px', border: '1px solid var(--line)', background: 'var(--code)', color: 'var(--ink)', fontSize: '12px' }} />
+              <input type="text" placeholder="Frameworks (e.g. React, Node.js, Next.js)" value={d.skills?.frameworks || ''} onChange={e => updateSkill('frameworks', e.target.value)} style={{ padding: '6px 10px', borderRadius: '4px', border: '1px solid var(--line)', background: 'var(--code)', color: 'var(--ink)', fontSize: '12px' }} />
+              <input type="text" placeholder="Databases (e.g. PostgreSQL, SQLite, MongoDB)" value={d.skills?.databases || ''} onChange={e => updateSkill('databases', e.target.value)} style={{ padding: '6px 10px', borderRadius: '4px', border: '1px solid var(--line)', background: 'var(--code)', color: 'var(--ink)', fontSize: '12px' }} />
+              <input type="text" placeholder="Tools (e.g. Git, Docker, REST APIs)" value={d.skills?.tools || ''} onChange={e => updateSkill('tools', e.target.value)} style={{ padding: '6px 10px', borderRadius: '4px', border: '1px solid var(--line)', background: 'var(--code)', color: 'var(--ink)', fontSize: '12px' }} />
             </div>
+
+            {/* Custom Skills */}
+            {(d.customSkills || []).map((cs, i) => (
+              <div key={i} style={{ display: 'flex', gap: '6px', marginTop: '6px' }}>
+                <input type="text" placeholder="Category" value={cs.category} onChange={e => updateCustomSkill(i, 'category', e.target.value)} style={{ width: '130px', padding: '5px 8px', borderRadius: '4px', border: '1px solid var(--line)', background: 'var(--code)', fontSize: '12px' }} />
+                <input type="text" placeholder="Skills" value={cs.items} onChange={e => updateCustomSkill(i, 'items', e.target.value)} style={{ flex: 1, padding: '5px 8px', borderRadius: '4px', border: '1px solid var(--line)', background: 'var(--code)', fontSize: '12px' }} />
+                <button className="cv-del-btn" onClick={() => removeCustomSkill(i)}>🗑️</button>
+              </div>
+            ))}
+            <button className="cv-add-btn" onClick={addCustomSkill} style={{ marginTop: '8px' }}>+ Add Custom Skill Category</button>
           </div>
 
-          {/* Dynamic Featured Projects */}
+          {/* Featured Projects */}
           <div style={{ marginBottom: '16px', borderBottom: '1px solid var(--line)', paddingBottom: '16px' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-              <b style={{ fontSize: '12px', textTransform: 'uppercase', color: 'var(--mute)' }}>Featured Projects ({(d.projects || []).length})</b>
-              <button className="ghost" onClick={addProject} style={{ fontSize: '11px', padding: '2px 8px' }}>+ Add Project</button>
-            </div>
-            {(d.projects || []).map((p, i) => (
-              <div key={i} className="cv-slot-card">
+            <b style={{ fontSize: '12px', textTransform: 'uppercase', color: 'var(--mute)', display: 'block', marginBottom: '8px' }}>Featured Projects</b>
+            {(d.projects || []).map((p, pIdx) => (
+              <div key={pIdx} className="cv-slot-card">
                 <div className="cv-slot-header">
-                  <strong style={{ fontSize: '12px', color: 'var(--acc)' }}>Project #{i + 1}</strong>
-                  <button className="cv-del-btn" onClick={() => removeProject(i)}>🗑️</button>
+                  <strong style={{ fontSize: '13px', color: 'var(--acc)' }}>Project #{pIdx + 1}</strong>
+                  <button className="cv-del-btn" onClick={() => removeProject(pIdx)}>🗑️</button>
                 </div>
-                <input type="text" placeholder="Title" value={p.title} onChange={e => updateProject(i, 'title', e.target.value)} style={{ width: '100%', padding: '5px 8px', borderRadius: '4px', border: '1px solid var(--line)', background: 'var(--panel)', fontSize: '12px', marginBottom: '6px', fontWeight: 600 }} />
-                <input type="text" placeholder="Tech Stack" value={p.technologies} onChange={e => updateProject(i, 'technologies', e.target.value)} style={{ width: '100%', padding: '5px 8px', borderRadius: '4px', border: '1px solid var(--line)', background: 'var(--panel)', fontSize: '12px', marginBottom: '6px' }} />
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6px', marginBottom: '6px' }}>
-                  <input type="text" placeholder="GitHub" value={p.github || ''} onChange={e => updateProject(i, 'github', e.target.value)} style={{ padding: '5px 8px', borderRadius: '4px', border: '1px solid var(--line)', background: 'var(--panel)', fontSize: '12px' }} />
-                  <input type="text" placeholder="Demo" value={p.demo || ''} onChange={e => updateProject(i, 'demo', e.target.value)} style={{ padding: '5px 8px', borderRadius: '4px', border: '1px solid var(--line)', background: 'var(--panel)', fontSize: '12px' }} />
+                <input type="text" placeholder="Project Title" value={p.title} onChange={e => updateProject(pIdx, 'title', e.target.value)} style={{ width: '100%', padding: '6px 8px', borderRadius: '4px', border: '1px solid var(--line)', background: 'var(--panel)', fontSize: '12.5px', fontWeight: 600, marginBottom: '6px' }} />
+                <input type="text" placeholder="Technologies (e.g. React, Node.js, SQLite)" value={p.technologies} onChange={e => updateProject(pIdx, 'technologies', e.target.value)} style={{ width: '100%', padding: '6px 8px', borderRadius: '4px', border: '1px solid var(--line)', background: 'var(--panel)', fontSize: '12px', marginBottom: '6px' }} />
+                
+                {/* Project Links */}
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6px', marginBottom: '8px' }}>
+                  <input type="text" placeholder="Source URL (github.com/...)" value={p.github || ''} onChange={e => updateProject(pIdx, 'github', e.target.value)} style={{ padding: '5px 8px', borderRadius: '4px', border: '1px solid var(--line)', background: 'var(--panel)', fontSize: '11.5px' }} />
+                  <input type="text" placeholder="Live Demo URL (demo.com)" value={p.demo || ''} onChange={e => updateProject(pIdx, 'demo', e.target.value)} style={{ padding: '5px 8px', borderRadius: '4px', border: '1px solid var(--line)', background: 'var(--panel)', fontSize: '11.5px' }} />
                 </div>
-                <textarea rows={3} placeholder="Bullets (1 per line)" value={(p.bullets || []).join('\n')} onChange={e => updateProjectBullets(i, e.target.value)} style={{ width: '100%', padding: '6px', borderRadius: '4px', border: '1px solid var(--line)', background: 'var(--panel)', fontSize: '12px', fontFamily: 'inherit' }} />
+
+                {/* Bullets */}
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                  {(p.bullets || []).map((b, bIdx) => (
+                    <div key={bIdx} style={{ display: 'flex', gap: '4px' }}>
+                      <input type="text" placeholder="Impact / Result bullet point" value={b} onChange={e => updateProjectBullet(pIdx, bIdx, e.target.value)} style={{ flex: 1, padding: '4px 8px', borderRadius: '4px', border: '1px solid var(--line)', background: 'var(--panel)', fontSize: '11.5px' }} />
+                      <button className="cv-del-btn" onClick={() => removeProjectBullet(pIdx, bIdx)}>✕</button>
+                    </div>
+                  ))}
+                  <button className="ghost" onClick={() => addProjectBullet(pIdx)} style={{ fontSize: '11px', padding: '2px', textAlign: 'left', color: 'var(--acc)' }}>+ Add Bullet Point</button>
+                </div>
               </div>
             ))}
             <button className="cv-add-btn" onClick={addProject}>+ Add Another Project Slot</button>
           </div>
 
-          {/* Dynamic Work Experience */}
+          {/* Work Experience */}
           <div style={{ marginBottom: '16px', borderBottom: '1px solid var(--line)', paddingBottom: '16px' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-              <b style={{ fontSize: '12px', textTransform: 'uppercase', color: 'var(--mute)' }}>Work Experience ({(d.experience || []).length})</b>
-              <button className="ghost" onClick={addExperience} style={{ fontSize: '11px', padding: '2px 8px' }}>+ Add Experience</button>
-            </div>
-            {(d.experience || []).map((exp, i) => (
-              <div key={i} className="cv-slot-card">
+            <b style={{ fontSize: '12px', textTransform: 'uppercase', color: 'var(--mute)', display: 'block', marginBottom: '8px' }}>Work Experience</b>
+            {(d.experience || []).map((exp, eIdx) => (
+              <div key={eIdx} className="cv-slot-card">
                 <div className="cv-slot-header">
-                  <strong style={{ fontSize: '12px', color: 'var(--acc)' }}>Role #{i + 1}</strong>
-                  <button className="cv-del-btn" onClick={() => removeExperience(i)}>🗑️</button>
+                  <strong style={{ fontSize: '13px', color: 'var(--acc)' }}>Role #{eIdx + 1}</strong>
+                  <button className="cv-del-btn" onClick={() => removeExperience(eIdx)}>🗑️</button>
                 </div>
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6px', marginBottom: '6px' }}>
-                  <input type="text" placeholder="Role" value={exp.role} onChange={e => updateExperience(i, 'role', e.target.value)} style={{ padding: '5px 8px', borderRadius: '4px', border: '1px solid var(--line)', background: 'var(--panel)', fontSize: '12px', fontWeight: 600 }} />
-                  <input type="text" placeholder="Company" value={exp.company} onChange={e => updateExperience(i, 'company', e.target.value)} style={{ padding: '5px 8px', borderRadius: '4px', border: '1px solid var(--line)', background: 'var(--panel)', fontSize: '12px' }} />
+                  <input type="text" placeholder="Job Title" value={exp.role} onChange={e => updateExperience(eIdx, 'role', e.target.value)} style={{ padding: '5px 8px', borderRadius: '4px', border: '1px solid var(--line)', background: 'var(--panel)', fontSize: '12px', fontWeight: 600 }} />
+                  <input type="text" placeholder="Company Name" value={exp.company} onChange={e => updateExperience(eIdx, 'company', e.target.value)} style={{ padding: '5px 8px', borderRadius: '4px', border: '1px solid var(--line)', background: 'var(--panel)', fontSize: '12px' }} />
                 </div>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6px', marginBottom: '6px' }}>
-                  <input type="text" placeholder="Period" value={exp.period} onChange={e => updateExperience(i, 'period', e.target.value)} style={{ padding: '5px 8px', borderRadius: '4px', border: '1px solid var(--line)', background: 'var(--panel)', fontSize: '12px' }} />
-                  <input type="text" placeholder="Location" value={exp.location || ''} onChange={e => updateExperience(i, 'location', e.target.value)} style={{ padding: '5px 8px', borderRadius: '4px', border: '1px solid var(--line)', background: 'var(--panel)', fontSize: '12px' }} />
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6px', marginBottom: '8px' }}>
+                  <input type="text" placeholder="Period (e.g. 2024 - Present)" value={exp.period} onChange={e => updateExperience(eIdx, 'period', e.target.value)} style={{ padding: '5px 8px', borderRadius: '4px', border: '1px solid var(--line)', background: 'var(--panel)', fontSize: '12px' }} />
+                  <input type="text" placeholder="Location (e.g. Remote)" value={exp.location || ''} onChange={e => updateExperience(eIdx, 'location', e.target.value)} style={{ padding: '5px 8px', borderRadius: '4px', border: '1px solid var(--line)', background: 'var(--panel)', fontSize: '12px' }} />
                 </div>
-                <textarea rows={3} placeholder="Bullets (1 per line)" value={(exp.bullets || []).join('\n')} onChange={e => updateExperienceBullets(i, e.target.value)} style={{ width: '100%', padding: '6px', borderRadius: '4px', border: '1px solid var(--line)', background: 'var(--panel)', fontSize: '12px', fontFamily: 'inherit' }} />
+
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                  {(exp.bullets || []).map((b, bIdx) => (
+                    <div key={bIdx} style={{ display: 'flex', gap: '4px' }}>
+                      <input type="text" placeholder="Achievement bullet point" value={b} onChange={e => updateExpBullet(eIdx, bIdx, e.target.value)} style={{ flex: 1, padding: '4px 8px', borderRadius: '4px', border: '1px solid var(--line)', background: 'var(--panel)', fontSize: '11.5px' }} />
+                      <button className="cv-del-btn" onClick={() => removeExpBullet(eIdx, bIdx)}>✕</button>
+                    </div>
+                  ))}
+                  <button className="ghost" onClick={() => addExpBullet(eIdx)} style={{ fontSize: '11px', padding: '2px', textAlign: 'left', color: 'var(--acc)' }}>+ Add Bullet Point</button>
+                </div>
               </div>
             ))}
-            <button className="cv-add-btn" onClick={addExperience}>+ Add Another Work Experience Slot</button>
+            <button className="cv-add-btn" onClick={addExperience}>+ Add Another Experience Slot</button>
           </div>
 
-          {/* Dynamic Education */}
+          {/* Education */}
           <div style={{ marginBottom: '16px', borderBottom: '1px solid var(--line)', paddingBottom: '16px' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-              <b style={{ fontSize: '12px', textTransform: 'uppercase', color: 'var(--mute)' }}>Education Degrees ({(d.education || []).length})</b>
-              <button className="ghost" onClick={addEducation} style={{ fontSize: '11px', padding: '2px 8px' }}>+ Add Education</button>
-            </div>
+            <b style={{ fontSize: '12px', textTransform: 'uppercase', color: 'var(--mute)', display: 'block', marginBottom: '8px' }}>Education & Degree</b>
             {(d.education || []).map((ed, i) => (
               <div key={i} className="cv-slot-card">
                 <div className="cv-slot-header">
-                  <strong style={{ fontSize: '12px', color: 'var(--acc)' }}>Education #{i + 1}</strong>
+                  <strong style={{ fontSize: '12px', color: 'var(--acc)' }}>Degree #{i + 1}</strong>
                   <button className="cv-del-btn" onClick={() => removeEducation(i)}>🗑️</button>
                 </div>
-                <input type="text" placeholder="Degree" value={ed.degree} onChange={e => updateEducation(i, 'degree', e.target.value)} style={{ width: '100%', padding: '5px 8px', borderRadius: '4px', border: '1px solid var(--line)', background: 'var(--panel)', fontSize: '12px', marginBottom: '6px', fontWeight: 600 }} />
+                <input type="text" placeholder="Degree / Certificate" value={ed.degree} onChange={e => updateEducation(i, 'degree', e.target.value)} style={{ width: '100%', padding: '5px 8px', borderRadius: '4px', border: '1px solid var(--line)', background: 'var(--panel)', fontSize: '12px', fontWeight: 600, marginBottom: '6px' }} />
                 <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '6px', marginBottom: '6px' }}>
-                  <input type="text" placeholder="Institution" value={ed.institution} onChange={e => updateEducation(i, 'institution', e.target.value)} style={{ padding: '5px 8px', borderRadius: '4px', border: '1px solid var(--line)', background: 'var(--panel)', fontSize: '12px' }} />
-                  <input type="text" placeholder="Years" value={ed.year || ''} onChange={e => updateEducation(i, 'year', e.target.value)} style={{ padding: '5px 8px', borderRadius: '4px', border: '1px solid var(--line)', background: 'var(--panel)', fontSize: '12px' }} />
+                  <input type="text" placeholder="Institution / University" value={ed.institution} onChange={e => updateEducation(i, 'institution', e.target.value)} style={{ padding: '5px 8px', borderRadius: '4px', border: '1px solid var(--line)', background: 'var(--panel)', fontSize: '12px' }} />
+                  <input type="text" placeholder="Year" value={ed.year} onChange={e => updateEducation(i, 'year', e.target.value)} style={{ padding: '5px 8px', borderRadius: '4px', border: '1px solid var(--line)', background: 'var(--panel)', fontSize: '12px' }} />
                 </div>
-                <input type="text" placeholder="Major / CGPA" value={ed.details || ''} onChange={e => updateEducation(i, 'details', e.target.value)} style={{ width: '100%', padding: '5px 8px', borderRadius: '4px', border: '1px solid var(--line)', background: 'var(--panel)', fontSize: '12px' }} />
+                <input type="text" placeholder="Major / Coursework / CGPA" value={ed.details || ''} onChange={e => updateEducation(i, 'details', e.target.value)} style={{ width: '100%', padding: '5px 8px', borderRadius: '4px', border: '1px solid var(--line)', background: 'var(--panel)', fontSize: '12px' }} />
               </div>
             ))}
             <button className="cv-add-btn" onClick={addEducation}>+ Add Another Education Slot</button>
@@ -678,11 +894,11 @@ ${(d.education || []).map(ed => `- **${ed.degree}**, ${ed.institution} (${ed.yea
                     <h1 className="ats-name">{d.name}</h1>
                     <div className="ats-title">{d.title}</div>
                     <div className="ats-contact">
-                      {d.email} · {d.phone} · {d.location}
+                      <a href={`mailto:${d.email}`}>{d.email}</a> · {d.phone && <a href={`tel:${d.phone}`}>{d.phone}</a>} · {d.location}
                       <br />
-                      {d.github && <><a href={d.github} target="_blank">🐙 GitHub</a> | </>}
-                      {d.linkedin && <><a href={d.linkedin} target="_blank">💼 LinkedIn</a> | </>}
-                      {d.website && <><a href={d.website} target="_blank">🌐 Portfolio</a></>}
+                      {d.github && <><a href={safeUrl(d.github)} target="_blank" rel="noopener noreferrer">🐙 GitHub</a> | </>}
+                      {d.linkedin && <><a href={safeUrl(d.linkedin)} target="_blank" rel="noopener noreferrer">💼 LinkedIn</a> | </>}
+                      {d.website && <><a href={safeUrl(d.website)} target="_blank" rel="noopener noreferrer">🌐 Portfolio</a></>}
                     </div>
                   </div>
                   {d.showPhoto && d.photoUrl && (
@@ -713,10 +929,12 @@ ${(d.education || []).map(ed => `- **${ed.degree}**, ${ed.institution} (${ed.yea
                   {(d.projects || []).map((p, i) => (
                     <div key={i} className="ats-item">
                       <div className="ats-item-header">
-                        <b>{p.title}</b> | <i>{p.technologies}</i>
-                        <span className="ats-links">
-                          {p.github && <a href={p.github} target="_blank">[Source] </a>}
-                          {p.demo && <a href={p.demo} target="_blank">[Demo]</a>}
+                        <div>
+                          <b>{p.title}</b> | <i>{p.technologies}</i>
+                        </div>
+                        <span className="ats-links" style={{ display: 'inline-flex', gap: '6px' }}>
+                          {p.github && <a href={safeUrl(p.github)} target="_blank" rel="noopener noreferrer">[Source]</a>}
+                          {p.demo && <a href={safeUrl(p.demo)} target="_blank" rel="noopener noreferrer">[Demo]</a>}
                         </span>
                       </div>
                       <ul className="ats-bullets">
@@ -778,17 +996,17 @@ ${(d.education || []).map(ed => `- **${ed.degree}**, ${ed.institution} (${ed.yea
                   <div className="twocol-title">{d.title}</div>
 
                   <div className="twocol-group">
-                    <h3>Contact</h3>
-                    <div>📧 {d.email}</div>
-                    <div>📱 {d.phone}</div>
+                    <h3>Contact & Links</h3>
+                    <div>📧 <a href={`mailto:${d.email}`}>{d.email}</a></div>
+                    <div>📱 <a href={`tel:${d.phone}`}>{d.phone}</a></div>
                     <div>📍 {d.location}</div>
-                    {d.github && <div>🐙 <a href={d.github} target="_blank">GitHub</a></div>}
-                    {d.linkedin && <div>💼 <a href={d.linkedin} target="_blank">LinkedIn</a></div>}
-                    {d.website && <div>🌐 <a href={d.website} target="_blank">Portfolio</a></div>}
+                    {d.github && <div>🐙 <a href={safeUrl(d.github)} target="_blank" rel="noopener noreferrer">GitHub</a></div>}
+                    {d.linkedin && <div>💼 <a href={safeUrl(d.linkedin)} target="_blank" rel="noopener noreferrer">LinkedIn</a></div>}
+                    {d.website && <div>🌐 <a href={safeUrl(d.website)} target="_blank" rel="noopener noreferrer">Portfolio</a></div>}
                   </div>
 
                   <div className="twocol-group">
-                    <h3>Skills & Tools</h3>
+                    <h3>Skills & Stack</h3>
                     <p><b>Languages:</b><br />{d.skills?.languages}</p>
                     <p><b>Frameworks:</b><br />{d.skills?.frameworks}</p>
                     <p><b>Databases:</b><br />{d.skills?.databases}</p>
@@ -823,9 +1041,13 @@ ${(d.education || []).map(ed => `- **${ed.degree}**, ${ed.institution} (${ed.yea
                     <h2 className="twocol-heading">Featured Engineering Projects</h2>
                     {(d.projects || []).map((p, i) => (
                       <div key={i} style={{ marginBottom: '14px' }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', flexWrap: 'wrap', gap: '6px' }}>
                           <b>{p.title}</b>
-                          <span style={{ fontSize: '11px', color: '#64748B' }}>{p.technologies}</span>
+                          <div style={{ display: 'flex', gap: '8px', fontSize: '11px' }}>
+                            <span style={{ color: '#64748B' }}>{p.technologies}</span>
+                            {p.github && <a href={safeUrl(p.github)} target="_blank" rel="noopener noreferrer">[Source]</a>}
+                            {p.demo && <a href={safeUrl(p.demo)} target="_blank" rel="noopener noreferrer">[Demo]</a>}
+                          </div>
                         </div>
                         <ul style={{ margin: '4px 0 0 16px', fontSize: '12px', lineHeight: 1.5 }}>
                           {(p.bullets || []).map((b, bIdx) => <li key={bIdx}>{b}</li>)}
@@ -862,7 +1084,10 @@ ${(d.education || []).map(ed => `- **${ed.degree}**, ${ed.institution} (${ed.yea
                     <h1>{d.name}</h1>
                     <div className="exec-subtitle">{d.title} | Engineering Leadership</div>
                     <div className="exec-contact-bar">
-                      {d.email} · {d.phone} · {d.location} · {d.github}
+                      <a href={`mailto:${d.email}`}>{d.email}</a> · {d.phone} · {d.location}
+                      {d.github && <> · <a href={safeUrl(d.github)} target="_blank" rel="noopener noreferrer">GitHub</a></>}
+                      {d.linkedin && <> · <a href={safeUrl(d.linkedin)} target="_blank" rel="noopener noreferrer">LinkedIn</a></>}
+                      {d.website && <> · <a href={safeUrl(d.website)} target="_blank" rel="noopener noreferrer">Portfolio</a></>}
                     </div>
                   </div>
                   {d.showPhoto && d.photoUrl && (
@@ -888,8 +1113,14 @@ ${(d.education || []).map(ed => `- **${ed.degree}**, ${ed.institution} (${ed.yea
                   <h2 className="exec-title">KEY ENGINEERING DELIVERABLES</h2>
                   {(d.projects || []).map((p, i) => (
                     <div key={i} className="exec-item">
-                      <div className="exec-item-title">
-                        <b>{p.title}</b> — <span>{p.technologies}</span>
+                      <div className="exec-item-title" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', flexWrap: 'wrap', gap: '6px' }}>
+                        <div>
+                          <b>{p.title}</b> — <span>{p.technologies}</span>
+                        </div>
+                        <div style={{ fontSize: '11px', display: 'flex', gap: '6px' }}>
+                          {p.github && <a href={safeUrl(p.github)} target="_blank" rel="noopener noreferrer">[Source]</a>}
+                          {p.demo && <a href={safeUrl(p.demo)} target="_blank" rel="noopener noreferrer">[Demo]</a>}
+                        </div>
                       </div>
                       <ul style={{ margin: '4px 0 0 18px', fontSize: '12px', lineHeight: 1.5 }}>
                         {(p.bullets || []).map((b, bIdx) => <li key={bIdx}>{b}</li>)}
@@ -934,8 +1165,14 @@ ${(d.education || []).map(ed => `- **${ed.degree}**, ${ed.institution} (${ed.yea
                     <div className="minimal-prompt">$ whoami</div>
                     <h1 className="minimal-name">{d.name}</h1>
                     <div className="minimal-role">&gt; {d.title}</div>
-                    <div className="minimal-meta">contact: [ {d.email} | {d.phone} | {d.location} ]</div>
-                    <div className="minimal-meta">links: [ <a href={d.github}>github</a> | <a href={d.linkedin}>linkedin</a> ]</div>
+                    <div className="minimal-meta">contact: [ <a href={`mailto:${d.email}`}>{d.email}</a> | {d.phone} | {d.location} ]</div>
+                    <div className="minimal-meta">
+                      links: [ 
+                        {d.github && <><a href={safeUrl(d.github)} target="_blank" rel="noopener noreferrer">github</a> | </>}
+                        {d.linkedin && <><a href={safeUrl(d.linkedin)} target="_blank" rel="noopener noreferrer">linkedin</a> | </>}
+                        {d.website && <><a href={safeUrl(d.website)} target="_blank" rel="noopener noreferrer">portfolio</a></>}
+                      ]
+                    </div>
                   </div>
                   {d.showPhoto && d.photoUrl && (
                     <img src={d.photoUrl} className="cv-photo-square" alt="Photo" />
@@ -956,7 +1193,13 @@ ${(d.education || []).map(ed => `- **${ed.degree}**, ${ed.institution} (${ed.yea
                   <div className="minimal-sec-head">## 03. PROJECTS ({(d.projects || []).length})</div>
                   {(d.projects || []).map((p, i) => (
                     <div key={i} style={{ marginBottom: '10px' }}>
-                      <b>* {p.title}</b> [{p.technologies}]
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', flexWrap: 'wrap' }}>
+                        <b>* {p.title}</b> <span>[{p.technologies}]</span>
+                        <span style={{ fontSize: '11px', display: 'flex', gap: '6px' }}>
+                          {p.github && <a href={safeUrl(p.github)} target="_blank" rel="noopener noreferrer">[src]</a>}
+                          {p.demo && <a href={safeUrl(p.demo)} target="_blank" rel="noopener noreferrer">[demo]</a>}
+                        </span>
+                      </div>
                       <ul style={{ margin: '3px 0 0 16px' }}>
                         {(p.bullets || []).map((b, bIdx) => <li key={bIdx}>{b}</li>)}
                       </ul>
@@ -1003,9 +1246,14 @@ ${(d.education || []).map(ed => `- **${ed.degree}**, ${ed.institution} (${ed.yea
                     </div>
                   </div>
                   <div className="creative-contact">
-                    <div>📧 {d.email}</div>
+                    <div>📧 <a href={`mailto:${d.email}`}>{d.email}</a></div>
                     <div>📱 {d.phone}</div>
                     <div>📍 {d.location}</div>
+                    <div style={{ marginTop: '4px', display: 'flex', gap: '8px', justifyContent: 'flex-end', fontSize: '11.5px' }}>
+                      {d.github && <a href={safeUrl(d.github)} target="_blank" rel="noopener noreferrer">GitHub</a>}
+                      {d.linkedin && <a href={safeUrl(d.linkedin)} target="_blank" rel="noopener noreferrer">LinkedIn</a>}
+                      {d.website && <a href={safeUrl(d.website)} target="_blank" rel="noopener noreferrer">Portfolio</a>}
+                    </div>
                   </div>
                 </header>
 
@@ -1028,7 +1276,13 @@ ${(d.education || []).map(ed => `- **${ed.degree}**, ${ed.institution} (${ed.yea
                   <div className="creative-projects-grid">
                     {(d.projects || []).map((p, i) => (
                       <div key={i} className="creative-project-card">
-                        <b>{p.title}</b>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '2px' }}>
+                          <b>{p.title}</b>
+                          <div style={{ fontSize: '11px', display: 'flex', gap: '6px' }}>
+                            {p.github && <a href={safeUrl(p.github)} target="_blank" rel="noopener noreferrer">Code ↗</a>}
+                            {p.demo && <a href={safeUrl(p.demo)} target="_blank" rel="noopener noreferrer">Demo ↗</a>}
+                          </div>
+                        </div>
                         <span className="creative-stack">{p.technologies}</span>
                         <ul style={{ margin: '0 0 0 16px', fontSize: '12px', lineHeight: 1.45 }}>
                           {(p.bullets || []).map((b, bIdx) => <li key={bIdx}>{b}</li>)}
@@ -1077,4 +1331,3 @@ ${(d.education || []).map(ed => `- **${ed.degree}**, ${ed.institution} (${ed.yea
     </div>
   );
 }
-

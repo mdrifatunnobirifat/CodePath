@@ -7,7 +7,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
 > 🌐 **Live Production Web App:** [https://codepath-zeta.vercel.app](https://codepath-zeta.vercel.app)  
-> 🛡️ **Master Admin Account:** Email: `admin@email.com` | Password: `#codepathadmin`
+> 🛡️ **Master Administrator Suite:** Verified administrators can log in via the platform authentication dialog to access live telemetry, learner analytics, and user access management.
 
 > **CodePath** is an accelerated coding practice and interview readiness platform designed for learners preparing to land developer roles within **60 days**. Built strictly according to the **CodePath Software Requirements Specification (SRS v1.0)** and incorporating the bespoke design system from the prototype.
 
