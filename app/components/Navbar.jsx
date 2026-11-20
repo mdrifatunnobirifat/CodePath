@@ -35,10 +35,10 @@ export default function Navbar({
           onClick={onOpenDrawer} 
           aria-label="Open Navigation Menu"
           title="Open Navigation Menu"
+          style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px', zIndex: 101 }}
         >
-          <span className="hamburger-line"></span>
-          <span className="hamburger-line"></span>
-          <span className="hamburger-line"></span>
+          <span className="hamburger-icon" style={{ fontSize: '18px', lineHeight: 1 }}>☰</span>
+          <span className="hamburger-text" style={{ fontWeight: 700, fontSize: '13px' }}>Menu</span>
         </button>
         <div 
           className="logo" 

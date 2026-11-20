@@ -37,11 +37,20 @@ export default function Drawer({
         <div 
           className="drawer-backdrop" 
           onClick={onClose} 
-          style={{ display: 'block', zIndex: 199 }}
+          style={{ display: 'block', zIndex: 9998 }}
         />
       )}
 
-      <aside className={`drawer-menu ${isOpen ? 'open' : ''}`} style={{ zIndex: 200, display: 'flex', flexDirection: 'column' }}>
+      <aside 
+        className={`drawer-menu ${isOpen ? 'open' : ''}`} 
+        style={{ 
+          zIndex: 9999, 
+          display: 'flex', 
+          flexDirection: 'column',
+          pointerEvents: isOpen ? 'auto' : 'none'
+        }}
+        aria-hidden={!isOpen}
+      >
         
         {/* Drawer Header */}
         <div className="drawer-header" style={{ padding: '16px 20px', borderBottom: '1px solid var(--line)' }}>
@@ -210,7 +219,7 @@ export default function Drawer({
           {user ? (
             <button className="drawer-auth-btn" onClick={onLogout}>
               <span className="nav-icon">🚪</span>
-              <span>Log Out ({user.name.split(' ')[0]})</span>
+              <span>Log Out ({((user?.name || user?.email || 'Learner')).split(' ')[0]})</span>
             </button>
           ) : (
             <button className="drawer-auth-btn" onClick={() => onOpenAuth('signup')}>

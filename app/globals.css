@@ -204,6 +204,20 @@ header {
   line-height: 1;
 }
 
+.hamburger-text {
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--ink);
+}
+
+.hamburger-line {
+  display: block;
+  width: 18px;
+  height: 2px;
+  background: var(--ink);
+  border-radius: 2px;
+}
+
 /* Hamburger Slide-out Drawer */
 .drawer-backdrop {
   position: fixed;
